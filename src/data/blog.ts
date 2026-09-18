@@ -15,6 +15,8 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   date: string;
+  datePublished: string;
+  dateModified: string;
   author: string;
   readTime: string;
   category: "Finanzas" | "Diseño" | "Ortografía";
@@ -28,8 +30,10 @@ export const BLOG_POSTS: BlogPost[] = [
     id: "1",
     slug: "guia-convertir-numeros-a-letras-rae-finanzas",
     title: "Guía Suprema: Cómo Convertir Números a Letras en Español (Normas RAE, Finanzas y Redacción de Cheques)",
-    excerpt: "Aprende las reglas ortográficas oficiales de la RAE para escribir cualquier número en letras, expresar cantidades financieras y rellenar cheques de forma impecable.",
+    excerpt: "Aprende las reglas ortográficas recomendadas por la RAE para escribir cualquier número en letras, expresar cantidades financieras y rellenar cheques con claridad.",
     date: "17 de Julio, 2026",
+    datePublished: "2026-07-17T00:00:00+00:00",
+    dateModified: "2026-09-18T00:00:00+00:00",
     author: "Comité Editorial Lingüístico",
     readTime: "12 min de lectura",
     category: "Finanzas",
@@ -42,7 +46,7 @@ export const BLOG_POSTS: BlogPost[] = [
         </p>
 
         <p>
-          Para resolver estas dudas de forma ágil, el sitio web <a href="https://numerosenletras.org" class="text-blue-600 hover:text-blue-800 font-bold underline">numerosenletras.org</a> provee una plataforma inteligente y gratuita para el procesamiento y traducción automatizada de cualquier cifra. En este extenso artículo, desglosaremos minuciosamente la normativa oficial de la <strong>Real Academia Española (RAE)</strong>, las excepciones prácticas del comercio diario y los estándares para transacciones financieras en todo el mundo hispanohablante.
+          Para resolver estas dudas de forma ágil, el sitio web <a href="/" class="text-blue-600 hover:text-blue-800 font-bold underline">numerosenletras.org</a> provee una plataforma inteligente y gratuita para el procesamiento y traducción automatizada de cualquier cifra. En este extenso artículo, desglosaremos minuciosamente la normativa de la <strong>Real Academia Española (RAE)</strong>, las excepciones prácticas del comercio diario y los estándares para transacciones financieras en todo el mundo hispanohablante.
         </p>
 
         <div class="my-6">
@@ -166,6 +170,8 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "El Arte de las Letras Burbuja Ⓑⓤⓡⓑⓤⓙⓐ: Guía de Tipografías Circulares Unicode para Redes Sociales",
     excerpt: "Descubre cómo funciona el sistema de símbolos circulares Unicode, por qué las letras burbuja son tan populares en redes sociales y cómo usarlas para potenciar tu presencia digital.",
     date: "17 de Julio, 2026",
+    datePublished: "2026-07-17T00:00:00+00:00",
+    dateModified: "2026-09-18T00:00:00+00:00",
     author: "Especialista en Tipografía Digital",
     readTime: "10 min de lectura",
     category: "Diseño",
@@ -180,7 +186,7 @@ export const BLOG_POSTS: BlogPost[] = [
         <div class="my-6">
           <h2 class="text-2xl font-bold text-gray-900 border-b pb-2 mb-4">1. La Ciencia Detrás de las Letras Burbuja: El Estándar Unicode</h2>
           <p class="mb-4">
-            Un generador de <a href="https://numerosenletras.org/letras-burbuja" class="text-blue-600 hover:text-blue-800 font-semibold underline">letras burbuja</a> mapea las letras normales del alfabeto latino hacia un bloque especial del estándar Unicode denominado <strong>"Alfanuméricos Encirculados" (Enclosed Alphanumerics)</strong>.
+            Un generador de <a href="/letras-burbuja/" class="text-blue-600 hover:text-blue-800 font-semibold underline">letras burbuja</a> mapea las letras normales del alfabeto latino hacia un bloque especial del estándar Unicode denominado <strong>"Alfanuméricos Encirculados" (Enclosed Alphanumerics)</strong>.
           </p>
           <ul class="list-disc pl-6 space-y-2 mb-4">
             <li><strong>Letras Burbuja Blancas (A-Z):</strong> Rango Unicode U+24B6 a U+24CF para mayúsculas (Ⓐ, Ⓑ, Ⓒ...) y U+24D0 a U+24E9 para minúsculas (ⓐ, ⓑ, ⓒ...).</li>
@@ -204,6 +210,8 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Guía Completa de Letras Aesthetic y Fuentes Pequeñas para Redes Sociales: Personaliza tu Biografía",
     excerpt: "Aprende a transformar tus textos para crear bios de impacto en Instagram, TikTok y Twitter usando letras pequeñas, cursivas y símbolos aesthetic copiar y pegar.",
     date: "17 de Julio, 2026",
+    datePublished: "2026-07-17T00:00:00+00:00",
+    dateModified: "2026-09-18T00:00:00+00:00",
     author: "Experta en Estrategia de Contenidos",
     readTime: "11 min de lectura",
     category: "Diseño",

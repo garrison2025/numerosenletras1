@@ -3,25 +3,24 @@ import { Image } from "astro:assets";
 import { BLOG_POSTS } from '../../data/blog';
 import Layout from '../../layouts/Layout.astro';
 
-const title = "Blog Oficial | Guías de Ortografía, Finanzas y Redacción de Números";
-const description = "Aprende las normas oficiales de la RAE para escribir números en letras, cómo llenar cheques correctamente y el uso de letras aesthetic y burbuja en redes sociales.";
-const keywords = "blog oficial, guias ortograficas, finanzas, numeros a letras, como llenar cheques, letras burbuja, letras aesthetic";
+const title = "Blog | Guías de Ortografía, Finanzas y Redacción de Números";
+const description = "Aprende las reglas ortográficas de la RAE para escribir números en letras, cómo llenar cheques correctamente y el uso de letras aesthetic y burbuja en redes sociales.";
 
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "Blog",
-  "name": "Blog Oficial de numerosenletras.org",
-  "url": "https://numerosenletras.org/blog",
+  "name": "Blog de numerosenletras.org",
+  "url": "https://numerosenletras.org/blog/",
   "description": description
 };
 
 const breadcrumbs = [
   { name: "Inicio", path: "/" },
-  { name: "Blog", path: "/blog" }
+  { name: "Blog", path: "/blog/" }
 ];
 ---
 
-<Layout title={title} description={description} keywords={keywords} currentPath="/blog" schemaData={schemaData} breadcrumbs={breadcrumbs}>
+<Layout title={title} description={description} currentPath="/blog/" schemaData={schemaData} breadcrumbs={breadcrumbs}>
   <div class="max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in text-left">
     <!-- Header -->
     <header class="text-center mb-12">
@@ -33,7 +32,7 @@ const breadcrumbs = [
         Blog de Lingüística y Finanzas
       </h1>
       <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
-        Aprende a redactar números y cantidades con total precisión académica, normativa mercantil y estilo para redes sociales.
+        Aprende a redactar números y cantidades con claridad, criterio ortográfico y estilo para redes sociales.
       </p>
     </header>
 
@@ -65,7 +64,7 @@ const breadcrumbs = [
                 <span class="text-xs text-gray-500 font-sans">{post.readTime}</span>
               </div>
               <h2 class="font-display font-bold text-lg sm:text-xl text-gray-900 group-hover:text-blue-600 transition-colors mb-2 leading-snug">
-                <a href={`/blog/${post.slug}`}>
+                <a href={`/blog/${post.slug}/`}>
                   {post.title}
                 </a>
               </h2>
@@ -76,7 +75,7 @@ const breadcrumbs = [
             <div class="flex items-center justify-between pt-4 border-t border-gray-100 text-xs">
               <span class="text-gray-400 font-sans">{post.date}</span>
               <a 
-                href={`/blog/${post.slug}`}
+                href={`/blog/${post.slug}/`}
                 class="font-bold text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform"
               >
                 <span>Leer artículo</span>

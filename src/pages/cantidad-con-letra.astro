@@ -4,7 +4,6 @@ import QuantityConverter from '../components/QuantityConverter';
 
 const title = "Convertir Cantidades a Letras | Generador para Cheques y Facturas";
 const description = "Escribe cualquier cantidad de dinero en letras de forma correcta. Compatible con pesos, dólares, euros y más. Genera el formato formal para rellenar cheques y recibos.";
-const keywords = "cantidad con letra, números a letras, cheques en letras, facturas con letra, escribir cantidades, convertidor de dinero, pesos a letras";
 
 const faqs = [
   {
@@ -34,7 +33,7 @@ const schemaData = [
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Cantidad con Letra - Generador de Cheques y Facturas",
-    "url": "https://numerosenletras.org/cantidad-con-letra",
+    "url": "https://numerosenletras.org/cantidad-con-letra/",
     "description": description,
     "applicationCategory": "FinancialApplication",
     "operatingSystem": "All",
@@ -56,11 +55,11 @@ const schemaData = [
 
 const breadcrumbs = [
   { name: "Inicio", path: "/" },
-  { name: "Cantidad con Letra", path: "/cantidad-con-letra" }
+  { name: "Cantidad con Letra", path: "/cantidad-con-letra/" }
 ];
 ---
 
-<Layout title={title} description={description} keywords={keywords} currentPath="/cantidad-con-letra" schemaData={schemaData} breadcrumbs={breadcrumbs}>
+<Layout title={title} description={description} currentPath="/cantidad-con-letra/" schemaData={schemaData} breadcrumbs={breadcrumbs}>
   <div class="relative max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in">
     <!-- Background glow -->
     <div class="absolute top-0 -left-4 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
@@ -70,13 +69,13 @@ const breadcrumbs = [
     <header class="text-center mb-10 relative">
       <div class="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 border border-emerald-100 shadow-xs">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="font-display tracking-wide uppercase text-[10px]">Generador Bancario y Mercantil Oficial</span>
+        <span class="font-display tracking-wide uppercase text-[10px]">Generador Bancario y Mercantil</span>
       </div>
       <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-4">
         Convertidor de Cantidad con Letra
       </h1>
       <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
-        Genera al instante la expresión formal en letras para cheques, pagarés, facturas, pólizas y contratos comerciales en más de 15 divisas oficiales.
+        Genera al instante la expresión formal en letras para cheques, pagarés, facturas, pólizas y contratos comerciales en más de 15 divisas habituales.
       </p>
     </header>
 

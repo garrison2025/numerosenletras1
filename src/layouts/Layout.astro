@@ -9,7 +9,6 @@ import '../index.css';
 interface Props {
   title?: string;
   description?: string;
-  keywords?: string;
   image?: string;
   currentPath: string;
   schemaData?: any;
@@ -19,50 +18,50 @@ interface Props {
 const {
   title = "Conversor de Números a Letras | Escribir Números en Palabras",
   description = "Herramienta online para convertir números a letras en español de forma instantánea. Ideal para cheques, contratos, facturas y aprender cómo se escribe cualquier cantidad.",
-  keywords = "como se escribe con letra, cómo se escribe con letra, conversor de numeros a letras, números a letras, letras burbuja, letras burbuja copiar y pegar, generador de letras burbuja, letras aesthetic",
   image = defaultOgImage.src,
   currentPath,
   schemaData
 } = Astro.props;
 
-const canonicalUrl = `https://numerosenletras.org${currentPath === "/" ? "" : currentPath}`;
+const normalizedPath = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
+const canonicalUrl = `https://numerosenletras.org${normalizedPath}`;
 const fullImageUrl = image.startsWith("http") ? image : `https://numerosenletras.org${image}`;
 
 // Generate dynamic breadcrumbs inside Astro
 const getBreadcrumbs = () => {
-  if (currentPath === "/") return null;
+  if (normalizedPath === "/") return null;
 
   const items = [
     { name: "Inicio", path: "/" }
   ];
 
-  if (currentPath === "/cantidad-con-letra") {
-    items.push({ name: "Conversor de Cantidad con Letra", path: "/cantidad-con-letra" });
-  } else if (currentPath === "/letras-aesthetic") {
-    items.push({ name: "Letras Aesthetic", path: "/letras-aesthetic" });
-  } else if (currentPath === "/letras-burbuja") {
-    items.push({ name: "Letras Burbuja", path: "/letras-burbuja" });
-  } else if (currentPath === "/como-se-escribe") {
-    items.push({ name: "Ortografía RAE de Números", path: "/como-se-escribe" });
-  } else if (currentPath === "/blog") {
-    items.push({ name: "Blog de Ortografía", path: "/blog" });
-  } else if (currentPath.startsWith("/blog/")) {
-    items.push({ name: "Blog de Ortografía", path: "/blog" });
-    const slug = currentPath.substring(6);
+  if (normalizedPath === "/cantidad-con-letra/") {
+    items.push({ name: "Conversor de Cantidad con Letra", path: "/cantidad-con-letra/" });
+  } else if (normalizedPath === "/letras-aesthetic/") {
+    items.push({ name: "Letras Aesthetic", path: "/letras-aesthetic/" });
+  } else if (normalizedPath === "/letras-burbuja/") {
+    items.push({ name: "Letras Burbuja", path: "/letras-burbuja/" });
+  } else if (normalizedPath === "/como-se-escribe/") {
+    items.push({ name: "Ortografía RAE de Números", path: "/como-se-escribe/" });
+  } else if (normalizedPath === "/blog/") {
+    items.push({ name: "Blog de Ortografía", path: "/blog/" });
+  } else if (normalizedPath.startsWith("/blog/")) {
+    items.push({ name: "Blog de Ortografía", path: "/blog/" });
+    const slug = normalizedPath.replace(/^\/blog\//, "").replace(/\/$/, "");
     const post = BLOG_POSTS.find(p => p.slug === slug);
     if (post) {
-      items.push({ name: post.title, path: currentPath });
+      items.push({ name: post.title, path: normalizedPath });
     } else {
-      items.push({ name: "Artículo", path: currentPath });
+      items.push({ name: "Artículo", path: normalizedPath });
     }
-  } else if (currentPath === "/sobre-nosotros") {
-    items.push({ name: "Quiénes Somos", path: "/sobre-nosotros" });
-  } else if (currentPath === "/privacidad") {
-    items.push({ name: "Política de Privacidad", path: "/privacidad" });
-  } else if (currentPath === "/terminos") {
-    items.push({ name: "Términos de Servicio", path: "/terminos" });
-  } else if (currentPath === "/contacto") {
-    items.push({ name: "Contacto", path: "/contacto" });
+  } else if (normalizedPath === "/sobre-nosotros/") {
+    items.push({ name: "Quiénes Somos", path: "/sobre-nosotros/" });
+  } else if (normalizedPath === "/privacidad/") {
+    items.push({ name: "Política de Privacidad", path: "/privacidad/" });
+  } else if (normalizedPath === "/terminos/") {
+    items.push({ name: "Términos de Servicio", path: "/terminos/" });
+  } else if (normalizedPath === "/contacto/") {
+    items.push({ name: "Contacto", path: "/contacto/" });
   } else {
     return null;
   }
@@ -79,9 +78,9 @@ const breadcrumbs = getBreadcrumbs();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content={keywords} />
     <meta name="google-site-verification" content="3hh3-fehDiki7YzVEL4KeWuGQhPfBLq23k_8zbACxE4" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#2563eb" />
     <meta name="application-name" content="NumerosEnLetras" />
@@ -131,7 +130,7 @@ const breadcrumbs = getBreadcrumbs();
           "@type": "ListItem",
           "position": index + 1,
           "name": item.name,
-          "item": `https://numerosenletras.org${item.path === "/" ? "" : item.path}`
+          "item": `https://numerosenletras.org${item.path.endsWith('/') ? item.path : `${item.path}/`}`
         }))
       })} />
     )}
@@ -220,8 +219,8 @@ const breadcrumbs = getBreadcrumbs();
             Sobre el Proyecto
           </h4>
           <div class="flex flex-col space-y-2 text-xs font-sans">
-            <a href="/sobre-nosotros" class="hover:text-blue-500 hover:underline cursor-pointer">• Quiénes Somos</a>
-            <a href="/contacto" class="hover:text-blue-500 hover:underline cursor-pointer">• Formulario de Contacto</a>
+            <a href="/sobre-nosotros/" class="hover:text-blue-500 hover:underline cursor-pointer">• Quiénes Somos</a>
+            <a href="/contacto/" class="hover:text-blue-500 hover:underline cursor-pointer">• Formulario de Contacto</a>
             <div class="flex items-center gap-1 text-[10px] text-gray-400 mt-1">
               <span>Email: contacto@numerosenletras.org</span>
             </div>
@@ -233,8 +232,8 @@ const breadcrumbs = getBreadcrumbs();
             Legal y Privacidad
           </h4>
           <div class="flex flex-col space-y-2 text-xs font-sans">
-            <a href="/privacidad" class="hover:text-blue-500 hover:underline cursor-pointer">• Política de Privacidad</a>
-            <a href="/terminos" class="hover:text-blue-500 hover:underline cursor-pointer">• Términos de Servicio</a>
+            <a href="/privacidad/" class="hover:text-blue-500 hover:underline cursor-pointer">• Política de Privacidad</a>
+            <a href="/terminos/" class="hover:text-blue-500 hover:underline cursor-pointer">• Términos de Servicio</a>
           </div>
         </div>
 
@@ -244,10 +243,10 @@ const breadcrumbs = getBreadcrumbs();
           </h4>
           <div class="flex flex-col space-y-2 text-xs font-sans">
             <a href="/" class="hover:text-blue-500 hover:underline cursor-pointer">• Conversor de Números</a>
-            <a href="/cantidad-con-letra" class="hover:text-blue-500 hover:underline cursor-pointer">• Cantidad con Letra</a>
-            <a href="/letras-burbuja" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Burbuja</a>
-            <a href="/letras-aesthetic" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Aesthetic</a>
-            <a href="/como-se-escribe" class="hover:text-blue-500 hover:underline cursor-pointer">• Reglas Ortográficas RAE</a>
+            <a href="/cantidad-con-letra/" class="hover:text-blue-500 hover:underline cursor-pointer">• Cantidad con Letra</a>
+            <a href="/letras-burbuja/" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Burbuja</a>
+            <a href="/letras-aesthetic/" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Aesthetic</a>
+            <a href="/como-se-escribe/" class="hover:text-blue-500 hover:underline cursor-pointer">• Reglas Ortográficas</a>
           </div>
         </div>
       </div>

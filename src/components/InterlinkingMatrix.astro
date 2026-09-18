@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { currentPath = "" } = Astro.props;
+const normCurrent = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
 
 const tools = [
   {
@@ -17,32 +18,32 @@ const tools = [
     color: "text-blue-600 bg-blue-50 border-blue-100"
   },
   {
-    id: "/cantidad-con-letra",
-    href: "/cantidad-con-letra",
+    id: "/cantidad-con-letra/",
+    href: "/cantidad-con-letra/",
     title: "Conversor de Cantidad con Letra",
-    desc: "Escribe cantidades de dinero en letras con el formato oficial para llenar cheques, facturas y contratos.",
+    desc: "Escribe cantidades de dinero en letras con el formato habitual para llenar cheques, facturas y contratos.",
     icon: Receipt,
     color: "text-emerald-600 bg-emerald-50 border-emerald-100"
   },
   {
-    id: "/como-se-escribe",
-    href: "/como-se-escribe",
+    id: "/como-se-escribe/",
+    href: "/como-se-escribe/",
     title: "Guía de Ortografía RAE de Números",
-    desc: "Aprende las reglas ortográficas oficiales para escribir números complejos, cien o ciento, veintiuno y más.",
+    desc: "Aprende las reglas ortográficas recomendadas por la RAE para escribir números complejos, cien o ciento, veintiuno y más.",
     icon: BookOpen,
     color: "text-amber-600 bg-amber-50 border-amber-100"
   },
   {
-    id: "/letras-aesthetic",
-    href: "/letras-aesthetic",
+    id: "/letras-aesthetic/",
+    href: "/letras-aesthetic/",
     title: "Letras Aesthetic Copiar y Pegar",
     desc: "Genera fuentes bonitas, cursivas, góticas y símbolos mágicos para personalizar tus redes sociales.",
     icon: Sparkles,
     color: "text-purple-600 bg-purple-50 border-purple-100"
   },
   {
-    id: "/letras-burbuja",
-    href: "/letras-burbuja",
+    id: "/letras-burbuja/",
+    href: "/letras-burbuja/",
     title: "Generador de Letras Burbuja",
     desc: "Transforma tus frases en elegantes letras con círculos blancos y negros para nombres de clanes y nicks.",
     icon: CircleDot,
@@ -52,17 +53,17 @@ const tools = [
 
 const featuredArticles = [
   {
-    href: "/blog/guia-convertir-numeros-a-letras-rae-finanzas",
+    href: "/blog/guia-convertir-numeros-a-letras-rae-finanzas/",
     title: "Guía Suprema: Cómo Convertir Números a Letras en Español",
     desc: "Las reglas ortográficas completas de la RAE, la redacción comercial y el uso del 'un mil' ante 'mil'."
   },
   {
-    href: "/blog/arte-letras-burbuja-tipografia-circular-copiar-pegar",
+    href: "/blog/arte-letras-burbuja-tipografia-circular-copiar-pegar/",
     title: "El Arte de las Letras Burbuja en Redes Sociales",
     desc: "Cómo funciona la codificación Unicode de los círculos y consejos de SEO para tus biografías."
   },
   {
-    href: "/blog/letras-aesthetic-fuentes-pequenas-instagram-tiktok",
+    href: "/blog/letras-aesthetic-fuentes-pequenas-instagram-tiktok/",
     title: "Guía de Letras Aesthetic y Fuentes Pequeñas",
     desc: "Aprende a captar atención visual usando letras pequeñas versalitas, superíndices y símbolos en tu bio."
   }
@@ -87,7 +88,7 @@ const featuredArticles = [
       <nav class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {tools.map((tool) => {
           const Icon = tool.icon;
-          const isCurrent = currentPath === tool.id;
+          const isCurrent = normCurrent === tool.id;
           return (
             <a
               href={tool.href}
@@ -139,7 +140,7 @@ const featuredArticles = [
             <div class="space-y-1.5 text-left">
               <div class="flex items-center gap-1.5 text-[9px] font-mono font-bold text-blue-600 uppercase tracking-wider">
                 <FileText className="w-3 h-3" />
-                <span>Artículo RAE</span>
+                <span>Guía de ortografía</span>
               </div>
               <h5 class="font-sans font-bold text-xs text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                 {article.title}
@@ -199,22 +200,22 @@ const featuredArticles = [
         Búsquedas Frecuentes y Guías Populares
       </h4>
       <div class="flex flex-wrap gap-2 text-xs font-sans">
-        <a href="/cantidad-con-letra" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
+        <a href="/cantidad-con-letra/" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
           • ¿Cómo escribir montos para cheques?
         </a>
-        <a href="/como-se-escribe" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
+        <a href="/como-se-escribe/" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
           • ¿Se escribe "Un mil" o "Mil"?
         </a>
-        <a href="/como-se-escribe" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
+        <a href="/como-se-escribe/" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
           • Reglas del 21 al 29 en una sola palabra
         </a>
-        <a href="/letras-burbuja" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-200 text-gray-700 hover:text-purple-600 transition-colors">
+        <a href="/letras-burbuja/" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-200 text-gray-700 hover:text-purple-600 transition-colors">
           • Fuentes de círculos negros (Ⓒⓘⓡⓒⓤ󠁬Ⓞⓢ)
         </a>
-        <a href="/letras-aesthetic" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-200 text-gray-700 hover:text-purple-600 transition-colors">
+        <a href="/letras-aesthetic/" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-200 text-gray-700 hover:text-purple-600 transition-colors">
           • Letras cursivas y bonitas para Instagram
         </a>
-        <a href="/cantidad-con-letra" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
+        <a href="/cantidad-con-letra/" class="px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 transition-colors">
           • Convertir números decimales y centavos
         </a>
       </div>
