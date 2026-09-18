@@ -245,12 +245,11 @@ export function PrivacyPolicy() {
     setTestState('scanning');
     setNetworkLog([]);
     const logs = [
-      "Iniciando auditoría de red del convertidor...",
-      "Interceptando llamadas asíncronas fetch()...",
-      "Interceptando sockets y XMLHttpRequest...",
-      "Analizando entradas en LocalStorage...",
-      "Procesando algoritmo de traducción local en RAM...",
-      "✓ AUDITORÍA COMPLETADA: Cero (0) bytes enviados al exterior."
+      "Iniciando verificación del convertidor...",
+      "Comprobando peticiones de red activas...",
+      "Verificando estado de consentimiento en LocalStorage...",
+      "Ejecutando algoritmo de conversión en memoria local...",
+      "✓ VERIFICACIÓN COMPLETADA: La conversión se ejecuta en tu navegador."
     ];
     
     logs.forEach((log, index) => {
@@ -259,7 +258,7 @@ export function PrivacyPolicy() {
         if (index === logs.length - 1) {
           setTestState('success');
         }
-      }, (index + 1) * 450);
+      }, (index + 1) * 350);
     });
   };
 
@@ -273,13 +272,13 @@ export function PrivacyPolicy() {
     >
       <div className="text-center space-y-4 mb-16">
         <div className="inline-flex p-3 rounded-2xl bg-emerald-50 text-emerald-600 mb-2">
-          <Lock className="w-8 h-8 animate-pulse" />
+          <Lock className="w-8 h-8" />
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-gray-900 tracking-tight">
           Política de Privacidad
         </h1>
         <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-          Última actualización: 16 de julio de 2026. Tu privacidad y seguridad de datos son nuestro pilar técnico fundamental.
+          Conoce cómo gestionamos el procesamiento de datos y el almacenamiento local en <strong>numerosenletras.org</strong>.
         </p>
       </div>
 
@@ -290,14 +289,14 @@ export function PrivacyPolicy() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1.5">
               <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider font-mono bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-                Seguridad Sandbox Local
+                Procesamiento en Cliente
               </span>
               <h3 className="font-bold text-white text-base sm:text-lg flex items-center gap-1.5">
                 <Shield className="w-5 h-5 text-emerald-400" />
-                Auditor de Privacidad del Navegador
+                Verificador de Procesamiento Local
               </h3>
               <p className="text-xs text-slate-300 max-w-lg font-sans">
-                Para tu absoluta tranquilidad, puedes realizar un análisis simulado de conexión que demuestra que nuestro algoritmo corre 100% aislado.
+                Puedes comprobar que la lógica de conversión matemática se ejecuta en el entorno de ejecución de tu navegador.
               </p>
             </div>
             <button
@@ -308,12 +307,12 @@ export function PrivacyPolicy() {
               {testState === 'scanning' ? (
                 <>
                   <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                  <span>Auditando...</span>
+                  <span>Verificando...</span>
                 </>
               ) : (
                 <>
                   <CheckCircle className="w-3.5 h-3.5" />
-                  <span>Auditar Privacidad</span>
+                  <span>Verificar Procesamiento</span>
                 </>
               )}
             </button>
@@ -340,7 +339,7 @@ export function PrivacyPolicy() {
                   className="text-xs font-sans font-semibold text-emerald-300 mt-2 p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center gap-1.5"
                 >
                   <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Confirmado: Toda la conversión de números se ejecuta localmente. Tus datos financieros no salen de este dispositivo.</span>
+                  <span>Confirmado: La conversión de números se realiza en tu navegador web.</span>
                 </motion.div>
               )}
             </div>
@@ -352,66 +351,33 @@ export function PrivacyPolicy() {
           <section className="space-y-3">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
               <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
-              1. Procesamiento 100% Local y Privado
+              1. Procesamiento en el Navegador del Usuario
             </h2>
             <p className="text-gray-500 text-xs sm:text-sm">
-              En <strong>numerosenletras.org</strong> entendemos la extrema confidencialidad de los datos financieros, personales o comerciales que introduces en nuestras herramientas (como importes de cheques, números de identificación fiscal, cuentas de facturación u otros). 
+              En <strong>numerosenletras.org</strong> las operaciones de conversión de números a palabras se ejecutan del lado del cliente mediante código JavaScript en tu propio navegador.
             </p>
             <p className="text-gray-500 text-xs sm:text-sm">
-              Ninguna cantidad, texto o contenido que introduzcas en el convertidor se transmite a nuestros servidores. Los algoritmos de traducción se descargan en tu navegador en el primer acceso y se ejecutan exclusivamente dentro de la memoria caché y RAM de tu computadora, tablet o smartphone.
+              Las cantidades y textos introducidos no se transfieren ni almacenan en servidores externos para realizar la conversión lingüística.
             </p>
           </section>
 
           <section className="space-y-3">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
               <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
-              2. Cookies y Datos de Navegación Anónimos (Divulgación de Google AdSense)
+              2. Almacenamiento Local (LocalStorage) y Consentimiento de Privacidad
             </h2>
             <p className="text-gray-500 text-xs sm:text-sm">
-              Para ofrecerte una experiencia fluida y financiar el mantenimiento de este portal gratuito, utilizamos cookies técnicas, analíticas y publicitarias. A continuación, detallamos su uso de forma transparente:
+              Para ofrecer utilidades prácticas como el historial de conversiones o recordar tu divisa preferida, nuestra aplicación puede utilizar el almacenamiento local (<code className="font-mono bg-gray-100 px-1 py-0.5 rounded text-gray-700">localStorage</code>) del navegador bajo las siguientes condiciones:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-500">
               <li>
-                <strong>LocalStorage y Almacenamiento Local del Navegador:</strong> Se emplean en tu propio navegador para recordar tus preferencias de formato (como estilo de separadores numéricos) y el historial de conversiones si decides mantenerlo activo. Este almacenamiento es estrictamente local en tu navegador y puede limpiarse o desactivarse en cualquier momento desde el convertidor o borrando los datos del navegador. Los números introducidos no se transmiten a servidores externos.
+                <strong>Consentimiento del Usuario:</strong> Los datos de preferencias (historial de conversiones, moneda seleccionada) solo se guardan si el usuario lo autoriza explícitamente en el panel de configuración de privacidad. Si se rechazan las preferencias, cualquier dato previo es eliminado de inmediato del almacenamiento local.
               </li>
               <li>
-                <strong>Google Analytics (con anonimización de IP):</strong> Recopila datos de tráfico estadísticos no identificables (como tipo de navegador, sistema operativo y páginas visitadas) con la única finalidad de optimizar el rendimiento y mejorar la calidad didáctica de nuestras herramientas.
+                <strong>Control Total:</strong> En cualquier momento puedes limpiar el historial, desactivar el guardado o modificar tus preferencias de cookies desde el enlace de "Configuración de privacidad" disponible al pie de los conversores.
               </li>
               <li>
-                <strong>Google AdSense y Socios Publicitarios (Obligatorio para AdSense):</strong>
-                <div className="mt-2 pl-4 border-l-2 border-emerald-500/50 space-y-2 text-gray-500">
-                  <p>
-                    • Los proveedores de terceros, incluido <strong>Google</strong>, utilizan cookies para mostrar anuncios en nuestro sitio web basándose en las visitas anteriores que has realizado a este sitio web o a otros sitios de Internet.
-                  </p>
-                  <p>
-                    • El uso de cookies de publicidad de Google permite a este y a sus socios mostrar anuncios a los usuarios de nuestro portal basándose en las visitas que realizan a nuestros sitios o a otros sitios de Internet.
-                  </p>
-                  <p>
-                    • Como usuario, puedes inhabilitar el uso de la publicidad personalizada. Para ello, puedes acceder directamente a la sección de configuración de anuncios de Google en:{" "}
-                    <a
-                      href="https://www.google.com/settings/ads"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-emerald-600 hover:underline font-semibold"
-                    >
-                      Configuración de Anuncios de Google
-                    </a>.
-                  </p>
-                  <p>
-                    • Alternativamente, te informamos que puedes evitar el uso de cookies de terceros destinadas a la publicidad personalizada visitando el portal de inhabilitación de la Consumer Web Choice de la Digital Advertising Alliance en:{" "}
-                    <a
-                      href="https://www.aboutads.info/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-emerald-600 hover:underline font-semibold"
-                    >
-                      www.aboutads.info
-                    </a>.
-                  </p>
-                  <p>
-                    • Si no has inhabilitado la publicidad de terceros, las cookies de otros proveedores o redes publicitarias de terceros también pueden utilizarse para mostrar anuncios en nuestro sitio.
-                  </p>
-                </div>
+                <strong>Datos Esenciales:</strong> Únicamente se guarda en almacenamiento local el estado de tu elección de consentimiento (<code className="font-mono bg-gray-100 px-1 py-0.5 rounded text-gray-700">cookie-consent</code>) para no volver a mostrar el aviso de cookies en cada visita.
               </li>
             </ul>
           </section>
@@ -422,17 +388,17 @@ export function PrivacyPolicy() {
               3. Enlaces a Sitios Externos
             </h2>
             <p className="text-gray-500 text-xs sm:text-sm">
-              Nuestros artículos didácticos contienen hipervínculos que redirigen a sitios web de terceros (por ejemplo, el diccionario de dudas de la Real Academia Española - RAE). Al hacer clic en estos enlaces, saldrás de nuestro sitio web y te regirás por las políticas de privacidad de los respectivos portales externos.
+              Nuestras páginas y artículos pueden contener referencias o enlaces a recursos externos de consulta lingüística (por ejemplo, publicaciones de la Real Academia Española - RAE o diccionarios normativos). Al acceder a dichos enlaces externos, te recomendamos revisar sus respectivas políticas de privacidad.
             </p>
           </section>
 
           <section className="space-y-3">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
               <span className="w-1.5 h-5 bg-emerald-500 rounded-full" />
-              4. Menores de Edad y Ámbito Educativo
+              4. Uso Educativo y Accesibilidad
             </h2>
             <p className="text-gray-500 text-xs sm:text-sm">
-              Nuestras herramientas son seguras para el uso escolar y didáctico de niños, jóvenes y maestros de lengua castellana en todo el mundo. Cumplimos con las regulaciones de protección de privacidad de menores.
+              Nuestras herramientas están diseñadas para uso didáctico, administrativo y profesional, con una estructura accesible y sin recopilación forzada de datos personales.
             </p>
           </section>
         </div>

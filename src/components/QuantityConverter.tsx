@@ -6,6 +6,7 @@ import {
   DEFAULT_CURRENCY, 
   type CurrencyConfig 
 } from "../data/currencies";
+import { canUsePreferenceStorage } from "../utils/storageConsent";
 import { 
   Copy, 
   Check, 
@@ -49,9 +50,11 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
 
   const [selectedCurrency, setSelectedCurrency] = useState<CurrencyConfig>(() => {
     try {
-      const savedCode = localStorage.getItem("saved_currency_code");
-      if (savedCode && CURRENCY_MAP[savedCode]) {
-        return CURRENCY_MAP[savedCode];
+      if (canUsePreferenceStorage()) {
+        const savedCode = localStorage.getItem("saved_currency_code");
+        if (savedCode && CURRENCY_MAP[savedCode]) {
+          return CURRENCY_MAP[savedCode];
+        }
       }
     } catch {}
     return DEFAULT_CURRENCY;
@@ -123,12 +126,16 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
   const [toastMessage, setToastMessage] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
 
-  // History settings
+  // History and privacy consent settings
   const [historyEnabled, setHistoryEnabled] = useState<boolean>(true);
+  const [preferenceStorageAllowed, setPreferenceStorageAllowed] = useState<boolean>(() => canUsePreferenceStorage());
   const [history, setHistory] = useState<QuantityHistoryItem[]>(() => {
     try {
-      const saved = localStorage.getItem("quantity_history");
-      return saved ? JSON.parse(saved) : [];
+      if (canUsePreferenceStorage()) {
+        const saved = localStorage.getItem("quantity_history");
+        return saved ? JSON.parse(saved) : [];
+      }
+      return [];
     } catch {
       return [];
     }
@@ -148,9 +155,21 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
       if (window.speechSynthesis) {
         synthRef.current = window.speechSynthesis;
       }
-      const storedHistoryEnabled = localStorage.getItem("history_enabled");
-      if (storedHistoryEnabled !== null) {
-        setHistoryEnabled(storedHistoryEnabled === "true");
+      const allowed = canUsePreferenceStorage();
+      setPreferenceStorageAllowed(allowed);
+      if (allowed) {
+        const storedHistoryEnabled = localStorage.getItem("history_enabled");
+        if (storedHistoryEnabled !== null) {
+          setHistoryEnabled(storedHistoryEnabled === "true");
+        }
+        try {
+          const saved = localStorage.getItem("quantity_history");
+          if (saved) {
+            setHistory(JSON.parse(saved));
+          }
+        } catch {}
+      } else {
+        setHistory([]);
       }
     }
 
@@ -164,17 +183,59 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
     };
   }, []);
 
+  // Listen to cookie consent updates
+  useEffect(() => {
+    const handleConsentUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const allowed = customEvent.detail?.preferences === true;
+      setPreferenceStorageAllowed(allowed);
+
+      if (!allowed) {
+        setHistory([]);
+      } else {
+        try {
+          const saved = localStorage.getItem("quantity_history");
+          if (saved) {
+            setHistory(JSON.parse(saved));
+          }
+          const storedHistoryEnabled = localStorage.getItem("history_enabled");
+          if (storedHistoryEnabled !== null) {
+            setHistoryEnabled(storedHistoryEnabled === "true");
+          }
+          const savedCode = localStorage.getItem("saved_currency_code");
+          if (savedCode && CURRENCY_MAP[savedCode]) {
+            setSelectedCurrency(CURRENCY_MAP[savedCode]);
+          }
+        } catch {}
+      }
+    };
+
+    window.addEventListener("cookie-consent-updated", handleConsentUpdate);
+    return () => {
+      window.removeEventListener("cookie-consent-updated", handleConsentUpdate);
+    };
+  }, []);
+
   // Save history to localStorage
   useEffect(() => {
-    if (historyEnabled) {
-      localStorage.setItem("quantity_history", JSON.stringify(history));
+    if (canUsePreferenceStorage() && historyEnabled) {
+      try {
+        localStorage.setItem("quantity_history", JSON.stringify(history));
+      } catch {}
     }
   }, [history, historyEnabled]);
 
   const toggleHistoryEnabled = () => {
+    if (!canUsePreferenceStorage()) {
+      showToast("Activa las preferencias de privacidad para guardar historial");
+      window.dispatchEvent(new Event("open-cookie-settings"));
+      return;
+    }
     const next = !historyEnabled;
     setHistoryEnabled(next);
-    localStorage.setItem("history_enabled", String(next));
+    try {
+      localStorage.setItem("history_enabled", String(next));
+    } catch {}
     showToast(next ? "Guardado de historial activado" : "Guardado de historial desactivado");
   };
 
@@ -238,7 +299,7 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
       setResult(conv.toUpperCase());
 
       // Save to history debounce if valid
-      if (historyEnabled && cleanVal && !isNaN(Number(cleanVal)) && cleanVal !== "0") {
+      if (canUsePreferenceStorage() && historyEnabled && cleanVal && !isNaN(Number(cleanVal)) && cleanVal !== "0") {
         const timer = setTimeout(() => {
           setHistory(prev => {
             if (prev.length > 0 && prev[0].amount === cleanVal && prev[0].currencyCode === selectedCurrency.code) {
@@ -300,37 +361,68 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
     if (hasFavorites) {
       setHistory(prev => {
         const remaining = prev.filter(item => item.isFavorite);
-        localStorage.setItem("quantity_history", JSON.stringify(remaining));
+        if (canUsePreferenceStorage()) {
+          try {
+            localStorage.setItem("quantity_history", JSON.stringify(remaining));
+          } catch {}
+        }
         showToast("Historial borrado, favoritos conservados");
         return remaining;
       });
     } else {
       setHistory([]);
-      localStorage.removeItem("quantity_history");
+      try {
+        localStorage.removeItem("quantity_history");
+      } catch {}
       showToast("Historial borrado");
     }
   };
 
   const handleRemoveHistoryItem = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setHistory(prev => prev.filter(item => item.id !== id));
+    setHistory(prev => {
+      const remaining = prev.filter(item => item.id !== id);
+      if (canUsePreferenceStorage()) {
+        try {
+          localStorage.setItem("quantity_history", JSON.stringify(remaining));
+        } catch {}
+      }
+      return remaining;
+    });
   };
 
   const toggleFavorite = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setHistory(prev => prev.map(item => {
-      if (item.id === id) {
-        return { ...item, isFavorite: !item.isFavorite };
+    if (!canUsePreferenceStorage()) {
+      showToast("Activa las preferencias para guardar favoritos");
+      window.dispatchEvent(new Event("open-cookie-settings"));
+      return;
+    }
+    setHistory(prev => {
+      const updated = prev.map(item => {
+        if (item.id === id) {
+          const nextFav = !item.isFavorite;
+          showToast(nextFav ? "Guardado en favoritos" : "Quitado de favoritos");
+          return { ...item, isFavorite: nextFav };
+        }
+        return item;
+      });
+      if (canUsePreferenceStorage()) {
+        try {
+          localStorage.setItem("quantity_history", JSON.stringify(updated));
+        } catch {}
       }
-      return item;
-    }));
+      return updated;
+    });
   };
 
   const handleCurrencyChange = (curr: CurrencyConfig) => {
     setSelectedCurrency(curr);
-    try {
-      localStorage.setItem("saved_currency_code", curr.code);
-    } catch {}
+    if (canUsePreferenceStorage()) {
+      try {
+        localStorage.setItem("saved_currency_code", curr.code);
+      } catch {}
+    }
     showToast(`Moneda seleccionada: ${curr.name}`);
   };
 
@@ -739,7 +831,20 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
               </div>
             </div>
 
-            {history.length > 0 ? (
+            {!preferenceStorageAllowed ? (
+              <div className="bg-gray-50/80 rounded-2xl p-4 border border-dashed border-gray-200 text-center space-y-2">
+                <p className="text-xs text-gray-500 font-sans leading-relaxed">
+                  El almacenamiento de preferencias está desactivado. Para guardar tu historial de conversiones en este dispositivo, activa el almacenamiento de preferencias en la configuración de privacidad.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+                  className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 underline cursor-pointer inline-block"
+                >
+                  Configuración de privacidad
+                </button>
+              </div>
+            ) : history.length > 0 ? (
               <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                 {history.map((item) => (
                   <div
@@ -797,9 +902,18 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
               </p>
             )}
 
-            <p className="text-[11px] text-gray-400 mt-4 leading-relaxed">
-              Los montos se procesan de forma privada en el navegador. El historial se almacena en tu dispositivo y puedes desactivarlo o limpiarlo cuando lo desees.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-gray-100 text-[11px] text-gray-400">
+              <p className="leading-relaxed">
+                Los montos se procesan de forma privada en el navegador.
+              </p>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+                className="text-gray-500 hover:text-emerald-600 underline shrink-0 cursor-pointer"
+              >
+                Configuración de privacidad
+              </button>
+            </div>
           </div>
         </div>
       </div>

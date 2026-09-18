@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { convertNumberToLetters } from "../utils/numberToLetters";
 import { CURRENCIES, CURRENCY_MAP, DEFAULT_CURRENCY, type CurrencyConfig } from "../data/currencies";
+import { canUsePreferenceStorage } from "../utils/storageConsent";
 
 interface HistoryItem {
   id: string;
@@ -55,6 +56,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
   // Local storage history and favorites
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [historyEnabled, setHistoryEnabled] = useState<boolean>(true);
+  const [preferenceStorageAllowed, setPreferenceStorageAllowed] = useState<boolean>(() => canUsePreferenceStorage());
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [historyFilter, setHistoryFilter] = useState<'all' | 'favorites'>('all');
   const [searchHistoryQuery, setSearchHistoryQuery] = useState("");
@@ -83,22 +85,58 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
         setInputVal(paramNum);
       }
 
-      // Load history enabled setting
-      const storedHistoryEnabled = localStorage.getItem("history_enabled");
-      if (storedHistoryEnabled !== null) {
-        setHistoryEnabled(storedHistoryEnabled === "true");
-      }
+      const allowed = canUsePreferenceStorage();
+      setPreferenceStorageAllowed(allowed);
 
-      // Load conversion history
-      try {
-        const stored = localStorage.getItem("conversion_history");
-        if (stored) {
-          setHistory(JSON.parse(stored));
+      if (allowed) {
+        // Load history enabled setting
+        const storedHistoryEnabled = localStorage.getItem("history_enabled");
+        if (storedHistoryEnabled !== null) {
+          setHistoryEnabled(storedHistoryEnabled === "true");
         }
-      } catch (e) {
-        console.error("Failed to load history", e);
+
+        // Load conversion history
+        try {
+          const stored = localStorage.getItem("conversion_history");
+          if (stored) {
+            setHistory(JSON.parse(stored));
+          }
+        } catch (e) {
+          console.error("Failed to load history", e);
+        }
+      } else {
+        setHistory([]);
       }
     }
+  }, []);
+
+  // Listen to cookie consent changes
+  useEffect(() => {
+    const handleConsentUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const allowed = customEvent.detail?.preferences === true;
+      setPreferenceStorageAllowed(allowed);
+
+      if (!allowed) {
+        setHistory([]);
+      } else {
+        try {
+          const stored = localStorage.getItem("conversion_history");
+          if (stored) {
+            setHistory(JSON.parse(stored));
+          }
+          const storedHistoryEnabled = localStorage.getItem("history_enabled");
+          if (storedHistoryEnabled !== null) {
+            setHistoryEnabled(storedHistoryEnabled === "true");
+          }
+        } catch {}
+      }
+    };
+
+    window.addEventListener("cookie-consent-updated", handleConsentUpdate);
+    return () => {
+      window.removeEventListener("cookie-consent-updated", handleConsentUpdate);
+    };
   }, []);
 
   // Sync cheque bank based on selected currency preset
@@ -185,7 +223,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
   }, [inputVal, gender, letterCase, isCurrencyMode, currencyPreset, isFinancialFormat, numberFormatStyle]);
 
   const saveToHistory = (num: string, textStr: string) => {
-    if (!historyEnabled || !num || num === "-" || isNaN(Number(num)) || textStr.startsWith("Entrada no")) return;
+    if (!canUsePreferenceStorage() || !historyEnabled || !num || num === "-" || isNaN(Number(num)) || textStr.startsWith("Entrada no")) return;
     
     setHistory((prev) => {
       if (prev.length > 0 && prev[0].number === num && prev[0].text === textStr) {
@@ -200,17 +238,26 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
       };
 
       const updated = [newItem, ...prev].slice(0, 15);
-      try {
-        localStorage.setItem("conversion_history", JSON.stringify(updated));
-      } catch {}
+      if (canUsePreferenceStorage()) {
+        try {
+          localStorage.setItem("conversion_history", JSON.stringify(updated));
+        } catch {}
+      }
       return updated;
     });
   };
 
   const toggleHistoryEnabled = () => {
+    if (!canUsePreferenceStorage()) {
+      showToast("Activa las preferencias de privacidad para guardar historial");
+      window.dispatchEvent(new Event("open-cookie-settings"));
+      return;
+    }
     const next = !historyEnabled;
     setHistoryEnabled(next);
-    localStorage.setItem("history_enabled", String(next));
+    try {
+      localStorage.setItem("history_enabled", String(next));
+    } catch {}
     showToast(next ? "Guardado de historial activado" : "Guardado de historial desactivado");
   };
 
@@ -267,13 +314,19 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
     if (hasFavorites) {
       setHistory((prev) => {
         const filtered = prev.filter(item => item.isFavorite);
-        localStorage.setItem("conversion_history", JSON.stringify(filtered));
+        if (canUsePreferenceStorage()) {
+          try {
+            localStorage.setItem("conversion_history", JSON.stringify(filtered));
+          } catch {}
+        }
         showToast("Historial borrado, conservando favoritos");
         return filtered;
       });
     } else {
       setHistory([]);
-      localStorage.removeItem("conversion_history");
+      try {
+        localStorage.removeItem("conversion_history");
+      } catch {}
       showToast("Historial borrado");
     }
   };
@@ -282,13 +335,22 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
     e.stopPropagation();
     setHistory((prev) => {
       const updated = prev.filter(item => item.id !== id);
-      localStorage.setItem("conversion_history", JSON.stringify(updated));
+      if (canUsePreferenceStorage()) {
+        try {
+          localStorage.setItem("conversion_history", JSON.stringify(updated));
+        } catch {}
+      }
       return updated;
     });
   };
 
   const toggleFavorite = (id: string, e: MouseEvent) => {
     e.stopPropagation();
+    if (!canUsePreferenceStorage()) {
+      showToast("Activa las preferencias para guardar favoritos");
+      window.dispatchEvent(new Event("open-cookie-settings"));
+      return;
+    }
     setHistory((prev) => {
       let isFavNow = false;
       const updated = prev.map(item => {
@@ -299,7 +361,9 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
         }
         return item;
       });
-      localStorage.setItem("conversion_history", JSON.stringify(updated));
+      try {
+        localStorage.setItem("conversion_history", JSON.stringify(updated));
+      } catch {}
       return updated;
     });
   };
@@ -826,7 +890,20 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
               </div>
             </div>
 
-            {history.length > 0 ? (
+            {!preferenceStorageAllowed ? (
+              <div className="bg-gray-50/80 rounded-2xl p-4 border border-dashed border-gray-200 text-center space-y-2">
+                <p className="text-xs text-gray-500 font-sans leading-relaxed">
+                  El almacenamiento de preferencias está desactivado. Para guardar tu historial de conversiones en este dispositivo, activa el almacenamiento de preferencias en la configuración de privacidad.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+                  className="text-xs font-semibold text-blue-600 hover:text-blue-700 underline cursor-pointer inline-block"
+                >
+                  Configuración de privacidad
+                </button>
+              </div>
+            ) : history.length > 0 ? (
               <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                 {history.map((item) => (
                   <div
@@ -878,9 +955,18 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
               </p>
             )}
 
-            <p className="text-[11px] text-gray-400 mt-4 leading-relaxed">
-              Los números introducidos no se envían a nuestros servidores. El historial de conversiones se almacena exclusivamente en la memoria local de tu navegador y puedes desactivarlo o limpiarlo en cualquier momento.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-gray-100 text-[11px] text-gray-400">
+              <p className="leading-relaxed">
+                Los números introducidos se procesan localmente en tu navegador.
+              </p>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+                className="text-gray-500 hover:text-blue-600 underline shrink-0 cursor-pointer"
+              >
+                Configuración de privacidad
+              </button>
+            </div>
           </div>
         </div>
       </div>

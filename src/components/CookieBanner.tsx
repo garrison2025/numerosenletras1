@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ShieldCheck, Settings, X, Check } from "lucide-react";
+import { clearPreferenceStorage } from "../utils/storageConsent";
 
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
@@ -76,12 +77,16 @@ export default function CookieBanner() {
     const consentData = { essential: true, preferences: false };
     setPreferences(consentData);
     localStorage.setItem("cookie-consent", JSON.stringify(consentData));
+    clearPreferenceStorage();
     window.dispatchEvent(new CustomEvent("cookie-consent-updated", { detail: consentData }));
     setShowBanner(false);
   };
 
   const handleSaveCustom = () => {
     localStorage.setItem("cookie-consent", JSON.stringify(preferences));
+    if (!preferences.preferences) {
+      clearPreferenceStorage();
+    }
     window.dispatchEvent(new CustomEvent("cookie-consent-updated", { detail: preferences }));
     setShowBanner(false);
   };
