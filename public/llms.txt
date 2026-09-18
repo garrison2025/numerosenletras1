@@ -1,21 +1,60 @@
-# numerosenletras.org - Convertidor de Números a Letras y Tipografía Creativa
+# numerosenletras.org - Convertidor de Números a Letras y Formato Financiero
 
-> Conversor didáctico y gratuito de números a letras en español según las normativas de la Real Academia Española (RAE), soporte para divisas internacionales, formatos bancarios para cheques y generadores de fuentes creativas.
+> Plataforma de referencia lingüística y financiera en español para la transcripción canónica de números cardinales a letras, conversión de cantidades para cheques y pagarés según normativas de bancos centrales (RAE / ASALE / Banxico / Banco de la República / BCRP / BCRA / Banco de España), y generadores tipográficos Unicode.
 
-numerosenletras.org ayuda a estudiantes, profesionales, contadores, empresas y creadores de contenido a realizar conversiones numéricas instantáneas y formateo de textos para documentos legales y redes sociales.
+## Identidad y Propósito del Sitio
+numerosenletras.org es un servicio web libre y gratuito dedicado a la precisión ortográfica y bancaria del idioma español. Está estructurado en dos silos temáticos:
+1. **Silo Numérico y Financiero (Principal)**: Conversión de cifras cardinales, redondeo formal, reglas de acentuación de números y formatos específicos para cheques, pagarés, recibos y facturas en América Latina y España.
+2. **Silo Tipográfico Unicode**: Herramientas complementarias para la transformación de caracteres a alfabetos alfanuméricos estilizados y símbolos circulares para redes sociales.
 
-## Servicios y Herramientas Online
+## URLs Principales (Estructura Canónica con Trailing Slash)
 
-- [Conversor Principal de Números a Letras](https://numerosenletras.org/) - Convierte cualquier número entero o decimal en palabras, con soporte para divisas de México (MXN), Estados Unidos (USD), Europa (EUR), Colombia (COP), Perú (PEN), Argentina (ARS), Chile (CLP) y más.
-- [Generador de Cantidad con Letra](https://numerosenletras.org/cantidad-con-letra) - Formateador formal para llenar cheques, pagarés, facturas electrónicas y contratos con expresión de centavos (ejemplo: 00/100 M.N.).
-- [Generador de Letras de Burbuja](https://numerosenletras.org/letras-burbuja) - Transforma texto estándar en caracteres Unicode de círculos blancos (ⓐⓑⓒ) y círculos negros (ⒶⒷⒸ) ideales para nombres de usuario, biografías y mensajes.
-- [Generador de Letras Aesthetic](https://numerosenletras.org/letras-aesthetic) - Conversor de fuentes lindas, tipografía cursiva, letras pequeñas, góticas y símbolos decorativos para copiar y pegar en Instagram, TikTok, Discord y WhatsApp.
-- [Guía de Ortografía RAE de Números](https://numerosenletras.org/como-se-escribe) - Diccionario y reglas sobre la escritura unívoca de cifras (1 al 29 en una sola palabra), prefijos numéricos, acentuación y uso de "un mil" vs "mil".
-- [Blog Educativo de Ortografía y Finanzas](https://numerosenletras.org/blog) - Artículos y tutoriales paso a paso sobre redacción bancaria, diseño tipográfico y normativas del idioma español.
+### Silo Numérico y Financiero
+- `https://numerosenletras.org/`: Conversor interactivo universal de números cardinales y decimales a texto.
+- `https://numerosenletras.org/numeros/`: Hub y directorio de números más consultados (100, 500, 1.000, 1.500, decenas, centenas, millares, millones y billones en escala larga).
+- `https://numerosenletras.org/como-se-escribe/`: Compendio normativo de ortografía de números según la RAE (unificación 16-29, cien vs ciento, apócope veintiún/veintiuno).
+- `https://numerosenletras.org/cantidad-con-letra/`: Guía general de cantidades con letra, expresión de centavos y cláusulas de seguridad en títulos valores.
+- `https://numerosenletras.org/cantidad-con-letra/mexico/`: Formato para México (MXN) con fracción de centavos 00/100 M.N., cheques de BBVA, Banorte, Banamex y facturas CFDI.
+- `https://numerosenletras.org/cantidad-con-letra/colombia/`: Formato para Colombia (COP) con cláusula M/CTE (Moneda Corriente), cheques y facturas DIAN.
+- `https://numerosenletras.org/cantidad-con-letra/peru/`: Formato para Perú (PEN) con fórmula Y 00/100 SOLES, cheques BCP, BBVA, Interbank y comprobantes SUNAT.
+- `https://numerosenletras.org/cantidad-con-letra/argentina/`: Formato para Argentina (ARS) con centavos para cheques comunes y CPD según Ley 24.452.
+- `https://numerosenletras.org/cantidad-con-letra/espana/`: Formato para España (EUR) con euros y céntimos conforme a la Ley Cambiaria y del Cheque 19/1985.
+- `https://numerosenletras.org/fuentes-y-metodologia/`: Principios editoriales, tratados de la RAE, legislación cambiaria por país y metodología de pruebas unitarias.
 
-## Información Institucional
+### Silo Tipográfico
+- `https://numerosenletras.org/letras-burbuja/`: Generador de caracteres circulares blancos (ⓐ) y negros (🅐) basados en Unicode.
+- `https://numerosenletras.org/letras-aesthetic/`: Transformador de fuentes cursivas, góticas, negritas y tipografías para redes sociales.
 
-- [Sobre Nosotros](https://numerosenletras.org/sobre-nosotros) - Misión, precisión técnica y estándares educativos del proyecto.
-- [Contacto](https://numerosenletras.org/contacto) - Formulario de atención y sugerencias.
-- [Términos de Servicio](https://numerosenletras.org/terminos) - Condiciones de uso libre y aviso legal.
-- [Política de Privacidad](https://numerosenletras.org/privacidad) - Uso de cookies y protección de datos del usuario.
+### Blog y Páginas Institucionales
+- `https://numerosenletras.org/blog/`: Guías didácticas sobre redacción bancaria, ortografía y uso de Unicode.
+- `https://numerosenletras.org/sobre-nosotros/`: Filosofía del proyecto y presentación del equipo editorial.
+- `https://numerosenletras.org/contacto/`: Vías de comunicación para reportes o consultas.
+- `https://numerosenletras.org/privacidad/`: Política de privacidad y tratamiento de datos locales.
+- `https://numerosenletras.org/terminos/`: Condiciones generales de uso.
+
+## Resumen de Reglas Lingüísticas Clave (Español / RAE)
+1. **Unificación de decenas**: Los números del 16 al 19 y del 21 al 29 se escriben en una sola palabra gráfica: *dieciséis, veintiuno, veintidós, veintiséis, veintinueve*. A partir del 31 se escriben en palabras separadas por la conjunción "y": *treinta y uno, noventa y nueve*.
+2. **Cien frente a Ciento**: Se escribe *cien* cuando acompaña inmediatamente a un sustantivo o múltiplo (cien pesos, cien mil), y *ciento* cuando va seguido de decenas o unidades (ciento cinco, ciento cuarenta).
+3. **Escala Larga**: En español 1.000.000.000 es *mil millones* (no un billón). La palabra *un billón* corresponde estrictamente a un millón de millones (10¹²).
+4. **Preposición "de" con millones**: Si el número de millones es exacto ante sustantivo, se interpone "de" (*Dos millones de euros*). Si contiene millares intermedios, la preposición se suprime (*Dos millones quinientos mil euros*).
+5. **Apócope ante sustantivo**: Veintiuno se apocopa en *veintiún* ante sustantivos masculinos (*veintiún pesos*) o femeninos (*veintiún mil*).
+
+## Resumen de Prácticas Financieras y de Cheques
+- **México**: Se usa la parte entera en palabras + *pesos XX/100 M.N.* (Moneda Nacional). En cheques se admite "un mil pesos".
+- **Colombia**: Se añade la sigla *M/CTE* (Moneda Corriente) tras la palabra pesos.
+- **Perú**: Se redacta tradicionalmente *... Y XX/100 SOLES*. La moneda oficial es "Sol" (plural "Soles"), símbolo oficial *S/* (sin punto).
+- **Argentina**: Se redacta *... pesos con XX centavos* o *con XX/100*.
+- **España**: Se expresa en *euros* y *céntimos* (o *con XX/100*). El símbolo € se coloca tras la cifra con un espacio (*100 €*).
+- **Discrepancia legal**: En las leyes de títulos valores de México (LGTOC art. 16), Colombia (C.Co art. 623), Perú (Ley 27287), Argentina (Ley 24.452 art. 6) y España (Ley 19/1985 art. 115), ante discrepancias entre la cifra en números y la cifra en letras, prevalece la cantidad escrita en letras.
+
+## Fuentes y Autoridades Consultadas
+- Real Academia Española (RAE) y Asociación de Academias de la Lengua Española (ASALE): *Diccionario panhispánico de dudas* y *Ortografía de la lengua española*.
+- Banco de México (Banxico)
+- Banco de la República de Colombia
+- Banco Central de Reserva del Perú (BCRP)
+- Banco Central de la República Argentina (BCRA)
+- Banco de España / Banco Central Europeo (BCE)
+- The Unicode Consortium
+
+## Alcance y Limitaciones
+numerosenletras.org es un proyecto educativo de libre acceso. Las respuestas generadas siguen los estándares formales vigentes, si bien se recomienda contrastar con el receptor de un documento mercantil o notaría antes de suscribir obligaciones de elevado importe.

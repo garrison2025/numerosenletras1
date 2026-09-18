@@ -10,6 +10,7 @@
     "clean": "rm -rf dist .astro",
     "lint": "tsc --noEmit",
     "test": "tsx --test test/**/*.test.ts",
+    "indexnow": "node scripts/submit-indexnow.mjs",
     "check": "npm run lint && npm run test && npm run build"
   },
   "dependencies": {

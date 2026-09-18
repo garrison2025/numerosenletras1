@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import QuantityConverter from '../../components/QuantityConverter';
+import InterlinkingMatrix from '../../components/InterlinkingMatrix.astro';
+
+const title = "Cantidad con Letra en Pesos Mexicanos | Convertidor MXN y Cheques";
+const description = "Convierte importes a pesos mexicanos con letra (MXN). Formato habitual con centavos fraccionarios (XX/100 M.N.) para cheques, recibos y facturas CFDI en México.";
+const currentPath = "/cantidad-con-letra/mexico/";
+
+const faqs = [
+  {
+    q: "¿Qué significa la sigla 'M.N.' en los cheques y facturas de México?",
+    a: "Significa 'Moneda Nacional'. Se añade habitualmente al final de la cifra en letras (por ejemplo: 'pesos 00/100 M.N.') para especificar inequívocamente que el pago se liquida en pesos mexicanos y no en divisas extranjeras."
+  },
+  {
+    q: "¿Cómo se escriben los centavos en pesos mexicanos con letra?",
+    a: "La práctica comercial y bancaria en México estipula expresar los centavos mediante una fracción sobre cien (XX/100). Por ejemplo, $1,540.50 se redacta: 'Mil quinientos cuarenta pesos 50/100 M.N.'."
+  },
+  {
+    q: "¿Se debe escribir 'mil pesos' o 'un mil pesos' en México?",
+    a: "La Real Academia Española (RAE) prescribe escribir 'mil pesos' en la norma culta general. No obstante, en la práctica bancaria, notarial y de llenado de cheques en México es común el uso de 'un mil pesos' para prevenir que terceros antepongan dígitos o palabras no autorizadas en el renglón del beneficiario."
+  },
+  {
+    q: "¿Cuándo se intercala la preposición 'de' con millones en pesos mexicanos?",
+    a: "Cuando la cifra de millones es redonda (por ejemplo, $2,000,000.00), se escribe 'Dos millones de pesos 00/100 M.N.'. Si la cifra tiene millares o centenas intermedias (ej. $2,100,000.00), se redacta 'Dos millones cien mil pesos 00/100 M.N.' sin la preposición 'de'."
+  },
+  {
+    q: "¿Qué valor prevalece si difieren la cifra en números y la cantidad con letra en un cheque mexicano?",
+    a: "De acuerdo con el artículo 16 de la Ley General de Títulos y Operaciones de Crédito (LGTOC) de México, en caso de discrepancia entre el importe escrito en números y el escrito en palabras, prevalecerá la cantidad escrita con letra."
+  }
+];
+
+const schemaData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Convertidor de Cantidad con Letra en Pesos Mexicanos",
+    "url": "https://numerosenletras.org/cantidad-con-letra/mexico/",
+    "description": description,
+    "applicationCategory": "FinancialApplication",
+    "operatingSystem": "All"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  }
+];
+
+const examples = [
+  { num: "$100.00", text: "Cien pesos 00/100 M.N." },
+  { num: "$500.00", text: "Quinientos pesos 00/100 M.N." },
+  { num: "$1,000.00", text: "Mil pesos 00/100 M.N. (o Un mil pesos 00/100 M.N.)" },
+  { num: "$1,500.00", text: "Mil quinientos pesos 00/100 M.N." },
+  { num: "$1,540.50", text: "Mil quinientos cuarenta pesos 50/100 M.N." },
+  { num: "$10,000.00", text: "Diez mil pesos 00/100 M.N." },
+  { num: "$50,000.00", text: "Cincuenta mil pesos 00/100 M.N." },
+  { num: "$100,000.00", text: "Cien mil pesos 00/100 M.N." },
+  { num: "$1,000,000.00", text: "Un millón de pesos 00/100 M.N." },
+  { num: "$2,345,678.90", text: "Dos millones trescientos cuarenta y cinco mil seiscientos setenta y ocho pesos 90/100 M.N." }
+];
+---
+
+<Layout title={title} description={description} currentPath={currentPath} schemaData={schemaData}>
+  <div class="relative max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in">
+    <!-- Header -->
+    <header class="text-center mb-8 relative">
+      <div class="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-3 border border-emerald-100 shadow-xs">
+        <span class="text-base">🇲🇽</span>
+        <span class="font-display tracking-wide uppercase text-[10px]">Formato Bancario para México (MXN)</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-3">
+        Cantidad con Letra en Pesos Mexicanos
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Escribe importes en pesos mexicanos de acuerdo con la práctica bancaria, cheques mercantiles y emisión de comprobantes fiscales digitales (CFDI) en México.
+      </p>
+    </header>
+
+    <!-- Quick Direct Answer (GEO / AI Overview optimized) -->
+    <section class="mb-8 bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 sm:p-5 text-left">
+      <div class="flex items-start gap-3">
+        <span class="p-1.5 bg-emerald-600 text-white rounded-lg text-xs font-mono font-bold mt-0.5 shrink-0">Respuesta rápida</span>
+        <div class="space-y-1">
+          <p class="text-xs sm:text-sm font-semibold text-emerald-950">
+            ¿Cómo se escribe una cantidad con letra en pesos mexicanos?
+          </p>
+          <p class="text-xs sm:text-sm text-emerald-900 leading-relaxed font-sans">
+            La estructura estándar consiste en escribir la parte entera en palabras, seguida de la palabra <strong>"pesos"</strong>, la fracción de centavos sobre cien (<strong>XX/100</strong>) y la sigla <strong>M.N.</strong> (Moneda Nacional).<br />
+            Ejemplo: <strong>$1,540.50 MXN</strong> se escribe <em>«Mil quinientos cuarenta pesos 50/100 M.N.»</em>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Tool Island -->
+    <QuantityConverter client:load initialCurrency="MXN" initialAmount="1540.50" />
+
+    <!-- Practical Formatting Guide -->
+    <article class="mt-12 bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 text-left space-y-8 shadow-xs">
+      <div class="border-b border-gray-150 pb-4">
+        <h2 class="font-display font-bold text-gray-950 text-xl sm:text-2xl">
+          Estructura y Reglas para Escribir Pesos Mexicanos con Letra
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Pautas aplicadas en cheques, pagarés y contratos regulados por la normativa mercantil mexicana.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600">
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">1. Fracción de Centavos (XX/100)</h3>
+          <p class="text-xs leading-relaxed">
+            A diferencia de la lengua coloquial donde se diría "con cincuenta centavos", en documentos bancarios y fiscales mexicanos los centavos siempre se expresan de forma fraccionaria. Si la cifra no tiene centavos, se indica expresamente <strong>00/100 M.N.</strong> para evitar espacios vacíos o manipulaciones.
+          </p>
+          <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 font-mono text-xs text-gray-800">
+            $850.00 → Ochocientos cincuenta pesos 00/100 M.N.
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">2. Uso de la Sigla "M.N."</h3>
+          <p class="text-xs leading-relaxed">
+            La mención "M.N." (Moneda Nacional) es una convención bancaria y mercantil mexicana para distinguir las operaciones liquidadas en pesos respecto a compromisos pactados en dólares estadounidenses (USD) o euros (EUR).
+          </p>
+          <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 font-mono text-xs text-gray-800">
+            ... pesos 50/100 M.N.
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">3. ¿"Mil" o "Un mil" en cheques de México?</h3>
+          <p class="text-xs leading-relaxed">
+            Gramaticalmente, la RAE indica que el numeral <em>mil</em> no requiere el determinante <em>un</em>. Sin embargo, en el sistema bancario mexicano (BBVA, Banorte, Santander, Citibanamex), el uso de <strong>"Un mil"</strong> es ampliamente tolerado y aconsejado por ejecutivos de cuenta para impedir que se agreguen palabras delante de la cifra.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">4. Línea de Cierre de Seguridad</h3>
+          <p class="text-xs leading-relaxed">
+            Al expedir un cheque en ventanilla o chequera física, se aconseja trazar una línea horizontal al final de la leyenda (ejemplo: <em>Mil quinientos pesos 00/100 M.N. -----------------</em>) para clausurar el campo de texto.
+          </p>
+        </div>
+      </div>
+
+      <!-- Conversion Examples Table -->
+      <div class="space-y-4 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-base">
+          Tabla de Cantidades Frecuentes en Pesos Mexicanos (MXN)
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border border-gray-200 rounded-xl overflow-hidden">
+            <thead class="bg-gray-50 text-gray-700 font-semibold border-b border-gray-200">
+              <tr>
+                <th class="p-3">Importe en Cifra</th>
+                <th class="p-3">Cantidad con Letra (Formato Mexicano)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 font-mono">
+              {examples.map((item, idx) => (
+                <tr class={idx % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
+                  <td class="p-3 font-bold text-gray-900 whitespace-nowrap">{item.num}</td>
+                  <td class="p-3 text-gray-700 font-sans">{item.text}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Common Mistakes -->
+      <div class="space-y-3 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-base">Errores Habituales al Escribir Pesos con Letra</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs text-gray-600 leading-relaxed font-sans">
+          <li><strong>Omitir la fracción de centavos:</strong> En cheques se debe colocar siempre <em>00/100 M.N.</em> aunque no existan fracciones.</li>
+          <li><strong>Escribir "veinte y cinco":</strong> Los números del 21 al 29 se escriben en una sola palabra (<em>veinticinco</em>, <em>veintiséis</em> con tilde).</li>
+          <li><strong>Omitir la preposición "de" en millones redondos:</strong> Debe escribirse <em>Un millón de pesos</em> y no <em>Un millón pesos</em>.</li>
+          <li><strong>Confundir coma y punto decimal:</strong> En México se utiliza el punto (.) para separar decimales y la coma (,) para miles (ej. $1,500.50).</li>
+        </ul>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="space-y-4 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-base">Preguntas Frecuentes sobre Cheques e Importes en México</h3>
+        <div class="space-y-3">
+          {faqs.map((faq, index) => (
+            <details class="group border border-gray-150 rounded-xl open:border-emerald-300 open:bg-emerald-50/15 transition-all p-3.5" open={index === 0}>
+              <summary class="font-semibold text-xs sm:text-sm text-gray-800 cursor-pointer list-none flex justify-between items-center">
+                <span>{faq.q}</span>
+                <span class="text-gray-400 group-open:rotate-180 transition-transform text-xs ml-2">▼</span>
+              </summary>
+              <p class="text-xs text-gray-600 mt-2 leading-relaxed border-t border-gray-150/60 pt-2 font-sans">
+                {faq.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- Sources and Revision -->
+      <div class="pt-6 border-t border-gray-150 space-y-2 text-xs text-gray-500 font-sans">
+        <h4 class="font-bold text-gray-800 text-xs uppercase tracking-wider font-mono">Fuentes consultadas</h4>
+        <ul class="list-disc pl-5 space-y-1 text-[11px]">
+          <li>
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/145_220618.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              Cámara de Diputados de México - Ley General de Títulos y Operaciones de Crédito (Artículo 16)
+            </a>
+          </li>
+          <li>
+            <a href="https://www.banxico.org.mx/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              Banco de México (Banxico) - Glosario y Regulaciones de Medios de Pago
+            </a>
+          </li>
+          <li>
+            <a href="https://www.rae.es/dpd/cardinales" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              Real Academia Española - Diccionario panhispánico de dudas (Numerales cardinales)
+            </a>
+          </li>
+        </ul>
+        <p class="text-[11px] text-gray-400 pt-2 font-mono">
+          Última revisión: septiembre de 2026. Información orientativa para usos contables, administrativos y mercantiles.
+        </p>
+      </div>
+    </article>
+
+    <!-- Contextual Interlinking Matrix -->
+    <InterlinkingMatrix currentPath={currentPath} />
+  </div>
+</Layout>

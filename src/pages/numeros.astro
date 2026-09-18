@@ -1,0 +1,315 @@
+---
+import Layout from '../layouts/Layout.astro';
+import InterlinkingMatrix from '../components/InterlinkingMatrix.astro';
+import { ListOrdered, Search, ArrowRight, BookOpen, Receipt, Sparkles, CheckCircle2, HelpCircle } from "lucide-react";
+
+const title = "Números en Letras | Cómo se Escriben los Números en Español";
+const description = "Guía completa de números en letras: decenas, centenas, millares y millones. Consulta directa de los números más buscados y reglas ortográficas RAE.";
+const currentPath = "/numeros/";
+
+const popularNumbers = [
+  {
+    num: "100",
+    word: "cien",
+    pitfall: "Se escribe 'ciento' si le siguen unidades (105: ciento cinco).",
+    monetary: "Cien pesos / Cien euros",
+    link: "/?n=100"
+  },
+  {
+    num: "500",
+    word: "quinientos",
+    pitfall: "Irregular: deriva de quinque. No existe 'cincocientos'.",
+    monetary: "Quinientos pesos 00/100 M.N.",
+    link: "/?n=500"
+  },
+  {
+    num: "1.000",
+    word: "mil",
+    pitfall: "La RAE aconseja 'mil', pero en cheques bancarios se usa 'un mil' por seguridad.",
+    monetary: "Mil pesos (o Un mil pesos)",
+    link: "/?n=1000"
+  },
+  {
+    num: "1.500",
+    word: "mil quinientos",
+    pitfall: "En español no se dice 'quince cientos' (calco del inglés 'fifteen hundred').",
+    monetary: "Mil quinientos pesos 00/100",
+    link: "/?n=1500"
+  },
+  {
+    num: "2.000",
+    word: "dos mil",
+    pitfall: "Se escribe siempre en dos palabras separadas.",
+    monetary: "Dos mil pesos / Dos mil euros",
+    link: "/?n=2000"
+  },
+  {
+    num: "5.000",
+    word: "cinco mil",
+    pitfall: "Se escribe en palabras separadas.",
+    monetary: "Cinco mil pesos M/CTE",
+    link: "/?n=5000"
+  },
+  {
+    num: "10.000",
+    word: "diez mil",
+    pitfall: "Diez se escribe con zeta (z).",
+    monetary: "Diez mil y 00/100 soles",
+    link: "/?n=10000"
+  },
+  {
+    num: "50.000",
+    word: "cincuenta mil",
+    pitfall: "Cincuenta se escribe con 'c' inicial.",
+    monetary: "Cincuenta mil pesos",
+    link: "/?n=50000"
+  },
+  {
+    num: "100.000",
+    word: "cien mil",
+    pitfall: "Se utiliza 'cien' antepuesto a mil.",
+    monetary: "Cien mil pesos 00/100 M.N.",
+    link: "/?n=100000"
+  },
+  {
+    num: "1.000.000",
+    word: "un millón",
+    pitfall: "Lleva tilde en la 'o'. Al ser exacto ante sustantivo lleva 'de' (un millón de pesos).",
+    monetary: "Un millón de pesos / euros",
+    link: "/?n=1000000"
+  }
+];
+
+const decenas = [
+  { n: 10, w: "diez" }, { n: 20, w: "veinte" }, { n: 30, w: "treinta" },
+  { n: 40, w: "cuarenta" }, { n: 50, w: "cincuenta" }, { n: 60, w: "sesenta" },
+  { n: 70, w: "setenta" }, { n: 80, w: "ochenta" }, { n: 90, w: "noventa" }
+];
+
+const centenas = [
+  { n: 100, w: "cien / ciento" }, { n: 200, w: "doscientos / doscientas" },
+  { n: 300, w: "trescientos / trescientas" }, { n: 400, w: "cuatrocientos / cuatrocientas" },
+  { n: 500, w: "quinientos / quinientas" }, { n: 600, w: "seiscientos / seiscientas" },
+  { n: 700, w: "setecientos / setecientas" }, { n: 800, w: "ochocientos / ochocientas" },
+  { n: 900, w: "novecientos / novecientas" }
+];
+
+const miles = [
+  { n: "1.000", w: "mil" }, { n: "2.000", w: "dos mil" }, { n: "3.000", w: "tres mil" },
+  { n: "4.000", w: "cuatro mil" }, { n: "5.000", w: "cinco mil" }, { n: "6.000", w: "seis mil" },
+  { n: "7.000", w: "siete mil" }, { n: "8.000", w: "ocho mil" }, { n: "9.000", w: "nueve mil" }
+];
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Números en Letras - Directorio y Guía Completa",
+  "url": "https://numerosenletras.org/numeros/",
+  "description": description,
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": popularNumbers.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": `${item.num} en letras: ${item.word}`,
+      "url": `https://numerosenletras.org/?n=${item.num.replace(/\./g, '')}`
+    }))
+  }
+};
+---
+
+<Layout title={title} description={description} currentPath={currentPath} schemaData={schemaData}>
+  <div class="relative max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in font-sans">
+    <!-- Header -->
+    <header class="text-center mb-10 relative">
+      <div class="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-3 border border-blue-100 shadow-xs">
+        <ListOrdered className="w-4 h-4 text-blue-600" />
+        <span class="font-display tracking-wide uppercase text-[10px]">Directorio Lingüístico General</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-4">
+        Números en Letras
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Aprende cómo se escriben los números en español según las directrices de la Real Academia Española (RAE). Respuestas directas, tablas cardinales y formatos de moneda.
+      </p>
+    </header>
+
+    <!-- Quick Conversion Jumpbox -->
+    <section class="mb-10 p-5 bg-gradient-to-r from-blue-50 to-indigo-50/50 rounded-2xl border border-blue-100 text-left flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+      <div class="space-y-1">
+        <h3 class="font-bold text-gray-900 text-sm sm:text-base">¿Deseas convertir un número específico en tiempo real?</h3>
+        <p class="text-xs text-gray-600">Nuestro convertidor interactivo procesa cualquier cifra con tildes y concordancia de género.</p>
+      </div>
+      <a href="/" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all whitespace-nowrap inline-flex items-center gap-1.5 cursor-pointer shrink-0">
+        <span>Abrir Convertidor</span>
+        <ArrowRight className="w-3.5 h-3.5" />
+      </a>
+    </section>
+
+    <!-- Section 1: Números más consultados (Answer-First Cards) -->
+    <section class="space-y-4 text-left mb-12">
+      <div class="border-b border-gray-150 pb-3">
+        <h2 class="font-display font-bold text-gray-950 text-xl sm:text-2xl">
+          Números Más Consultados (Respuestas Directas)
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          La transcripción ortográfica canónica, advertencia de errores comunes y formato monetario para las cifras más buscadas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {popularNumbers.map((item) => (
+          <div class="p-4 bg-white rounded-2xl border border-gray-150 hover:border-blue-300 transition-all space-y-2.5 shadow-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-lg text-blue-600">{item.num}</span>
+              <a href={item.link} class="text-[10px] font-mono text-blue-600 hover:underline flex items-center gap-1">
+                <span>Ver en conversor</span>
+                <ArrowRight className="w-3 h-3" />
+              </a>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-widest font-mono">En letras:</span>
+              <p class="text-base font-bold text-gray-900 capitalize font-display">{item.word}</p>
+            </div>
+            <div class="text-[11px] text-gray-600 bg-gray-50 p-2.5 rounded-xl border border-gray-100 space-y-1">
+              <p><strong class="text-gray-800">Cuidado:</strong> {item.pitfall}</p>
+              <p><strong class="text-gray-800">En moneda:</strong> <span class="font-mono text-gray-700">{item.monetary}</span></p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 2: Decenas, Centenas, Miles (Structured Tables) -->
+    <section class="bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 space-y-8 text-left shadow-xs mb-12">
+      <div class="border-b border-gray-150 pb-3">
+        <h2 class="font-display font-bold text-gray-950 text-xl sm:text-2xl">
+          Tablas de Cardinales: Decenas, Centenas y Miles
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Escritura sistemática de las principales unidades cardinales de la numeración española.
+        </p>
+      </div>
+
+      <!-- Decenas -->
+      <div class="space-y-3">
+        <h3 class="font-bold text-gray-900 text-sm flex items-center gap-1.5">
+          <span class="w-1.5 h-4 bg-blue-600 rounded-full"></span>
+          <span>Decenas (10 al 90)</span>
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+          {decenas.map((d) => (
+            <a href={`/?n=${d.n}`} class="p-2.5 bg-gray-50 hover:bg-blue-50 border border-gray-150 hover:border-blue-200 rounded-xl flex justify-between items-center transition-colors">
+              <span class="font-mono font-bold text-gray-800">{d.n}</span>
+              <span class="text-gray-600 capitalize">{d.w}</span>
+            </a>
+          ))}
+        </div>
+        <p class="text-[11px] text-gray-500 pt-1 font-sans">
+          * Nota: Entre el 21 y el 29 se escriben en una sola palabra (<em>veintiuno, veintidós</em>). A partir del 31 se separan (<em>treinta y uno</em>).
+        </p>
+      </div>
+
+      <!-- Centenas -->
+      <div class="space-y-3 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-sm flex items-center gap-1.5">
+          <span class="w-1.5 h-4 bg-indigo-600 rounded-full"></span>
+          <span>Centenas (100 al 900)</span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+          {centenas.map((c) => (
+            <a href={`/?n=${c.n}`} class="p-2.5 bg-gray-50 hover:bg-indigo-50 border border-gray-150 hover:border-indigo-200 rounded-xl flex justify-between items-center transition-colors">
+              <span class="font-mono font-bold text-gray-800">{c.n}</span>
+              <span class="text-gray-600 capitalize truncate ml-2">{c.w}</span>
+            </a>
+          ))}
+        </div>
+        <p class="text-[11px] text-gray-500 pt-1 font-sans">
+          * Nota: Las centenas tienen variación de género ante sustantivos femeninos (<em>trescientas personas</em>).
+        </p>
+      </div>
+
+      <!-- Miles -->
+      <div class="space-y-3 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-sm flex items-center gap-1.5">
+          <span class="w-1.5 h-4 bg-emerald-600 rounded-full"></span>
+          <span>Miles (1.000 al 9.000)</span>
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+          {miles.map((m) => (
+            <a href={`/?n=${m.n.replace(/\./g, '')}`} class="p-2.5 bg-gray-50 hover:bg-emerald-50 border border-gray-150 hover:border-emerald-200 rounded-xl flex justify-between items-center transition-colors">
+              <span class="font-mono font-bold text-gray-800">{m.n}</span>
+              <span class="text-gray-600 capitalize">{m.w}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Millones y Escala Larga -->
+    <section class="bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 space-y-4 text-left shadow-xs mb-12">
+      <h2 class="font-display font-bold text-gray-950 text-xl">
+        Escala de Millones y Billones en Español
+      </h2>
+      <p class="text-xs text-gray-600 leading-relaxed">
+        El español emplea el sistema numérico de <strong>escala larga</strong>, donde cada nuevo orden de magnitud nominal corresponde a un millón de veces el anterior:
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div class="p-3 bg-gray-50 rounded-xl border border-gray-150">
+          <span class="font-mono font-bold text-gray-900 block">1.000.000 (10⁶)</span>
+          <span class="text-gray-600">Un millón (lleva tilde en la 'o')</span>
+        </div>
+        <div class="p-3 bg-gray-50 rounded-xl border border-gray-150">
+          <span class="font-mono font-bold text-gray-900 block">1.000.000.000 (10⁹)</span>
+          <span class="text-gray-600">Mil millones (en inglés: "one billion")</span>
+        </div>
+        <div class="p-3 bg-gray-50 rounded-xl border border-gray-150">
+          <span class="font-mono font-bold text-gray-900 block">1.000.000.000.000 (10¹²)</span>
+          <span class="text-gray-600">Un billón (un millón de millones)</span>
+        </div>
+        <div class="p-3 bg-gray-50 rounded-xl border border-gray-150">
+          <span class="font-mono font-bold text-gray-900 block">1.000.000.000.000.000.000 (10¹⁸)</span>
+          <span class="text-gray-600">Un trillón (un millón de billones)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Conexiones Temáticas -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-12">
+      <a href="/cantidad-con-letra/" class="p-5 bg-white rounded-2xl border border-gray-150 hover:border-emerald-300 hover:shadow-xs transition-all flex flex-col justify-between group">
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <Receipt className="w-4 h-4" />
+          </div>
+          <h3 class="font-bold text-gray-900 text-base group-hover:text-emerald-700 transition-colors">Cantidad con Letra</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">
+            Aprende a redactar cifras de dinero con centavos y fracciones (XX/100) para cheques, pagarés y facturas.
+          </p>
+        </div>
+        <span class="text-xs font-bold text-emerald-600 inline-flex items-center gap-1 mt-4">
+          <span>Ver formatos de moneda</span>
+          <ArrowRight className="w-3 h-3" />
+        </span>
+      </a>
+
+      <a href="/como-se-escribe/" class="p-5 bg-white rounded-2xl border border-gray-150 hover:border-amber-300 hover:shadow-xs transition-all flex flex-col justify-between group">
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <BookOpen className="w-4 h-4" />
+          </div>
+          <h3 class="font-bold text-gray-900 text-base group-hover:text-amber-700 transition-colors">Reglas Ortográficas RAE</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">
+            Consulta las directrices académicas sobre acentuación, cien vs ciento, veintiuno vs veintiún y números compuestos.
+          </p>
+        </div>
+        <span class="text-xs font-bold text-amber-600 inline-flex items-center gap-1 mt-4">
+          <span>Consultar dudas de ortografía</span>
+          <ArrowRight className="w-3 h-3" />
+        </span>
+      </a>
+    </section>
+
+    <!-- Contextual Interlinking Matrix -->
+    <InterlinkingMatrix currentPath={currentPath} />
+  </div>
+</Layout>

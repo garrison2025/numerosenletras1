@@ -37,6 +37,25 @@ const getBreadcrumbs = () => {
 
   if (normalizedPath === "/cantidad-con-letra/") {
     items.push({ name: "Conversor de Cantidad con Letra", path: "/cantidad-con-letra/" });
+  } else if (normalizedPath === "/cantidad-con-letra/mexico/") {
+    items.push({ name: "Cantidad con Letra", path: "/cantidad-con-letra/" });
+    items.push({ name: "México (MXN)", path: "/cantidad-con-letra/mexico/" });
+  } else if (normalizedPath === "/cantidad-con-letra/colombia/") {
+    items.push({ name: "Cantidad con Letra", path: "/cantidad-con-letra/" });
+    items.push({ name: "Colombia (COP)", path: "/cantidad-con-letra/colombia/" });
+  } else if (normalizedPath === "/cantidad-con-letra/peru/") {
+    items.push({ name: "Cantidad con Letra", path: "/cantidad-con-letra/" });
+    items.push({ name: "Perú (PEN)", path: "/cantidad-con-letra/peru/" });
+  } else if (normalizedPath === "/cantidad-con-letra/argentina/") {
+    items.push({ name: "Cantidad con Letra", path: "/cantidad-con-letra/" });
+    items.push({ name: "Argentina (ARS)", path: "/cantidad-con-letra/argentina/" });
+  } else if (normalizedPath === "/cantidad-con-letra/espana/") {
+    items.push({ name: "Cantidad con Letra", path: "/cantidad-con-letra/" });
+    items.push({ name: "España (EUR)", path: "/cantidad-con-letra/espana/" });
+  } else if (normalizedPath === "/fuentes-y-metodologia/") {
+    items.push({ name: "Fuentes y Metodología", path: "/fuentes-y-metodologia/" });
+  } else if (normalizedPath === "/numeros/") {
+    items.push({ name: "Números en Letras", path: "/numeros/" });
   } else if (normalizedPath === "/letras-aesthetic/") {
     items.push({ name: "Letras Aesthetic", path: "/letras-aesthetic/" });
   } else if (normalizedPath === "/letras-burbuja/") {
@@ -111,7 +130,9 @@ const breadcrumbs = getBreadcrumbs();
       "@type": "Organization",
       "name": "numerosenletras.org",
       "url": "https://numerosenletras.org/",
-      "logo": "https://numerosenletras.org/favicon.svg"
+      "logo": "https://numerosenletras.org/favicon.svg",
+      "email": "contacto@numerosenletras.org",
+      "publishingPrinciples": "https://numerosenletras.org/fuentes-y-metodologia/"
     })} />
 
     <!-- WebSite Schema -->
@@ -220,6 +241,7 @@ const breadcrumbs = getBreadcrumbs();
           </h4>
           <div class="flex flex-col space-y-2 text-xs font-sans">
             <a href="/sobre-nosotros/" class="hover:text-blue-500 hover:underline cursor-pointer">• Quiénes Somos</a>
+            <a href="/fuentes-y-metodologia/" class="hover:text-blue-500 hover:underline cursor-pointer">• Fuentes y Metodología</a>
             <a href="/contacto/" class="hover:text-blue-500 hover:underline cursor-pointer">• Formulario de Contacto</a>
             <div class="flex items-center gap-1 text-[10px] text-gray-400 mt-1">
               <span>Email: contacto@numerosenletras.org</span>
@@ -244,9 +266,10 @@ const breadcrumbs = getBreadcrumbs();
           <div class="flex flex-col space-y-2 text-xs font-sans">
             <a href="/" class="hover:text-blue-500 hover:underline cursor-pointer">• Conversor de Números</a>
             <a href="/cantidad-con-letra/" class="hover:text-blue-500 hover:underline cursor-pointer">• Cantidad con Letra</a>
+            <a href="/numeros/" class="hover:text-blue-500 hover:underline cursor-pointer">• Guía de Números</a>
+            <a href="/como-se-escribe/" class="hover:text-blue-500 hover:underline cursor-pointer">• Reglas Ortográficas</a>
             <a href="/letras-burbuja/" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Burbuja</a>
             <a href="/letras-aesthetic/" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Aesthetic</a>
-            <a href="/como-se-escribe/" class="hover:text-blue-500 hover:underline cursor-pointer">• Reglas Ortográficas</a>
           </div>
         </div>
       </div>

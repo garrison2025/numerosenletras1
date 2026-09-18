@@ -1,0 +1,292 @@
+---
+import Layout from '../layouts/Layout.astro';
+import InterlinkingMatrix from '../components/InterlinkingMatrix.astro';
+import { BookOpen, ShieldCheck, CheckCircle2, Landmark, Scale, Code2, AlertTriangle, ArrowRight } from "lucide-react";
+
+const title = "Fuentes y Metodología | numerosenletras.org";
+const description = "Conoce las fuentes lingüísticas de la RAE, bases normativas bancarias y la metodología algorítmica de verificación empleada por numerosenletras.org.";
+const currentPath = "/fuentes-y-metodologia/";
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Fuentes y Metodología de Conversión",
+  "url": "https://numerosenletras.org/fuentes-y-metodologia/",
+  "description": description,
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "numerosenletras.org",
+    "publishingPrinciples": "https://numerosenletras.org/fuentes-y-metodologia/"
+  }
+};
+---
+
+<Layout title={title} description={description} currentPath={currentPath} schemaData={schemaData}>
+  <div class="relative max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in font-sans">
+    <!-- Header -->
+    <header class="text-center mb-12 relative">
+      <div class="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-3 border border-blue-100 shadow-xs">
+        <ShieldCheck className="w-4 h-4 text-blue-600" />
+        <span class="font-display tracking-wide uppercase text-[10px]">Transparencia Editorial y Técnica</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-4">
+        Fuentes y metodología de conversión
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Explicamos los fundamentos lingüísticos, las prácticas bancarias aplicables por país y los procesos algorítmicos que gobiernan cada conversión en <strong class="text-gray-900 font-semibold">numerosenletras.org</strong>.
+      </p>
+    </header>
+
+    <div class="space-y-10 text-left">
+      <!-- 1. Cómo funciona el conversor -->
+      <section class="bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 space-y-6 shadow-xs">
+        <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+          <div class="p-2 rounded-xl bg-blue-50 text-blue-600">
+            <Code2 className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-gray-950 text-xl">1. Cómo Funciona el Algoritmo de Conversión</h2>
+            <p class="text-xs text-gray-500">Arquitectura de análisis léxico y estructuración sintáctica.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm text-gray-600 leading-relaxed">
+          <div class="space-y-2 p-4 bg-gray-50/70 rounded-2xl border border-gray-100">
+            <h3 class="font-bold text-gray-900 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>Normalización y Análisis de Entrada</span>
+            </h3>
+            <p className="text-xs">
+              El motor extrae los caracteres numéricos aislándolos de símbolos monetarios ($ o €), comas y puntos. Detecta dinámicamente si el usuario emplea formato internacional (1,500.50) o europeo continental (1.500,50).
+            </p>
+          </div>
+
+          <div class="space-y-2 p-4 bg-gray-50/70 rounded-2xl border border-gray-100">
+            <h3 class="font-bold text-gray-900 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>Descomposición en Escala Larga Española</span>
+            </h3>
+            <p className="text-xs">
+              A diferencia del sistema anglosajón de escala corta, el español utiliza la <strong>escala larga</strong>: un billón equivale a un millón de millones (10¹²), no a mil millones (10⁹). El algoritmo segmenta tríadas respetando esta convención.
+            </p>
+          </div>
+
+          <div class="space-y-2 p-4 bg-gray-50/70 rounded-2xl border border-gray-100">
+            <h3 class="font-bold text-gray-900 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>Concordancia Gramatical y Apócope</span>
+            </h3>
+            <p className="text-xs">
+              El sistema evalúa el género del sustantivo ("veintiún pesos" vs "veintiuna páginas") y aplica la regla de apócope antepuesta al sustantivo masculino o femenino de acuerdo a las directrices de la RAE.
+            </p>
+          </div>
+
+          <div class="space-y-2 p-4 bg-gray-50/70 rounded-2xl border border-gray-100">
+            <h3 class="font-bold text-gray-900 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>Unificación de Decenas (16 al 29)</span>
+            </h3>
+            <p className="text-xs">
+              Las cifras del 16 al 19 y del 21 al 29 se transcriben en una sola palabra con su acentuación correspondiente (ej. <em>dieciséis, veintidós, veintitrés, veintiséis</em>). A partir del 31 se separan con la conjunción "y" (<em>treinta y uno</em>).
+            </p>
+          </div>
+
+          <div class="space-y-2 p-4 bg-gray-50/70 rounded-2xl border border-gray-100">
+            <h3 class="font-bold text-gray-900 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>Regla de Cien frente a Ciento</span>
+            </h3>
+            <p className="text-xs">
+              Se utiliza <strong>cien</strong> cuando la centena es exacta o acompaña a un sustantivo o múltiplo de mil/millón (<em>cien pesos, cien mil</em>), y <strong>ciento</strong> cuando le siguen decenas o unidades (<em>ciento cinco, ciento cuarenta</em>).
+            </p>
+          </div>
+
+          <div class="space-y-2 p-4 bg-gray-50/70 rounded-2xl border border-gray-100">
+            <h3 class="font-bold text-gray-900 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>Preposición "de" en Millones Redondos</span>
+            </h3>
+            <p className="text-xs">
+              Cuando los millones son exactos, se intercala la preposición: <em>Dos millones <strong>de</strong> pesos</em>. Si le siguen millares o decenas, la preposición desaparece: <em>Dos millones quinientos pesos</em>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Fuentes lingüísticas -->
+      <section class="bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 space-y-6 shadow-xs">
+        <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+          <div class="p-2 rounded-xl bg-amber-50 text-amber-600">
+            <BookOpen className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-gray-950 text-xl">2. Fuentes Lingüísticas Oficiales</h2>
+            <p class="text-xs text-gray-500">Tratados normativos y directrices lexicográficas consultadas.</p>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+          <p>
+            Toda la lógica morfosintáctica y de ortografía numérica implementada en el sitio se rige por las publicaciones y consensos de la <strong>Asociación de Academias de la Lengua Española (ASALE)</strong> y la <strong>Real Academia Española (RAE)</strong>:
+          </p>
+
+          <ul class="space-y-3">
+            <li class="p-3.5 bg-gray-50 rounded-2xl border border-gray-150 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <strong class="text-gray-900 font-semibold block">Diccionario panhispánico de dudas (DPD)</strong>
+                <span class="text-gray-500 text-xs">Entrada sobre «cardinales», reglas de unificación de decenas y concordancia de género.</span>
+              </div>
+              <a href="https://www.rae.es/dpd/cardinales" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-xs shrink-0 inline-flex items-center gap-1">
+                <span>rae.es/dpd/cardinales</span>
+                <ArrowRight className="w-3 h-3" />
+              </a>
+            </li>
+
+            <li class="p-3.5 bg-gray-50 rounded-2xl border border-gray-150 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <strong class="text-gray-900 font-semibold block">Ortografía de la lengua española (2010)</strong>
+                <span class="text-gray-500 text-xs">Capítulo dedicado a la representación gráfica de cantidades, números romanos y cardinales.</span>
+              </div>
+              <a href="https://www.rae.es/obras-academicas/ortografia-2010" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-xs shrink-0 inline-flex items-center gap-1">
+                <span>rae.es/ortografia-2010</span>
+                <ArrowRight className="w-3 h-3" />
+              </a>
+            </li>
+
+            <li class="p-3.5 bg-gray-50 rounded-2xl border border-gray-150 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <strong class="text-gray-900 font-semibold block">Unicode Consortium - Mathematical Alphanumeric Symbols</strong>
+                <span class="text-gray-500 text-xs">Especificación técnica internacional de puntos de código Unicode para caracteres circulares y estilizados.</span>
+              </div>
+              <a href="https://www.unicode.org/charts/PDF/U1D400.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-xs shrink-0 inline-flex items-center gap-1">
+                <span>unicode.org</span>
+                <ArrowRight className="w-3 h-3" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 3. Fuentes financieras y mercantiles -->
+      <section class="bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 space-y-6 shadow-xs">
+        <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+          <div class="p-2 rounded-xl bg-emerald-50 text-emerald-600">
+            <Landmark className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-gray-950 text-xl">3. Fuentes Financieras y Bancarias por País</h2>
+            <p class="text-xs text-gray-500">Leyes cambiarias, directivas de bancos centrales y regulaciones tributarias.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-gray-600">
+          <div class="p-4 rounded-2xl border border-gray-150 space-y-1.5">
+            <div class="flex items-center gap-1.5">
+              <span class="text-base">🇲🇽</span>
+              <strong class="text-gray-900 text-xs font-bold">México: Banco de México & Ley LGTOC</strong>
+            </div>
+            <p class="leading-relaxed">
+              Ley General de Títulos y Operaciones de Crédito (Artículo 16 sobre primacía de la letra sobre el número) y catálogo de monedas del SAT (CFDI 4.0).
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-gray-150 space-y-1.5">
+            <div class="flex items-center gap-1.5">
+              <span class="text-base">🇨🇴</span>
+              <strong class="text-gray-900 text-xs font-bold">Colombia: Banco de la República & Código de Comercio</strong>
+            </div>
+            <p class="leading-relaxed">
+              Artículo 623 del Código de Comercio colombiano sobre discrepancias en títulos valores y convención mercantil "M/CTE" (Moneda Corriente).
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-gray-150 space-y-1.5">
+            <div class="flex items-center gap-1.5">
+              <span class="text-base">🇵🇪</span>
+              <strong class="text-gray-900 text-xs font-bold">Perú: Banco Central de Reserva (BCRP) & Ley N° 30381</strong>
+            </div>
+            <p class="leading-relaxed">
+              Denominación oficial "Sol" (símbolo S/) y Ley N° 27287 de Títulos Valores para el llenado y compensación de cheques interbancarios.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-gray-150 space-y-1.5">
+            <div class="flex items-center gap-1.5">
+              <span class="text-base">🇦🇷</span>
+              <strong class="text-gray-900 text-xs font-bold">Argentina: Banco Central (BCRA) & Ley N° 24.452</strong>
+            </div>
+            <p class="leading-relaxed">
+              Artículo 6 de la Ley de Cheques de la República Argentina sobre validez preponderante de la cantidad en letras en cheques comunes y de pago diferido.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-gray-150 space-y-1.5 sm:col-span-2">
+            <div class="flex items-center gap-1.5">
+              <span class="text-base">🇪🇸</span>
+              <strong class="text-gray-900 text-xs font-bold">España y Eurozona: Banco de España & Ley Cambiaria 19/1985</strong>
+            </div>
+            <p class="leading-relaxed">
+              Artículo 115 de la Ley 19/1985, de 16 de julio, Cambiaria y del Cheque de España, y directivas del Banco Central Europeo sobre denominación del euro y céntimos.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Metodología de revisión y verificación -->
+      <section class="bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 space-y-6 shadow-xs">
+        <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+          <div class="p-2 rounded-xl bg-purple-50 text-purple-600">
+            <Scale className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-gray-950 text-xl">4. Metodología de Revisión y Pruebas Continuas</h2>
+            <p class="text-xs text-gray-500">Control de calidad algorítmico y cobertura de casos límite.</p>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
+          <p>
+            Para garantizar que el convertidor no sufra desviaciones ni regresiones ortográficas, cada cambio en el código fuente se somete a una batería automatizada de pruebas unitarias que evalúa:
+          </p>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-xs">
+            <li class="p-3 bg-gray-50 rounded-xl border border-gray-150 text-gray-800">
+              ✓ Cero (0) y casos extremos vacíos
+            </li>
+            <li class="p-3 bg-gray-50 rounded-xl border border-gray-150 text-gray-800">
+              ✓ Veintiuno vs veintiún ante sustantivo
+            </li>
+            <li class="p-3 bg-gray-50 rounded-xl border border-gray-150 text-gray-800">
+              ✓ Cien vs ciento cinco
+            </li>
+            <li class="p-3 bg-gray-50 rounded-xl border border-gray-150 text-gray-800">
+              ✓ Mil vs un mil en monedas bancarias
+            </li>
+            <li class="p-3 bg-gray-50 rounded-xl border border-gray-150 text-gray-800">
+              ✓ Millón de pesos vs millón quinientos
+            </li>
+            <li class="p-3 bg-gray-50 rounded-xl border border-gray-150 text-gray-800">
+              ✓ Fracciones fraccionarias 00/100 y 99/100
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. Aviso y Descargo -->
+      <section class="bg-amber-50/60 rounded-3xl border border-amber-200/80 p-6 sm:p-8 space-y-3 text-amber-950 shadow-xs">
+        <div class="flex items-center gap-2 font-bold text-sm">
+          <AlertTriangle className="w-5 h-5 text-amber-700" />
+          <span>Aviso de Responsabilidad y Alcance del Servicio</span>
+        </div>
+        <p class="text-xs leading-relaxed font-sans text-amber-900">
+          <strong>numerosenletras.org</strong> es una herramienta digital de consulta educativa y de asistencia práctica para la redacción de importes en español. Aunque nos esforzamos rigurosamente por mantener la exactitud lingüística y bancaria de los resultados, recomendamos verificar siempre los requisitos particulares de la entidad financiera, notaría, juzgado o administración tributaria antes de suscribir documentos legales o mercantiles de valor significativo.
+        </p>
+        <p class="text-[11px] text-amber-800/80 pt-2 font-mono">
+          Última actualización de metodología y fuentes: septiembre de 2026.
+        </p>
+      </section>
+    </div>
+
+    <!-- Contextual Interlinking Matrix -->
+    <InterlinkingMatrix currentPath={currentPath} />
+  </div>
+</Layout>

@@ -37,7 +37,13 @@ interface QuantityHistoryItem {
   isFavorite?: boolean;
 }
 
-export default function QuantityConverter({ initialAmount }: { initialAmount?: string }) {
+export default function QuantityConverter({ 
+  initialAmount,
+  initialCurrency
+}: { 
+  initialAmount?: string;
+  initialCurrency?: string;
+}) {
   const [amount, setAmount] = useState(initialAmount || "1540.50");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,6 +55,9 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
   }, []);
 
   const [selectedCurrency, setSelectedCurrency] = useState<CurrencyConfig>(() => {
+    if (initialCurrency && CURRENCY_MAP[initialCurrency]) {
+      return CURRENCY_MAP[initialCurrency];
+    }
     try {
       if (canUsePreferenceStorage()) {
         const savedCode = localStorage.getItem("saved_currency_code");
@@ -75,10 +84,15 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
     }
   }, [initialAmount]);
 
+  const hasUserEdited = useRef(false);
+
   // Sync amount state with title and URL
   useEffect(() => {
+    if (!hasUserEdited.current) {
+      return;
+    }
     const rawVal = amount.trim();
-    if (typeof document !== "undefined") {
+    if (typeof document !== "undefined" && !initialCurrency) {
       if (rawVal && !isNaN(Number(rawVal.replace(/[^0-9.-]/g, '')))) {
         document.title = `¿Cómo se escribe ${rawVal} en letras? | Cantidad con Letra`;
       } else {
@@ -98,7 +112,7 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
       } catch {}
     }, 400);
     return () => clearTimeout(timer);
-  }, [amount]);
+  }, [amount, initialCurrency]);
 
   const [isFinancialFormat, setIsFinancialFormat] = useState(true);
   const [recipient, setRecipient] = useState("Juan Pérez Maldonado");
@@ -486,7 +500,10 @@ export default function QuantityConverter({ initialAmount }: { initialAmount?: s
                 type="text"
                 id="amount-input"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  hasUserEdited.current = true;
+                  setAmount(e.target.value);
+                }}
                 placeholder={numberFormatStyle === 'LA' ? "Ej: 1,540.50" : "Ej: 1.540,50"}
                 className="w-full bg-gray-50/50 hover:bg-gray-50 focus:bg-white text-gray-900 text-xl sm:text-2xl font-mono font-bold tracking-tight rounded-2xl border-2 border-gray-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all pl-12 pr-28 py-4 outline-hidden placeholder:text-gray-350"
                 autoComplete="off"

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import QuantityConverter from '../components/QuantityConverter';
+import InterlinkingMatrix from '../components/InterlinkingMatrix.astro';
 
 const title = "Convertir Cantidades a Letras | Generador para Cheques y Facturas";
 const description = "Escribe cualquier cantidad de dinero en letras de forma correcta. Compatible con pesos, dólares, euros y más. Genera el formato formal para rellenar cheques y recibos.";
@@ -164,5 +165,72 @@ const breadcrumbs = [
         ))}
       </div>
     </section>
+
+    <!-- Country specific guides -->
+    <section class="mt-12 bg-white rounded-3xl border border-gray-100 shadow-xs p-6 sm:p-8 text-left space-y-6">
+      <div class="border-b border-gray-100 pb-4">
+        <h2 class="font-sans font-bold text-gray-900 text-lg sm:text-xl">
+          Formatos Bancarios y Fiscales por País
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Cada sistema bancario posee regulaciones específicas (M.N., M/CTE, centavos sobre cien y leyes cambiarias). Consulta la guía de tu país:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+        <a href="/cantidad-con-letra/mexico/" class="p-4 rounded-2xl border border-gray-150 hover:border-emerald-300 hover:bg-emerald-50/20 transition-all space-y-1.5 group">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🇲🇽</span>
+            <strong class="text-gray-900 font-bold group-hover:text-emerald-700">México (MXN)</strong>
+          </div>
+          <p class="text-gray-500 leading-relaxed">
+            Formato con fracción 00/100 M.N., cheques de BBVA, Banorte, Banamex y facturas CFDI.
+          </p>
+        </a>
+
+        <a href="/cantidad-con-letra/colombia/" class="p-4 rounded-2xl border border-gray-150 hover:border-emerald-300 hover:bg-emerald-50/20 transition-all space-y-1.5 group">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🇨🇴</span>
+            <strong class="text-gray-900 font-bold group-hover:text-emerald-700">Colombia (COP)</strong>
+          </div>
+          <p class="text-gray-500 leading-relaxed">
+            Uso de la cláusula M/CTE (Moneda Corriente), cheques Bancolombia y facturación DIAN.
+          </p>
+        </a>
+
+        <a href="/cantidad-con-letra/peru/" class="p-4 rounded-2xl border border-gray-150 hover:border-emerald-300 hover:bg-emerald-50/20 transition-all space-y-1.5 group">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🇵🇪</span>
+            <strong class="text-gray-900 font-bold group-hover:text-emerald-700">Perú (PEN)</strong>
+          </div>
+          <p class="text-gray-500 leading-relaxed">
+            Fórmula Y 00/100 SOLES, cheques BCP, BBVA Perú, Interbank y comprobantes SUNAT.
+          </p>
+        </a>
+
+        <a href="/cantidad-con-letra/argentina/" class="p-4 rounded-2xl border border-gray-150 hover:border-emerald-300 hover:bg-emerald-50/20 transition-all space-y-1.5 group">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🇦🇷</span>
+            <strong class="text-gray-900 font-bold group-hover:text-emerald-700">Argentina (ARS)</strong>
+          </div>
+          <p class="text-gray-500 leading-relaxed">
+            Pesos con centavos, cheques comunes y de pago diferido (CPD) según Ley 24.452.
+          </p>
+        </a>
+
+        <a href="/cantidad-con-letra/espana/" class="p-4 rounded-2xl border border-gray-150 hover:border-emerald-300 hover:bg-emerald-50/20 transition-all space-y-1.5 group">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🇪🇸</span>
+            <strong class="text-gray-900 font-bold group-hover:text-emerald-700">España (EUR)</strong>
+          </div>
+          <p class="text-gray-500 leading-relaxed">
+            Euros con céntimos, cheques bancarios y pagarés según la Ley Cambiaria 19/1985.
+          </p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Contextual Interlinking Matrix -->
+    <InterlinkingMatrix currentPath="/cantidad-con-letra/" />
   </div>
 </Layout>

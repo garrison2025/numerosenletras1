@@ -1,0 +1,232 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import QuantityConverter from '../../components/QuantityConverter';
+import InterlinkingMatrix from '../../components/InterlinkingMatrix.astro';
+
+const title = "Cantidad con Letra en Pesos Argentinos | Convertidor ARS y Cheques";
+const description = "Convierte cifras a pesos argentinos con letra (ARS). Formatos de redacción con centavos para cheques bancarios comunes o de pago diferido y facturas electrónicas en Argentina.";
+const currentPath = "/cantidad-con-letra/argentina/";
+
+const faqs = [
+  {
+    q: "¿Cómo se redactan los centavos en un cheque en Argentina?",
+    a: "En cheques bancarios argentinos (comunes o de pago diferido) es habitual escribir la cantidad entera seguida de 'pesos' y expresar los centavos como 'con XX centavos' o la fracción 'con XX/100'. Por ejemplo: 'Mil quinientos cuarenta pesos con cincuenta centavos' o '... con 50/100'."
+  },
+  {
+    q: "¿Qué sucede si la suma en letras difiere de la suma en números en un cheque argentino?",
+    a: "De acuerdo con el Artículo 6 de la Ley de Cheques de la República Argentina (Ley 24.452), si el cheque tuviese su importe escrito en letras y en cifras y hubiese diferencia entre una y otra mención, valdrá por la cantidad escrita en letras."
+  },
+  {
+    q: "¿Se escribe 'mil pesos' o 'un mil pesos' en cheques en Argentina?",
+    a: "La norma gramatical de la Real Academia Española (RAE) aconseja escribir 'mil pesos'. Sin embargo, en la práctica bancaria argentina (Banco Nación, Santander, Galicia, BBVA) es habitual y admitido consignar 'un mil pesos' para evitar que se intercalen palabras antes de 'mil'."
+  },
+  {
+    q: "¿Cómo se escribe un millón de pesos en Argentina?",
+    a: "Se redacta 'Un millón de pesos'. Al ser una cifra entera de millones, la regla lingüística exige colocar la preposición 'de' antes del vocablo 'pesos'."
+  },
+  {
+    q: "¿Cuál es el separador decimal habitual en Argentina?",
+    a: "En la República Argentina, según las normas del Sistema Métrico Legal Argentino (SIMELA) y la costumbre contable, se utiliza la coma (,) como separador decimal y el punto (.) o espacio como separador de millares (ejemplo: $1.500,50)."
+  }
+];
+
+const schemaData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Convertidor de Cantidad con Letra en Pesos Argentinos",
+    "url": "https://numerosenletras.org/cantidad-con-letra/argentina/",
+    "description": description,
+    "applicationCategory": "FinancialApplication",
+    "operatingSystem": "All"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  }
+];
+
+const examples = [
+  { num: "$100,00", text: "Cien pesos" },
+  { num: "$500,00", text: "Quinientos pesos" },
+  { num: "$1.000,00", text: "Mil pesos (o Un mil pesos)" },
+  { num: "$1.500,00", text: "Mil quinientos pesos" },
+  { num: "$1.540,50", text: "Mil quinientos cuarenta pesos con cincuenta centavos" },
+  { num: "$10.000,00", text: "Diez mil pesos" },
+  { num: "$50.000,00", text: "Cincuenta mil pesos" },
+  { num: "$100.000,00", text: "Cien mil pesos" },
+  { num: "$1.000.000,00", text: "Un millón de pesos" },
+  { num: "$5.250.000,75", text: "Cinco millones doscientos cincuenta mil pesos con setenta y cinco centavos" }
+];
+---
+
+<Layout title={title} description={description} currentPath={currentPath} schemaData={schemaData}>
+  <div class="relative max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in">
+    <!-- Header -->
+    <header class="text-center mb-8 relative">
+      <div class="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-3 border border-emerald-100 shadow-xs">
+        <span class="text-base">🇦🇷</span>
+        <span class="font-display tracking-wide uppercase text-[10px]">Formato Bancario para Argentina (ARS)</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-3">
+        Cantidad con Letra en Pesos Argentinos
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Genera la redacción formal de importes para cheques comunes, cheques de pago diferido (CPD), contratos de locación y facturación electrónica en Argentina.
+      </p>
+    </header>
+
+    <!-- Quick Direct Answer (GEO / AI Overview optimized) -->
+    <section class="mb-8 bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 sm:p-5 text-left">
+      <div class="flex items-start gap-3">
+        <span class="p-1.5 bg-emerald-600 text-white rounded-lg text-xs font-mono font-bold mt-0.5 shrink-0">Respuesta rápida</span>
+        <div class="space-y-1">
+          <p class="text-xs sm:text-sm font-semibold text-emerald-950">
+            ¿Cómo se escribe una cantidad con letra en pesos argentinos?
+          </p>
+          <p class="text-xs sm:text-sm text-emerald-900 leading-relaxed font-sans">
+            La fórmula habitual consiste en escribir el importe entero en letras, seguido de la palabra <strong>"pesos"</strong> y la especificación de los decimales mediante <strong>"con XX centavos"</strong> o <strong>"con XX/100"</strong>.<br />
+            Ejemplo: <strong>$1.540,50 ARS</strong> se escribe: <em>«Mil quinientos cuarenta pesos con cincuenta centavos»</em>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Tool Island -->
+    <QuantityConverter client:load initialCurrency="ARS" initialAmount="1540.50" />
+
+    <!-- Practical Formatting Guide -->
+    <article class="mt-12 bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 text-left space-y-8 shadow-xs">
+      <div class="border-b border-gray-150 pb-4">
+        <h2 class="font-display font-bold text-gray-950 text-xl sm:text-2xl">
+          Estructura y Reglas para Escribir Pesos Argentinos con Letra
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Pautas contables y mercantiles para cheques del Banco Central de la República Argentina (BCRA).
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600">
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">1. Centavos y Decimales</h3>
+          <p class="text-xs leading-relaxed">
+            En la emisión de cheques en Argentina se estipulan los centavos agregando la palabra "con" y la cantidad de centavos escrita en palabras o como fracción decimal:
+          </p>
+          <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 font-mono text-xs text-gray-800">
+            ... pesos con cincuenta centavos (o con 50/100)
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">2. ¿"Mil" o "Un mil" en Cheques Argentinos?</h3>
+          <p class="text-xs leading-relaxed">
+            Aunque la RAE indica que no es preceptivo anteponer "un", en bancos argentinos (Banco Nación, Galicia, Santander, Macro) suele tolerarse o aconsejarse <strong>"Un mil pesos"</strong> para clausurar el margen izquierdo del renglón.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">3. Uso de la Preposición "de" con Millones</h3>
+          <p class="text-xs leading-relaxed">
+            Si la suma termina exactamente en millones (ej. $2.000.000), debe interponerse "de": <em>Dos millones <strong>de</strong> pesos</em>. Si contiene millares (ej. $2.500.000), se escribe <em>Dos millones quinientos mil pesos</em>.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-900 text-sm">4. Separadores de Miles y Decimales</h3>
+          <p class="text-xs leading-relaxed">
+            En Argentina es estándar el uso del punto para los miles y la coma para los decimales (ej. $1.500,50). Al rellenar cheques, es conveniente encerrar la cifra entre signos numerales o almohadillas (#1.500,50#).
+          </p>
+        </div>
+      </div>
+
+      <!-- Conversion Examples Table -->
+      <div class="space-y-4 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-base">
+          Tabla de Cantidades Frecuentes en Pesos Argentinos (ARS)
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border border-gray-200 rounded-xl overflow-hidden">
+            <thead class="bg-gray-50 text-gray-700 font-semibold border-b border-gray-200">
+              <tr>
+                <th class="p-3">Importe en Cifra</th>
+                <th class="p-3">Cantidad con Letra (Formato Argentino)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 font-mono">
+              {examples.map((item, idx) => (
+                <tr class={idx % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
+                  <td class="p-3 font-bold text-gray-900 whitespace-nowrap">{item.num}</td>
+                  <td class="p-3 text-gray-700 font-sans">{item.text}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Common Mistakes -->
+      <div class="space-y-3 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-base">Errores Frecuentes en Textos Legales Argentinos</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs text-gray-600 leading-relaxed font-sans">
+          <li><strong>Separar las decenas del 21 al 29:</strong> Se escriben en una sola palabra: <em>veintiuno</em>, <em>veintidós</em>, etc.</li>
+          <li><strong>Discrepancia entre números y letras:</strong> Recuerda que la Ley 24.452 otorga primacía indiscutible al texto escrito en letras.</li>
+          <li><strong>Omitir la palabra "pesos":</strong> Al formular contratos o pagarés, el nombre de la moneda debe constar taxativamente.</li>
+        </ul>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="space-y-4 pt-4 border-t border-gray-150">
+        <h3 class="font-bold text-gray-900 text-base">Preguntas Frecuentes sobre Cheques e Importes en Argentina</h3>
+        <div class="space-y-3">
+          {faqs.map((faq, index) => (
+            <details class="group border border-gray-150 rounded-xl open:border-emerald-300 open:bg-emerald-50/15 transition-all p-3.5" open={index === 0}>
+              <summary class="font-semibold text-xs sm:text-sm text-gray-800 cursor-pointer list-none flex justify-between items-center">
+                <span>{faq.q}</span>
+                <span class="text-gray-400 group-open:rotate-180 transition-transform text-xs ml-2">▼</span>
+              </summary>
+              <p class="text-xs text-gray-600 mt-2 leading-relaxed border-t border-gray-150/60 pt-2 font-sans">
+                {faq.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- Sources and Revision -->
+      <div class="pt-6 border-t border-gray-150 space-y-2 text-xs text-gray-500 font-sans">
+        <h4 class="font-bold text-gray-800 text-xs uppercase tracking-wider font-mono">Fuentes consultadas</h4>
+        <ul class="list-disc pl-5 space-y-1 text-[11px]">
+          <li>
+            <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/15000-19999/19441/texact.htm" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              InfoLEG - Ley N° 24.452 (Ley de Cheques de la República Argentina, Artículo 6)
+            </a>
+          </li>
+          <li>
+            <a href="https://www.bcra.gob.ar/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              Banco Central de la República Argentina (BCRA) - Normas sobre Instrumentos de Pago y Cheques
+            </a>
+          </li>
+          <li>
+            <a href="https://www.rae.es/dpd/cardinales" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              Real Academia Española - Diccionario panhispánico de dudas (Cardinal)
+            </a>
+          </li>
+        </ul>
+        <p class="text-[11px] text-gray-400 pt-2 font-mono">
+          Última revisión: septiembre de 2026. Información de orientación para trámites bancarios y redacción contractual.
+        </p>
+      </div>
+    </article>
+
+    <!-- Contextual Interlinking Matrix -->
+    <InterlinkingMatrix currentPath={currentPath} />
+  </div>
+</Layout>

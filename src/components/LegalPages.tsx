@@ -206,27 +206,47 @@ export function AboutUs({ onNavigate }: { onNavigate?: (path: string) => void })
                 <p className="text-gray-500 text-[11px] sm:text-xs mt-0.5 leading-relaxed">Convierte enteros simples a texto literario instantáneamente según reglas RAE.</p>
               </div>
             </div>
-            <div className="flex items-start gap-3 p-3 bg-gray-50/50 rounded-xl border border-gray-100/40 hover:bg-blue-50/20 transition-all cursor-pointer" onClick={() => onNavigate && onNavigate("/cantidad-con-letra")}>
+            <div className="flex items-start gap-3 p-3 bg-gray-50/50 rounded-xl border border-gray-100/40 hover:bg-blue-50/20 transition-all cursor-pointer" onClick={() => onNavigate && onNavigate("/cantidad-con-letra/")}>
               <span className="text-blue-600 font-bold shrink-0 mt-0.5">✓</span>
               <div>
                 <strong className="text-gray-900 text-xs sm:text-sm block">Importes de Dinero Formales</strong>
                 <p className="text-gray-500 text-[11px] sm:text-xs mt-0.5 leading-relaxed">Formatos de moneda para el llenado y verificación de cheques o facturas con fracción decimal.</p>
               </div>
             </div>
-            <div className="flex items-start gap-3 p-3 bg-gray-50/50 rounded-xl border border-gray-100/40 hover:bg-blue-50/20 transition-all cursor-pointer" onClick={() => onNavigate && onNavigate("/como-se-escribe")}>
+            <div className="flex items-start gap-3 p-3 bg-gray-50/50 rounded-xl border border-gray-100/40 hover:bg-blue-50/20 transition-all cursor-pointer" onClick={() => onNavigate && onNavigate("/como-se-escribe/")}>
               <span className="text-blue-600 font-bold shrink-0 mt-0.5">✓</span>
               <div>
                 <strong className="text-gray-900 text-xs sm:text-sm block">Consultas de Ortografía y FAQ</strong>
                 <p className="text-gray-500 text-[11px] sm:text-xs mt-0.5 leading-relaxed">Respuestas didácticas a dudas clásicas (¿cien o ciento?, ¿veintiuno o veintiún?).</p>
               </div>
             </div>
-            <div className="flex items-start gap-3 p-3 bg-gray-50/50 rounded-xl border border-gray-100/40 hover:bg-blue-50/20 transition-all cursor-pointer" onClick={() => onNavigate && onNavigate("/letras-aesthetic")}>
+            <div className="flex items-start gap-3 p-3 bg-gray-50/50 rounded-xl border border-gray-100/40 hover:bg-blue-50/20 transition-all cursor-pointer" onClick={() => onNavigate && onNavigate("/letras-aesthetic/")}>
               <span className="text-blue-600 font-bold shrink-0 mt-0.5">✓</span>
               <div>
                 <strong className="text-gray-900 text-xs sm:text-sm block">Fuentes de Letras de Diseño</strong>
                 <p className="text-gray-500 text-[11px] sm:text-xs mt-0.5 leading-relaxed">Generador complementario de letras aesthetic, cursivas y burbuja para biografías y redes.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Editorial Team & Methodological Standards */}
+        <section className="bg-white p-6 sm:p-10 rounded-3xl border border-gray-100 shadow-xl shadow-gray-100/30 space-y-4 text-left">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-950 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-600 rounded-full" />
+            Equipo Editorial y Principios de Publicación
+          </h2>
+          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+            Las guías, tablas y algoritmos de <strong>numerosenletras.org</strong> son redactados y supervisados por nuestro <strong>Equipo editorial</strong>, basándonos en los tratados gramaticales de la Real Academia Española (RAE), la Asociación de Academias de la Lengua Española (ASALE) y las directivas de títulos valores de los bancos centrales de América Latina y España.
+          </p>
+          <div className="pt-2">
+            <a 
+              href="/fuentes-y-metodologia/" 
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline"
+            >
+              <span>Conoce nuestras fuentes y metodología de verificación</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
           </div>
         </section>
       </div>
