@@ -26,7 +26,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇲🇽",
     country: "México",
     region: "north-central",
-    defaultBank: "BANCO INTERNACIONAL DE MÉXICO"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "USD",
@@ -40,7 +40,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇺🇸",
     country: "EE.UU.",
     region: "north-central",
-    defaultBank: "FEDERAL RESERVE BANK / CHASE BANK"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "EUR",
@@ -54,7 +54,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇪🇺",
     country: "Europa",
     region: "europe",
-    defaultBank: "BANCO CENTRAL EUROPEO / DE ESPAÑA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "COP",
@@ -68,7 +68,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇨🇴",
     country: "Colombia",
     region: "south",
-    defaultBank: "BANCO DE LA REPÚBLICA DE COLOMBIA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "PEN",
@@ -82,7 +82,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇵🇪",
     country: "Perú",
     region: "south",
-    defaultBank: "BANCO CENTRAL DE RESERVA DEL PERÚ"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "ARS",
@@ -96,7 +96,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇦🇷",
     country: "Argentina",
     region: "south",
-    defaultBank: "BANCO DE LA NACIÓN ARGENTINA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "CLP",
@@ -110,7 +110,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇨🇱",
     country: "Chile",
     region: "south",
-    defaultBank: "BANCO CENTRAL DE CHILE"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "VES",
@@ -124,7 +124,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇻🇪",
     country: "Venezuela",
     region: "south",
-    defaultBank: "BANCO CENTRAL DE VENEZUELA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "BOB",

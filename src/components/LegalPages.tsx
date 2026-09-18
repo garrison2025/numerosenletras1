@@ -237,7 +237,7 @@ export function AboutUs({ onNavigate }: { onNavigate?: (path: string) => void })
             Equipo Editorial y Principios de Publicación
           </h2>
           <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-            Las guías, tablas y algoritmos de <strong>numerosenletras.org</strong> son redactados y supervisados por nuestro <strong>Equipo editorial</strong>, basándonos en los tratados gramaticales de la Real Academia Española (RAE), la Asociación de Academias de la Lengua Española (ASALE) y las directivas de títulos valores de los bancos centrales de América Latina y España.
+            <strong>numerosenletras.org</strong> es un recurso digital público de consulta lingüística y utilitaria para la escritura de cifras en español. Nuestro equipo recopila y sistematiza las directrices oficiales de la Real Academia Española (RAE), la Asociación de Academias de la Lengua Española (ASALE) y el marco mercantil aplicable en los países hispanohablantes para plasmarlas en algoritmos comprensibles y guías de consulta abierta.
           </p>
           <div className="pt-2">
             <a 
@@ -457,8 +457,8 @@ export function TermsOfService() {
     },
     dev: {
       title: "Desarrolladores & API",
-      badge: "Código abierto",
-      desc: "El código y diseño visual son propiedad intelectual del portal. Te invitamos a leer nuestro código de conversión de forma libre para implementarlo en tus propios proyectos bajo atribución.",
+      badge: "Código visible",
+      desc: "El código y diseño visual son propiedad intelectual del portal. Ofrecemos acceso visible y transparente a la lógica de conversión para que puedas analizar cómo implementamos las reglas gramaticales bajo atribución.",
       icon: Code,
       color: "border-purple-200 bg-purple-50/20"
     }

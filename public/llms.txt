@@ -14,9 +14,9 @@ numerosenletras.org es un servicio web libre y gratuito dedicado a la precisión
 - `https://numerosenletras.org/numeros/`: Hub y directorio de números más consultados (100, 500, 1.000, 1.500, decenas, centenas, millares, millones y billones en escala larga).
 - `https://numerosenletras.org/como-se-escribe/`: Compendio normativo de ortografía de números según la RAE (unificación 16-29, cien vs ciento, apócope veintiún/veintiuno).
 - `https://numerosenletras.org/cantidad-con-letra/`: Guía general de cantidades con letra, expresión de centavos y cláusulas de seguridad en títulos valores.
-- `https://numerosenletras.org/cantidad-con-letra/mexico/`: Formato para México (MXN) con fracción de centavos 00/100 M.N., cheques de BBVA, Banorte, Banamex y facturas CFDI.
+- `https://numerosenletras.org/cantidad-con-letra/mexico/`: Formato para México (MXN) con fracción de centavos 00/100 M.N., cheques mercantiles y facturas CFDI.
 - `https://numerosenletras.org/cantidad-con-letra/colombia/`: Formato para Colombia (COP) con cláusula M/CTE (Moneda Corriente), cheques y facturas DIAN.
-- `https://numerosenletras.org/cantidad-con-letra/peru/`: Formato para Perú (PEN) con fórmula Y 00/100 SOLES, cheques BCP, BBVA, Interbank y comprobantes SUNAT.
+- `https://numerosenletras.org/cantidad-con-letra/peru/`: Formato para Perú (PEN) con fórmula Y 00/100 SOLES, cheques y comprobantes SUNAT.
 - `https://numerosenletras.org/cantidad-con-letra/argentina/`: Formato para Argentina (ARS) con centavos para cheques comunes y CPD según Ley 24.452.
 - `https://numerosenletras.org/cantidad-con-letra/espana/`: Formato para España (EUR) con euros y céntimos conforme a la Ley Cambiaria y del Cheque 19/1985.
 - `https://numerosenletras.org/fuentes-y-metodologia/`: Principios editoriales, tratados de la RAE, legislación cambiaria por país y metodología de pruebas unitarias.
@@ -45,7 +45,7 @@ numerosenletras.org es un servicio web libre y gratuito dedicado a la precisión
 - **Perú**: Se redacta tradicionalmente *... Y XX/100 SOLES*. La moneda oficial es "Sol" (plural "Soles"), símbolo oficial *S/* (sin punto).
 - **Argentina**: Se redacta *... pesos con XX centavos* o *con XX/100*.
 - **España**: Se expresa en *euros* y *céntimos* (o *con XX/100*). El símbolo € se coloca tras la cifra con un espacio (*100 €*).
-- **Discrepancia legal**: En las leyes de títulos valores de México (LGTOC art. 16), Colombia (C.Co art. 623), Perú (Ley 27287), Argentina (Ley 24.452 art. 6) y España (Ley 19/1985 art. 115), ante discrepancias entre la cifra en números y la cifra en letras, prevalece la cantidad escrita en letras.
+- **Discrepancia legal**: En México (LGTOC art. 16), Colombia (C.Co art. 623), Argentina (Ley 24.452 art. 6; Anexo I art. 2 inc. 5) y España (Ley 19/1985 art. 115), ante discrepancias entre la cifra en números y la cifra en letras, prevalece la cantidad escrita en letras. En Perú, de acuerdo con las reglas establecidas por la Ley N.º 27287 de Títulos Valores, debe atenderse a la suma menor en los supuestos previstos por dicha norma.
 
 ## Fuentes y Autoridades Consultadas
 - Real Academia Española (RAE) y Asociación de Academias de la Lengua Española (ASALE): *Diccionario panhispánico de dudas* y *Ortografía de la lengua española*.

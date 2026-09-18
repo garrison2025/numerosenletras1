@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import QuantityConverter from '../../components/QuantityConverter';
-import InterlinkingMatrix from '../../components/InterlinkingMatrix.astro';
+import { getCountryExamples } from '../../utils/countryFinancialFormats.js';
 
 const title = "Cantidad con Letra en Pesos Argentinos | Convertidor ARS y Cheques";
 const description = "Convierte cifras a pesos argentinos con letra (ARS). Formatos de redacción con centavos para cheques bancarios comunes o de pago diferido y facturas electrónicas en Argentina.";
@@ -14,15 +14,15 @@ const faqs = [
   },
   {
     q: "¿Qué sucede si la suma en letras difiere de la suma en números en un cheque argentino?",
-    a: "De acuerdo con el Artículo 6 de la Ley de Cheques de la República Argentina (Ley 24.452), si el cheque tuviese su importe escrito en letras y en cifras y hubiese diferencia entre una y otra mención, valdrá por la cantidad escrita en letras."
+    a: "De acuerdo con la Ley de Cheques de la República Argentina (Ley 24.452, Anexo I, artículo 2, inciso 5 y artículo 6), si el cheque tuviese su importe escrito en letras y en cifras y hubiese diferencia entre una y otra mención, valdrá por la cantidad escrita en letras."
   },
   {
     q: "¿Se escribe 'mil pesos' o 'un mil pesos' en cheques en Argentina?",
-    a: "La norma gramatical de la Real Academia Española (RAE) aconseja escribir 'mil pesos'. Sin embargo, en la práctica bancaria argentina (Banco Nación, Santander, Galicia, BBVA) es habitual y admitido consignar 'un mil pesos' para evitar que se intercalen palabras antes de 'mil'."
+    a: "La norma gramatical de la Real Academia Española (RAE) aconseja escribir 'mil pesos'. Sin embargo, en la práctica bancaria argentina suele admitirse consignar 'un mil pesos' con fin preventivo para evitar intercalar palabras antes de 'mil'."
   },
   {
     q: "¿Cómo se escribe un millón de pesos en Argentina?",
-    a: "Se redacta 'Un millón de pesos'. Al ser una cifra entera de millones, la regla lingüística exige colocar la preposición 'de' antes del vocablo 'pesos'."
+    a: "Se redacta 'Un millón de pesos'. Al ser una cifra entera de millones, la regla lingüística general exige colocar la preposición 'de' antes del vocablo 'pesos'."
   },
   {
     q: "¿Cuál es el separador decimal habitual en Argentina?",
@@ -54,18 +54,7 @@ const schemaData = [
   }
 ];
 
-const examples = [
-  { num: "$100,00", text: "Cien pesos" },
-  { num: "$500,00", text: "Quinientos pesos" },
-  { num: "$1.000,00", text: "Mil pesos (o Un mil pesos)" },
-  { num: "$1.500,00", text: "Mil quinientos pesos" },
-  { num: "$1.540,50", text: "Mil quinientos cuarenta pesos con cincuenta centavos" },
-  { num: "$10.000,00", text: "Diez mil pesos" },
-  { num: "$50.000,00", text: "Cincuenta mil pesos" },
-  { num: "$100.000,00", text: "Cien mil pesos" },
-  { num: "$1.000.000,00", text: "Un millón de pesos" },
-  { num: "$5.250.000,75", text: "Cinco millones doscientos cincuenta mil pesos con setenta y cinco centavos" }
-];
+const examples = getCountryExamples('AR');
 ---
 
 <Layout title={title} description={description} currentPath={currentPath} schemaData={schemaData}>
@@ -101,7 +90,7 @@ const examples = [
     </section>
 
     <!-- Interactive Tool Island -->
-    <QuantityConverter client:load initialCurrency="ARS" initialAmount="1540.50" />
+    <QuantityConverter client:load initialCurrency="ARS" initialAmount="1540.50" initialCity="Buenos Aires" initialNumberFormatStyle="ES" />
 
     <!-- Practical Formatting Guide -->
     <article class="mt-12 bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 text-left space-y-8 shadow-xs">
@@ -110,7 +99,7 @@ const examples = [
           Estructura y Reglas para Escribir Pesos Argentinos con Letra
         </h2>
         <p class="text-xs text-gray-500 mt-1">
-          Pautas contables y mercantiles para cheques del Banco Central de la República Argentina (BCRA).
+          Pautas contables y mercantiles para instrumentos de pago conforme a la Ley 24.452.
         </p>
       </div>
 
@@ -128,7 +117,7 @@ const examples = [
         <div class="space-y-3">
           <h3 class="font-bold text-gray-900 text-sm">2. ¿"Mil" o "Un mil" en Cheques Argentinos?</h3>
           <p class="text-xs leading-relaxed">
-            Aunque la RAE indica que no es preceptivo anteponer "un", en bancos argentinos (Banco Nación, Galicia, Santander, Macro) suele tolerarse o aconsejarse <strong>"Un mil pesos"</strong> para clausurar el margen izquierdo del renglón.
+            Aunque la RAE indica que no es preceptivo anteponer "un", en la práctica bancaria argentina suele admitirse <strong>"Un mil pesos"</strong> con el propósito de clausurar el margen izquierdo del renglón.
           </p>
         </div>
 
@@ -164,7 +153,7 @@ const examples = [
               {examples.map((item, idx) => (
                 <tr class={idx % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
                   <td class="p-3 font-bold text-gray-900 whitespace-nowrap">{item.num}</td>
-                  <td class="p-3 text-gray-700 font-sans">{item.text}</td>
+                  <td class="p-3 text-gray-700 font-sans">{item.text} {item.variant ? <span class="text-gray-400 text-[11px]">({item.variant})</span> : ''}</td>
                 </tr>
               ))}
             </tbody>
@@ -177,7 +166,7 @@ const examples = [
         <h3 class="font-bold text-gray-900 text-base">Errores Frecuentes en Textos Legales Argentinos</h3>
         <ul class="list-disc pl-5 space-y-1.5 text-xs text-gray-600 leading-relaxed font-sans">
           <li><strong>Separar las decenas del 21 al 29:</strong> Se escriben en una sola palabra: <em>veintiuno</em>, <em>veintidós</em>, etc.</li>
-          <li><strong>Discrepancia entre números y letras:</strong> Recuerda que la Ley 24.452 otorga primacía indiscutible al texto escrito en letras.</li>
+          <li><strong>Discrepancia entre números y letras:</strong> La Ley 24.452 (Anexo I) otorga primacía a la suma expresada en letras.</li>
           <li><strong>Omitir la palabra "pesos":</strong> Al formular contratos o pagarés, el nombre de la moneda debe constar taxativamente.</li>
         </ul>
       </div>
@@ -206,7 +195,7 @@ const examples = [
         <ul class="list-disc pl-5 space-y-1 text-[11px]">
           <li>
             <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/15000-19999/19441/texact.htm" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-              InfoLEG - Ley N° 24.452 (Ley de Cheques de la República Argentina, Artículo 6)
+              InfoLEG - Ley N° 24.452 (Ley de Cheques de la República Argentina, Anexo I, artículo 2, inciso 5 y artículo 6)
             </a>
           </li>
           <li>
@@ -223,10 +212,10 @@ const examples = [
         <p class="text-[11px] text-gray-400 pt-2 font-mono">
           Última revisión: septiembre de 2026. Información de orientación para trámites bancarios y redacción contractual.
         </p>
+        <p class="text-[11px] text-gray-500 italic mt-3 pt-3 border-t border-gray-150/70 font-sans leading-relaxed">
+          «La información y ejemplos presentados en esta página tienen carácter meramente orientativo e ilustrativo. Para la suscripción o emisión de cheques, pagarés u otros títulos valores de valor vinculante, verifique siempre las directivas particulares de su entidad bancaria y la normativa mercantil aplicable.»
+        </p>
       </div>
     </article>
-
-    <!-- Contextual Interlinking Matrix -->
-    <InterlinkingMatrix currentPath={currentPath} />
   </div>
 </Layout>

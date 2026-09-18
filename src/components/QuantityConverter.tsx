@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { convertNumberToLetters } from "../utils/numberToLetters";
+import { formatCountryFinancialAmount } from "../utils/countryFinancialFormats";
 import { 
   CURRENCIES, 
   CURRENCY_MAP, 
@@ -39,10 +40,14 @@ interface QuantityHistoryItem {
 
 export default function QuantityConverter({ 
   initialAmount,
-  initialCurrency
+  initialCurrency,
+  initialNumberFormatStyle,
+  initialCity
 }: { 
   initialAmount?: string;
   initialCurrency?: string;
+  initialNumberFormatStyle?: 'LA' | 'ES';
+  initialCity?: string;
 }) {
   const [amount, setAmount] = useState(initialAmount || "1540.50");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -116,9 +121,9 @@ export default function QuantityConverter({
 
   const [isFinancialFormat, setIsFinancialFormat] = useState(true);
   const [recipient, setRecipient] = useState("Juan Pérez Maldonado");
-  const [city, setCity] = useState("Ciudad de México");
+  const [city, setCity] = useState(initialCity || "Ciudad de México");
   const [chequeNumber, setChequeNumber] = useState("10024921");
-  const [chequeBank, setChequeBank] = useState("BANCO INTERNACIONAL DE MÉXICO");
+  const [chequeBank, setChequeBank] = useState(selectedCurrency.defaultBank || "NOMBRE DEL BANCO");
   const [signatureStyle, setSignatureStyle] = useState<'elegant' | 'modern' | 'none'>('elegant');
   
   // Sync cheque bank based on selected currency preset
@@ -127,13 +132,25 @@ export default function QuantityConverter({
       setChequeBank(selectedCurrency.defaultBank);
     }
   }, [selectedCurrency]);
+
+  useEffect(() => {
+    if (initialCity) {
+      setCity(initialCity);
+    }
+  }, [initialCity]);
   
   const [result, setResult] = useState("");
   const [copied, setCopied] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
   
   // Advanced controls
-  const [numberFormatStyle, setNumberFormatStyle] = useState<'LA' | 'ES'>('LA');
+  const [numberFormatStyle, setNumberFormatStyle] = useState<'LA' | 'ES'>(initialNumberFormatStyle || 'LA');
+
+  useEffect(() => {
+    if (initialNumberFormatStyle) {
+      setNumberFormatStyle(initialNumberFormatStyle);
+    }
+  }, [initialNumberFormatStyle]);
   const [currencyRegion, setCurrencyRegion] = useState<"all" | "north-central" | "south" | "europe">("all");
   const [searchHistoryQuery, setSearchHistoryQuery] = useState("");
   const [speaking, setSpeaking] = useState(false);
@@ -300,17 +317,29 @@ export default function QuantityConverter({
       const isNeg = cleanVal.startsWith("-");
       const posVal = isNeg ? cleanVal.substring(1) : cleanVal;
 
-      let conv = convertNumberToLetters(posVal, {
-        currency: selectedCurrency,
-        formatFinancial: isFinancialFormat,
-        decimalMode: isFinancialFormat ? 'fraction' : 'words'
-      });
+      let conv = "";
+      if (isFinancialFormat && ['MXN', 'COP', 'PEN', 'ARS', 'EUR'].includes(selectedCurrency.code)) {
+        conv = formatCountryFinancialAmount(posVal, selectedCurrency.code, {
+          uppercase: true,
+          formatStyle: numberFormatStyle
+        });
+        if (isNeg && conv !== "CERO") {
+          conv = `MENOS ${conv}`;
+        }
+      } else {
+        conv = convertNumberToLetters(posVal, {
+          currency: selectedCurrency,
+          formatFinancial: isFinancialFormat,
+          decimalMode: isFinancialFormat ? 'fraction' : 'words'
+        });
 
-      if (isNeg && conv !== "cero") {
-        conv = `MENOS ${conv}`;
+        if (isNeg && conv !== "cero") {
+          conv = `MENOS ${conv}`;
+        }
+        conv = conv.toUpperCase();
       }
 
-      setResult(conv.toUpperCase());
+      setResult(conv);
 
       // Save to history debounce if valid
       if (canUsePreferenceStorage() && historyEnabled && cleanVal && !isNaN(Number(cleanVal)) && cleanVal !== "0") {

@@ -1,10 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import QuantityConverter from '../../components/QuantityConverter';
-import InterlinkingMatrix from '../../components/InterlinkingMatrix.astro';
+import { getCountryExamples } from '../../utils/countryFinancialFormats.js';
 
 const title = "Cantidad con Letra en Soles Peruanos | Convertidor PEN y Cheques";
-const description = "Convierte cifras a soles peruanos con letra (PEN). Formato bancario con centavos fraccionarios (Y XX/100 SOLES) para cheques BCP, BBVA, facturas SUNAT y recibos en Perú.";
+const description = "Convierte cifras a soles peruanos con letra (PEN). Formato bancario con centavos fraccionarios (Y XX/100 SOLES) para cheques bancarios, facturas SUNAT y recibos en Perú.";
 const currentPath = "/cantidad-con-letra/peru/";
 
 const faqs = [
@@ -14,19 +14,19 @@ const faqs = [
   },
   {
     q: "¿Cómo se escriben los céntimos en un cheque en Perú?",
-    a: "La práctica bancaria uniforme en entidades peruanas (BCP, BBVA, Interbank, Scotiabank) es redactar la parte entera seguida del conector 'Y' y la fracción sobre cien: '... Y XX/100 SOLES'. Por ejemplo: 'Mil quinientos cuarenta Y 50/100 SOLES'."
+    a: "La práctica bancaria y comercial común en el Perú consiste en redactar la parte entera seguida del conector 'Y' y la fracción sobre cien: '... Y XX/100 SOLES'. Por ejemplo: 'Mil quinientos cuarenta Y 50/100 SOLES'."
   },
   {
     q: "¿Se escribe 'mil soles' o 'un mil soles' en cheques peruanos?",
-    a: "En el español estándar de la RAE la forma canónica es 'mil soles'. No obstante, en la emisión de cheques en Perú es frecuente y aceptado escribir 'Un mil y 00/100 soles' con el fin de inhabilitar añadidos manuscritos fraudulentos."
+    a: "En el español estándar de la RAE la forma canónica es 'mil soles'. No obstante, en la emisión de cheques en Perú suele emplearse 'Un mil y 00/100 soles' con el fin preventivo de inhabilitar añadidos manuscritos fraudulentos."
   },
   {
     q: "¿Cómo se expresa un millón de soles con letra?",
-    a: "Se redacta 'Un millón de soles y 00/100 soles' o bien 'Un millón de soles'. Al ser un millón exacto, se interpone la preposición 'de' antes del vocablo 'soles'."
+    a: "Se redacta 'Un millón de soles y 00/100 soles' o en cheques 'Un millón y 00/100 soles'. Al ser un millón exacto, en construcciones continuas se interpone la preposición 'de' antes del vocablo 'soles'."
   },
   {
     q: "¿Qué establece la Ley de Títulos Valores de Perú ante discrepancias de importes?",
-    a: "Según la Ley N° 27287 (Ley de Títulos Valores de Perú), cuando exista discrepancia entre el monto expresado en números y el consignado en letras en un cheque o pagaré, prevalecerá la cantidad escrita en letras."
+    a: "De acuerdo con el artículo 5 de la Ley N.º 27287 (Ley de Títulos Valores de Perú), cuando exista diferencia en la expresión del importe del título valor, debe atenderse a la suma menor en los supuestos previstos por dicha norma, a diferencia de otras legislaciones donde prima la letra."
   }
 ];
 
@@ -54,18 +54,7 @@ const schemaData = [
   }
 ];
 
-const examples = [
-  { num: "S/ 100.00", text: "Cien y 00/100 soles" },
-  { num: "S/ 500.00", text: "Quinientos y 00/100 soles" },
-  { num: "S/ 1,000.00", text: "Mil y 00/100 soles (o Un mil y 00/100 soles)" },
-  { num: "S/ 1,500.00", text: "Mil quinientos y 00/100 soles" },
-  { num: "S/ 1,540.50", text: "Mil quinientos cuarenta y 50/100 soles" },
-  { num: "S/ 10,000.00", text: "Diez mil y 00/100 soles" },
-  { num: "S/ 50,000.00", text: "Cincuenta mil y 00/100 soles" },
-  { num: "S/ 100,000.00", text: "Cien mil y 00/100 soles" },
-  { num: "S/ 1,000,000.00", text: "Un millón y 00/100 soles" },
-  { num: "S/ 2,450.75", text: "Dos mil cuatrocientos cincuenta y 75/100 soles" }
-];
+const examples = getCountryExamples('PE');
 ---
 
 <Layout title={title} description={description} currentPath={currentPath} schemaData={schemaData}>
@@ -101,7 +90,7 @@ const examples = [
     </section>
 
     <!-- Interactive Tool Island -->
-    <QuantityConverter client:load initialCurrency="PEN" initialAmount="1540.50" />
+    <QuantityConverter client:load initialCurrency="PEN" initialAmount="1540.50" initialCity="Lima" />
 
     <!-- Practical Formatting Guide -->
     <article class="mt-12 bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 text-left space-y-8 shadow-xs">
@@ -118,7 +107,7 @@ const examples = [
         <div class="space-y-3">
           <h3 class="font-bold text-gray-900 text-sm">1. La Fórmula "Y XX/100 SOLES"</h3>
           <p class="text-xs leading-relaxed">
-            En los cheques emitidos en el Perú (Banco de Crédito del Perú BCP, BBVA, Interbank, BanBif), el campo del importe con letra culmina tradicionalmente con la conjunción <strong>"Y"</strong>, la fracción de céntimos sobre cien y el nombre de la divisa en mayúsculas:
+            En los cheques emitidos en el Perú, el campo del importe con letra culmina tradicionalmente con la conjunción <strong>"Y"</strong>, la fracción de céntimos sobre cien y el nombre de la divisa en mayúsculas:
           </p>
           <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 font-mono text-xs text-gray-800">
             ... Y 00/100 SOLES
@@ -135,7 +124,7 @@ const examples = [
         <div class="space-y-3">
           <h3 class="font-bold text-gray-900 text-sm">3. Uso de "Un mil" en Títulos Valores Peruanos</h3>
           <p class="text-xs leading-relaxed">
-            Si bien la RAE prescribe redactar <em>mil</em>, en letras de cambio y pagarés bancarios peruanos se acepta <strong>"Un mil"</strong> para neutralizar cualquier adulteración o espacio en blanco previo.
+            Si bien la RAE prescribe redactar <em>mil</em>, en letras de cambio y cheques bancarios peruanos suele encontrarse la mención preventiva <strong>"Un mil"</strong> para neutralizar cualquier adulteración o espacio en blanco previo.
           </p>
         </div>
 
@@ -164,7 +153,7 @@ const examples = [
               {examples.map((item, idx) => (
                 <tr class={idx % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
                   <td class="p-3 font-bold text-gray-900 whitespace-nowrap">{item.num}</td>
-                  <td class="p-3 text-gray-700 font-sans">{item.text}</td>
+                  <td class="p-3 text-gray-700 font-sans">{item.text} {item.variant ? <span class="text-gray-400 text-[11px]">({item.variant})</span> : ''}</td>
                 </tr>
               ))}
             </tbody>
@@ -178,7 +167,7 @@ const examples = [
         <ul class="list-disc pl-5 space-y-1.5 text-xs text-gray-600 leading-relaxed font-sans">
           <li><strong>Escribir "Nuevos Soles":</strong> La moneda oficial se llama legalmente "Sol" desde fines de 2015.</li>
           <li><strong>Colocar punto en el símbolo (S/.):</strong> El símbolo legalmente vigente ante el BCRP es <em>S/</em> sin punto.</li>
-          <li><strong>Olvidar indicar céntimos fraccionarios:</strong> En cheques se debe colocar expresamente <em>00/100</em> cuando no hay céntimos.</li>
+          <li><strong>Olvidar indicar céntimos fraccionarios:</strong> En cheques se suele colocar expresamente <em>00/100</em> cuando no hay céntimos.</li>
         </ul>
       </div>
 
@@ -206,7 +195,7 @@ const examples = [
         <ul class="list-disc pl-5 space-y-1 text-[11px]">
           <li>
             <a href="https://www.bcrp.gob.pe/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-              Banco Central de Reserva del Perú (BCRP) - Ley N° 30381 (Cambio de denominación de la unidad monetaria a Sol)
+              Banco Central de Reserva del Perú (BCRP) — portal institucional (Ley N° 30381 sobre unidad monetaria Sol)
             </a>
           </li>
           <li>
@@ -223,10 +212,10 @@ const examples = [
         <p class="text-[11px] text-gray-400 pt-2 font-mono">
           Última revisión: septiembre de 2026. Documento informativo orientado a la correcta transcripción literal de importes.
         </p>
+        <p class="text-[11px] text-gray-500 italic mt-3 pt-3 border-t border-gray-150/70 font-sans leading-relaxed">
+          «La información y ejemplos presentados en esta página tienen carácter meramente orientativo e ilustrativo. Para la suscripción o emisión de cheques, pagarés u otros títulos valores de valor vinculante, verifique siempre las directivas particulares de su entidad bancaria y la normativa mercantil aplicable.»
+        </p>
       </div>
     </article>
-
-    <!-- Contextual Interlinking Matrix -->
-    <InterlinkingMatrix currentPath={currentPath} />
   </div>
 </Layout>
