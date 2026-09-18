@@ -220,7 +220,7 @@ export default function BlogWidget({ slug }: BlogWidgetProps) {
             )}
           </div>
           <a 
-            href="/letras-burbuja"
+            href="/letras-burbuja/"
             className="block w-full text-center text-[10px] font-bold text-indigo-600 hover:underline pt-1"
           >
             Ir al conversor completo de letras burbuja →
@@ -300,7 +300,7 @@ export default function BlogWidget({ slug }: BlogWidgetProps) {
             )}
           </div>
           <a 
-            href="/letras-aesthetic"
+            href="/letras-aesthetic/"
             className="block w-full text-center text-[10px] font-bold text-pink-600 hover:underline pt-1"
           >
             Ir al conversor avanzado de letras aesthetic →

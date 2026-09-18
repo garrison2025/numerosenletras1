@@ -141,7 +141,7 @@ export default function CookieBanner() {
           </div>
           <div className="text-center">
             <a
-              href="/privacidad"
+              href="/privacidad/"
               className="text-[10px] text-gray-400 hover:text-blue-500 hover:underline inline-block"
             >
               Leer nuestra Política de Privacidad
