@@ -7,6 +7,9 @@ export default defineConfig({
   site: 'https://numerosenletras.org',
   integrations: [react()],
   output: 'static',
+  build: {
+    inlineStylesheets: 'always'
+  },
   vite: {
     plugins: [tailwindcss()]
   },

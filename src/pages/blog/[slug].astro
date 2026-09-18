@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { BLOG_POSTS } from '../../data/blog';
 import Layout from '../../layouts/Layout.astro';
 import BlogWidget from '../../components/BlogWidget';
@@ -15,9 +16,7 @@ const currentPath = `/blog/${post.slug}`;
 
 const relatedPosts = BLOG_POSTS.filter(p => p.slug !== post.slug).slice(0, 2);
 
-const imageSrc = post.image && typeof post.image === 'object' && 'src' in post.image 
-  ? (post.image as any).src 
-  : post.image;
+const imageSrc = post.image.src;
 
 const schemaData = {
   "@context": "https://schema.org",
@@ -42,7 +41,7 @@ const schemaData = {
       "url": "https://numerosenletras.org/favicon.svg"
     }
   },
-  "image": imageSrc ? (imageSrc.startsWith("http") ? imageSrc : `https://numerosenletras.org${imageSrc}`) : undefined
+  "image": new URL(post.image.src, "https://numerosenletras.org").href
 };
 
 const breadcrumbs = [
@@ -101,14 +100,18 @@ const breadcrumbs = [
     </header>
 
     <!-- Featured Image -->
-    {imageSrc && (
+    {post.image && (
       <div class="mb-8 rounded-3xl overflow-hidden border border-gray-100 shadow-sm bg-gray-50 max-h-96">
-        <img 
-          src={imageSrc} 
+        <Image 
+          src={post.image} 
           alt={post.title}
-          class="w-full h-full object-cover"
+          widths={[480, 640, 768, 896, 1200]}
+          sizes="(max-width: 896px) calc(100vw - 2rem), 896px"
           loading="eager"
           decoding="async"
+          fetchpriority="high"
+          quality={78}
+          class="w-full h-full object-cover"
         />
       </div>
     )}

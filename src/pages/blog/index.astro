@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { BLOG_POSTS } from '../../data/blog';
 import Layout from '../../layouts/Layout.astro';
 
@@ -42,12 +43,15 @@ const breadcrumbs = [
         <article class="bg-white rounded-3xl border border-gray-100 shadow-xs hover:shadow-md hover:border-blue-200 transition-all overflow-hidden flex flex-col sm:flex-row group">
           {post.image && (
             <div class="sm:w-1/3 h-48 sm:h-auto relative overflow-hidden bg-gray-50 shrink-0">
-              <img 
+              <Image 
                 src={post.image} 
                 alt={post.title}
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                widths={[320, 480, 640, 768]}
+                sizes="(max-width: 640px) calc(100vw - 2rem), 300px"
                 loading="lazy"
                 decoding="async"
+                quality={75}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
           )}

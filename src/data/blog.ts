@@ -1,8 +1,9 @@
-const imgNumerosLetras = "/assets/images/blog_numeros_letras.webp";
-const imgLetrasBurbuja = "/assets/images/blog_letras_burbuja.webp";
-const imgLetrasAesthetic = "/assets/images/blog_letras_aesthetic.webp";
+import type { ImageMetadata } from "astro";
+import imgNumerosLetras from "../assets/images/blog_numeros_letras.webp";
+import imgLetrasBurbuja from "../assets/images/blog_letras_burbuja.webp";
+import imgLetrasAesthetic from "../assets/images/blog_letras_aesthetic.webp";
 
-export const SVG_FALLBACKS: Record<string, string> = {
+export const SVG_FALLBACKS: Record<string, ImageMetadata> = {
   "como-convertir-numeros-a-letras": imgNumerosLetras,
   "letras-burbuja-redondas": imgLetrasBurbuja,
   "letras-aesthetic-guia-completa": imgLetrasAesthetic,
@@ -19,7 +20,7 @@ export interface BlogPost {
   category: "Finanzas" | "Diseño" | "Ortografía";
   keywords: string[];
   content: string;
-  image: string;
+  image: ImageMetadata;
 }
 
 export const BLOG_POSTS: BlogPost[] = [

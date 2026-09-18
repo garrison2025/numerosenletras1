@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar.astro';
 import InterlinkingMatrix from '../components/InterlinkingMatrix.astro';
 import CookieBanner from '../components/CookieBanner';
 import { BLOG_POSTS } from '../data/blog';
+import defaultOgImage from '../assets/images/blog_numeros_letras.webp';
 import '../index.css';
 
 interface Props {
@@ -12,13 +13,14 @@ interface Props {
   image?: string;
   currentPath: string;
   schemaData?: any;
+  breadcrumbs?: any;
 }
 
 const {
   title = "Conversor de Números a Letras | Escribir Números en Palabras",
   description = "Herramienta online para convertir números a letras en español de forma instantánea. Ideal para cheques, contratos, facturas y aprender cómo se escribe cualquier cantidad.",
   keywords = "como se escribe con letra, cómo se escribe con letra, conversor de numeros a letras, números a letras, letras burbuja, letras burbuja copiar y pegar, generador de letras burbuja, letras aesthetic",
-  image = "/assets/images/blog_numeros_letras.webp",
+  image = defaultOgImage.src,
   currentPath,
   schemaData
 } = Astro.props;
@@ -87,15 +89,6 @@ const breadcrumbs = getBreadcrumbs();
     <link rel="alternate" hreflang="es" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
     <link rel="alternate" type="application/rss+xml" title="numerosenletras.org - RSS Feed" href="/rss.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@500;700&display=swap" />
-
-    {currentPath.startsWith("/blog") && image && (
-      <link rel="preload" as="image" href={image} fetchpriority="high" type="image/webp" />
-    )}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
