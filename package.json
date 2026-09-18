@@ -1,0 +1,32 @@
+{
+  "name": "react-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port=3000 --host=0.0.0.0",
+    "build": "astro build",
+    "preview": "astro preview --port=3000 --host=0.0.0.0",
+    "clean": "rm -rf dist .astro",
+    "lint": "tsc --noEmit",
+    "test": "tsx --test test/**/*.test.ts",
+    "check": "npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "@astrojs/react": "^6.0.1",
+    "@tailwindcss/vite": "^4.1.14",
+    "astro": "^7.1.1",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Numeros en Letras - Conversor Gratis",
+  "short_name": "NumerosEnLetras",
+  "description": "Convertidor instantáneo de números a letras en español para cheques, contratos y facturas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

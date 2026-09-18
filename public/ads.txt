@@ -1,0 +1,8 @@
+# Archivo ads.txt para numerosenletras.org (Google AdSense)
+# Reemplaza 'pub-0000000000000000' con tu propio ID de editor (Publisher ID) de AdSense.
+# Puedes obtener este ID en tu panel de Google AdSense (sección "Sitios" o "Cuenta").
+# 
+# Formato estándar de línea autorizada de Google AdSense:
+# google.com, pub-[TUIDDEPUBLISHER], DIRECT, f08c47fec0942fa0
+
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

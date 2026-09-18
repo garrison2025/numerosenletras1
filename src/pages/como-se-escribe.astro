@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HowToEscribe from '../components/HowToEscribe';
+
+const title = "¿Cómo se Escribe con Letra? | Ortografía de Números en Español y RAE";
+const description = "Guía ortográfica y analizador de números en letras según la RAE. Aprende las reglas de acentuación, concordancia de género y redacción para cheques y contratos.";
+const keywords = "como se escribe con letra, ortografia de numeros, numeros en letras rae, cien o ciento, veintiuno o veintiun, un mil o mil";
+
+const faqs = [
+  {
+    q: "¿Cómo se escribe con letra el número 100?",
+    a: "Se escribe estrictamente como 'cien' cuando expresa la cantidad exacta de 100 (ej: cien personas, cien euros). Se transforma en 'ciento' cuando va seguido de otros números menores (ej: ciento uno, ciento cincuenta)."
+  },
+  {
+    q: "Al buscar cómo se escribe con letra el 21, ¿se usa 'veintiuno' o 'veintiún'?",
+    a: "Ambas formas son correctas según el contexto sintáctico: se usa 'veintiún' cuando acompaña directamente a un sustantivo masculino (ej: veintiún pesos, veintiún días). Se utiliza 'veintiuno' de forma aislada, en el conteo o al final de oración. En femenino se emplea 'veintiuna' (ej: veintiuna páginas)."
+  },
+  {
+    q: "Para transacciones financieras, ¿cómo se escribe con letra el 1000?",
+    a: "La RAE aconseja el uso exclusivo de 'mil' cuando nos referimos de forma directa a la cifra de 1000 (ej: mil dólares, mil gracias). La fórmula 'un mil' se considera redundante en el habla común, pero es aceptada y muy habitual en cheques, contratos y documentos notariales para evitar alteraciones fraudulentas."
+  },
+  {
+    q: "¿Cómo se escribe con letra la palabra millón?",
+    a: "'Millón' lleva tilde en la 'o' por ser aguda terminada en 'n'. Su plural 'millones' no lleva tilde por ser palabra llana terminada en 's'. Para cifras exactas se antepone la preposición 'de' a la moneda (ej: cinco millones de pesos)."
+  },
+  {
+    q: "¿Cómo se escribe con letra el rango del 21 al 29?",
+    a: "Según la norma ortográfica de la RAE, los números del 21 al 29 se escriben en una sola palabra y con acentuación gráfica cuando corresponda: veintiuno, veintidós, veintitrés, veinticuatro, veinticinco, veintiséis, veintisiete, veintiocho y veintinueve. A partir del 31, se escriben en palabras separadas por la conjunción 'y' (ej: treinta y uno)."
+  },
+  {
+    q: "¿Cómo se escribe con letra el número 0?",
+    a: "Se escribe 'cero' con 'c'. Funciona como sustantivo masculino y su plural regular es 'ceros'."
+  }
+];
+
+const schemaData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Analizador Ortográfico de Números en Letras",
+    "url": "https://numerosenletras.org/como-se-escribe",
+    "description": description,
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  }
+];
+
+const breadcrumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "¿Cómo se Escribe?", path: "/como-se-escribe" }
+];
+---
+
+<Layout title={title} description={description} keywords={keywords} currentPath="/como-se-escribe" schemaData={schemaData} breadcrumbs={breadcrumbs}>
+  <div class="max-w-5xl mx-auto px-4 py-8 sm:py-12 animate-fade-in text-left space-y-10">
+    
+    <!-- Hero Header (Astro Static) -->
+    <header class="text-center">
+      <div class="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-mono font-semibold mb-3">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>Guía de Ortografía Española y RAE</span>
+      </div>
+      <h1 class="font-sans font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-gray-900 mb-4">
+        ¿Cómo se Escribe con Letra?
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Aprende <strong>cómo se escribe con letra</strong> cualquier cifra y resuelve tus dudas de ortografía de números de forma instantánea según las directrices de la Real Academia Española (RAE).
+      </p>
+    </header>
+
+    <!-- Interactive Component Island (React) -->
+    <HowToEscribe client:load />
+
+    <!-- Static FAQ Accordion (Astro, 0KB JS) -->
+    <section class="bg-white border border-gray-150 rounded-3xl p-6 sm:p-8 shadow-xs">
+      <div class="border-b border-gray-100 pb-4 mb-6">
+        <h2 class="font-sans font-bold text-gray-900 text-lg sm:text-xl flex items-center gap-2">
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-xl">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+          <span>Dudas Frecuentes sobre Escritura de Números en Español</span>
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Respuestas fundamentadas en la Ortografía de la Lengua Española (RAE y ASALE).
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        {faqs.map((faq, index) => (
+          <details 
+            class="group border border-gray-150 rounded-2xl open:border-indigo-200 open:bg-indigo-50/20 transition-all overflow-hidden"
+            open={index === 0}
+          >
+            <summary class="flex items-center justify-between p-4 cursor-pointer list-none font-sans font-semibold text-xs sm:text-sm text-gray-800 hover:text-indigo-700 transition-colors">
+              <span>{faq.q}</span>
+              <span class="text-gray-400 group-open:rotate-180 transition-transform text-xs font-mono ml-3">▼</span>
+            </summary>
+            <div class="px-4 pb-4 pt-1 text-xs text-gray-600 font-sans leading-relaxed border-t border-gray-100/60 mt-1">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- SEO Content Guide: Reglas y Ejemplos (Astro Static) -->
+    <section class="bg-slate-50 border border-slate-150 rounded-3xl p-6 sm:p-8 space-y-6">
+      <h2 class="font-sans font-bold text-gray-900 text-lg flex items-center gap-2">
+        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>Guía Maestra: ¿Cómo se escribe con letra cada número?</span>
+      </h2>
+      
+      <p class="text-xs sm:text-sm text-gray-600 leading-relaxed font-sans">
+        Para comprender a fondo <strong>cómo se escribe con letra</strong> cualquier cantidad en español, es fundamental seguir las directrices académicas de la Real Academia Española (RAE). Este desglose te ayudará en la redacción de cheques, contratos bancarios y registros contables.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+        <div class="space-y-3 bg-white p-5 rounded-2xl border border-gray-150">
+          <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wider">Números Básicos del 1 al 10</h3>
+          <ul class="space-y-1.5 text-gray-600 font-mono text-xs">
+            <li>• 1: <strong>uno</strong> (apócope <em>un</em> ante sustantivos masculinos)</li>
+            <li>• 2: <strong>dos</strong></li>
+            <li>• 3: <strong>tres</strong></li>
+            <li>• 4: <strong>cuatro</strong></li>
+            <li>• 5: <strong>cinco</strong></li>
+            <li>• 6: <strong>seis</strong></li>
+            <li>• 7: <strong>siete</strong></li>
+            <li>• 8: <strong>ocho</strong></li>
+            <li>• 9: <strong>nueve</strong></li>
+            <li>• 10: <strong>diez</strong></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3 bg-white p-5 rounded-2xl border border-gray-150">
+          <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wider">Decenas y Centenas Principales</h3>
+          <ul class="space-y-1.5 text-gray-600 font-mono text-xs">
+            <li>• 20: <strong>veinte</strong> (21 al 29 en una sola palabra)</li>
+            <li>• 30: <strong>treinta</strong> (31+ con conjunción "y")</li>
+            <li>• 40: <strong>cuarenta</strong></li>
+            <li>• 50: <strong>cincuenta</strong></li>
+            <li>• 60: <strong>sesenta</strong></li>
+            <li>• 70: <strong>setenta</strong></li>
+            <li>• 80: <strong>ochenta</strong></li>
+            <li>• 90: <strong>noventa</strong></li>
+            <li>• 100: <strong>cien</strong> (aislado) / <strong>ciento</strong> (compuesto)</li>
+            <li>• 1.000: <strong>mil</strong> (preferido RAE) / <strong>un mil</strong> (uso bancario)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-xs text-gray-500 leading-relaxed bg-white p-4.5 rounded-2xl border border-gray-150">
+        Recuerda que a partir del número 31 la separación con la conjunción <em>"y"</em> es obligatoria (por ejemplo: "treinta y uno", "noventa y nueve"). Entre el 16 y el 29, la RAE establece la escritura en una sola palabra (dieciséis, veintidós, veintiséis).
+      </div>
+    </section>
+  </div>
+</Layout>

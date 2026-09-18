@@ -1,0 +1,252 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NumberConverter from '../components/NumberConverter';
+import { HOME_FAQS } from '../data/faqs';
+
+const title = "Conversor de Números a Letras | Escribir Números en Palabras";
+const description = "Herramienta online para convertir números a letras en español de forma instantánea. Ideal para cheques, contratos, facturas y aprender cómo se escribe cualquier cantidad.";
+const keywords = "conversor de numeros a letras, numeros en letras, cantidad con letra, numeros a letras, convertir numeros a letras, cómo se escribe con letra";
+
+const referenceNumbers = [
+  { num: "0", word: "Cero" },
+  { num: "1", word: "Uno / Un" },
+  { num: "11", word: "Once" },
+  { num: "16", word: "Dieciséis" },
+  { num: "20", word: "Veinte" },
+  { num: "22", word: "Veintidós" },
+  { num: "30", word: "Treinta" },
+  { num: "31", word: "Treinta y uno" },
+  { num: "100", word: "Cien" },
+  { num: "101", word: "Ciento uno" },
+  { num: "500", word: "Quinientos" },
+  { num: "1000", word: "Mil" },
+  { num: "1000000", word: "Un millón" },
+  { num: "1000000000", word: "Mil millones" },
+  { num: "1.50", word: "Uno con cincuenta" }
+];
+
+const schemaData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Conversor de Números a Letras",
+    "url": "https://numerosenletras.org/",
+    "description": description,
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": HOME_FAQS.map(faq => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a
+      }
+    }))
+  }
+];
+---
+
+<Layout title={title} description={description} keywords={keywords} currentPath="/" schemaData={schemaData}>
+  <div class="relative max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in">
+    <!-- Decorative Blur Orbs for Premium Style -->
+    <div class="absolute top-0 -left-4 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <div class="absolute top-20 -right-4 w-72 h-72 bg-indigo-300/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <!-- Static Hero Header (Rendered in Astro for zero hydration cost) -->
+    <header class="text-center mb-12 relative">
+      <div class="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 border border-blue-100 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        <span class="font-display tracking-wide uppercase text-[10px]">Herramienta Profesional .org</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-4">
+        Convertidor de Números a Letras
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Escribe cualquier número o cantidad decimal y transfórmalo a letras en español de forma instantánea. 
+        Cumple rigurosamente con las reglas ortográficas oficiales de la RAE.
+      </p>
+    </header>
+
+    <!-- Interactive Converter React Island (Only interactive logic hydrates) -->
+    <NumberConverter client:load />
+
+    <!-- Static Rules & Educational Section (Astro) -->
+    <section class="mt-8 space-y-4">
+      <div class="bg-white/80 backdrop-blur-md rounded-3xl border border-gray-100 shadow-xl shadow-gray-100/30 p-6 sm:p-8 text-left">
+        <h2 class="font-display font-bold text-gray-900 text-lg sm:text-xl mb-4">
+          Reglas Esenciales de Ortografía de Números (RAE)
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 bg-gray-50/70 rounded-2xl border border-gray-100/80">
+            <p class="font-semibold text-gray-900 text-xs mb-1.5">1. Una sola palabra (0 al 30):</p>
+            <p class="text-xs text-gray-600 font-sans leading-relaxed">
+              Los números del <strong>0 al 30</strong> se escriben estrictamente en una sola palabra continua (ej: <em>veintiuno</em>, <em>veinticuatro</em>). Desde el 31 se separan con "y" (ej: <em>treinta y uno</em>).
+            </p>
+          </div>
+
+          <div class="p-4 bg-gray-50/70 rounded-2xl border border-gray-100/80">
+            <p class="font-semibold text-gray-900 text-xs mb-1.5">2. Cien, Ciento y Millones:</p>
+            <p class="text-xs text-gray-600 font-sans leading-relaxed">
+              "Cien" se convierte en "ciento" a partir del 101. En cantidades redondas de millones, se une a la moneda con "de" (ej: <em>Un millón de pesos</em>).
+            </p>
+          </div>
+
+          <div class="p-4 bg-gray-50/70 rounded-2xl border border-gray-100/80">
+            <p class="font-semibold text-gray-900 text-xs mb-1.5">3. Uso de "mil" vs "un mil":</p>
+            <p class="text-xs text-gray-600 font-sans leading-relaxed">
+              La RAE establece <strong>"mil"</strong> en la lengua general. En cheques y documentos bancarios se acostumbra "un mil" como salvaguarda preventiva ante alteraciones.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl p-5 text-left shadow-md shadow-blue-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1 max-w-xl">
+          <h3 class="font-sans font-bold text-sm">¿Necesitas llenar un cheque, recibo o factura?</h3>
+          <p class="text-xs text-blue-100 font-sans leading-relaxed">
+            Utiliza nuestra herramienta especializada de cantidad con letra con fracciones centenarias y monedas nacionales.
+          </p>
+        </div>
+        <a 
+          href="/cantidad-con-letra"
+          class="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2.5 rounded-xl transition-all font-sans font-semibold text-xs shadow-md shrink-0 inline-block"
+        >
+          Ir al Generador Bancario →
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick Equivalency Reference Table Section (Astro) -->
+    <section class="mt-12 bg-white/80 backdrop-blur-md rounded-3xl border border-gray-100 shadow-xl shadow-gray-100/30 p-6 sm:p-8 text-left relative overflow-hidden">
+      <div class="flex items-center space-x-2.5 mb-6">
+        <div class="p-2 bg-blue-50 rounded-xl text-blue-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <div>
+          <h2 class="font-sans font-bold text-gray-900 text-base sm:text-lg leading-snug">Tabla de Referencia de Escritura RAE</h2>
+          <p class="text-xs text-gray-500 font-sans">Consulta rápida de las formas escritas oficiales más comunes</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {referenceNumbers.map((item) => (
+          <a 
+            href={`/?n=${item.num}`}
+            class="bg-gray-50/60 hover:bg-blue-50/50 border border-gray-200/60 hover:border-blue-200 rounded-xl p-3 flex items-center justify-between transition-all group"
+          >
+            <div>
+              <span class="font-mono text-[11px] font-bold text-gray-400 block leading-none mb-1 group-hover:text-blue-600 transition-colors">{item.num}</span>
+              <span class="font-sans font-semibold text-xs text-gray-800 group-hover:text-gray-950">{item.word}</span>
+            </div>
+            <span class="text-[10px] text-gray-400 group-hover:text-blue-600 transition-all font-mono">
+              Cargar →
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Static Comprehensive SEO Guide (Astro) -->
+    <section class="mt-12 text-left space-y-6">
+      <div class="relative overflow-hidden bg-gradient-to-r from-blue-900 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-lg border border-slate-800">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div class="max-w-2xl">
+            <span class="inline-block bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-3 border border-blue-400/20">
+              Manual de Referencia Oficial
+            </span>
+            <h2 class="font-display font-bold text-xl sm:text-2xl text-white tracking-tight leading-tight">
+              Guía Profesional de Conversión: <span class="text-blue-400">Números en Letras</span>
+            </h2>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed font-sans">
+              Aprende cómo transcribir cualquier cifra en <strong class="text-white">números en letras</strong> de manera correcta según la normativa RAE. Ponemos a tu disposición este convertidor interactivo de <strong class="text-white">números en letras</strong> para fines contables, financieros y administrativos.
+            </p>
+          </div>
+          <div class="shrink-0">
+            <div class="bg-white/10 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 text-center">
+              <span class="block text-xl font-bold font-mono text-blue-400">100%</span>
+              <span class="text-[10px] font-semibold uppercase text-slate-300">Precisión RAE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Informative Guide Cards (Pure Astro, 0KB JS) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-xs space-y-3">
+          <h3 class="font-sans font-bold text-gray-900 text-sm flex items-center gap-2">
+            <span class="w-1.5 h-4 bg-blue-500 rounded-full inline-block"></span>
+            1. Normas Oficiales de la RAE
+          </h3>
+          <p class="text-xs text-gray-600 font-sans leading-relaxed">
+            La Real Academia Española establece que las cifras del 0 al 30 se escriben en una sola palabra. A partir del 31, las decenas y unidades se coordinan mediante la conjunción copulativa "y".
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-xs space-y-3">
+          <h3 class="font-sans font-bold text-gray-900 text-sm flex items-center gap-2">
+            <span class="w-1.5 h-4 bg-indigo-500 rounded-full inline-block"></span>
+            2. Aplicaciones Prácticas y Financieras
+          </h3>
+          <p class="text-xs text-gray-600 font-sans leading-relaxed">
+            En contratos, pólizas y facturación es indispensable registrar el monto tanto en dígitos como en letras. La redacción en letras minimiza ambigüedades y errores tipográficos.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-xs space-y-3">
+          <h3 class="font-sans font-bold text-gray-900 text-sm flex items-center gap-2">
+            <span class="w-1.5 h-4 bg-amber-500 rounded-full inline-block"></span>
+            3. Errores Frecuentes al Redactar Cifras
+          </h3>
+          <p class="text-xs text-gray-600 font-sans leading-relaxed">
+            Un error habitual consiste en separar números como "veinte y cinco" en lugar de "veinticinco", o escribir formas incorrectas como "sietecientos" en vez de "setecientos".
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-xs space-y-3">
+          <h3 class="font-sans font-bold text-gray-900 text-sm flex items-center gap-2">
+            <span class="w-1.5 h-4 bg-emerald-500 rounded-full inline-block"></span>
+            4. Tratamiento de Decimales y Centavos
+          </h3>
+          <p class="text-xs text-gray-600 font-sans leading-relaxed">
+            En el ámbito financiero hispanoamericano, los centavos suelen consignarse en formato fraccionario (ej. 50/100 M.N.), garantizando una expresión exacta sin discrepancias.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Native FAQ Section with semantic details/summary (0KB JS) -->
+    <section class="mt-12 bg-white rounded-3xl border border-gray-100 shadow-xs p-6 sm:p-8 text-left space-y-6">
+      <div class="border-b border-gray-100 pb-4">
+        <h2 class="font-sans font-bold text-gray-900 text-lg sm:text-xl">
+          Preguntas Frecuentes sobre la Conversión a Letras
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Respuestas a las dudas ortográficas, contables y técnicas más habituales.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        {HOME_FAQS.map((faq, index) => (
+          <details 
+            class="group border border-gray-100 rounded-2xl open:border-blue-200 open:bg-blue-50/20 transition-all overflow-hidden"
+            open={index === 0}
+          >
+            <summary class="flex items-center justify-between p-4 cursor-pointer list-none font-sans font-semibold text-xs sm:text-sm text-gray-800 hover:text-blue-600 transition-colors">
+              <span>{faq.q}</span>
+              <span class="text-gray-400 group-open:rotate-180 transition-transform text-xs font-mono ml-3">▼</span>
+            </summary>
+            <div class="px-4 pb-4 pt-1 text-xs text-gray-600 font-sans leading-relaxed border-t border-gray-100/60 mt-1">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>

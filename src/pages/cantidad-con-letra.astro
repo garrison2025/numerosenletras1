@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import QuantityConverter from '../components/QuantityConverter';
+
+const title = "Convertir Cantidades a Letras | Generador para Cheques y Facturas";
+const description = "Escribe cualquier cantidad de dinero en letras de forma correcta. Compatible con pesos, dólares, euros y más. Genera el formato formal para rellenar cheques y recibos.";
+const keywords = "cantidad con letra, números a letras, cheques en letras, facturas con letra, escribir cantidades, convertidor de dinero, pesos a letras";
+
+const faqs = [
+  {
+    q: "¿Qué significa la abreviatura 'M.N.' en una cantidad con letra?",
+    a: "Significa 'Moneda Nacional' y se estipula principalmente en cheques y facturas de México para certificar formalmente que la transacción se liquida en pesos mexicanos, evitando cualquier confusión con divisas extranjeras."
+  },
+  {
+    q: "¿Cómo se escribe una cantidad con letra para un cheque o pagaré en dólares?",
+    a: "Para transacciones oficiales en dólares estadounidenses, se utiliza la cantidad en letras, seguida de la porción centenaria sobre cien y la sigla 'USD'. Por ejemplo: 'Mil quinientos dólares 50/100 USD'."
+  },
+  {
+    q: "¿Es obligatorio poner 'un mil' o se puede escribir simplemente 'mil'?",
+    a: "Según la norma lingüística general de la RAE, la forma habitual recomendada es escribir 'mil' (ej. 'mil pesos'). No obstante, en la práctica bancaria y notarial de varios países se acostumbra escribir 'un mil' para dificultar posibles adulteraciones manuales en cheques o pagarés."
+  },
+  {
+    q: "¿Cómo se expresan los centavos en facturas y cheques bancarios?",
+    a: "En facturas y cheques de la mayoría de países hispanohablantes se utiliza el formato formal fraccionario 'XX/100' (por ejemplo: 'Dos mil pesos 50/100 M.N.'), lo que certifica con exactitud los centésimos correspondientes."
+  },
+  {
+    q: "¿Qué valor prevalece si la cifra en número y la cantidad con letra difieren?",
+    a: "En algunos ordenamientos jurídicos y normativas sobre títulos de crédito, cuando un documento contiene una cantidad escrita en palabras y otra en cifras y ambas difieren, la normativa aplicable suele dar prevalencia al importe escrito en palabras como salvaguarda frente a alteraciones. No obstante, las reglas concretas varían según la legislación de cada país y los requisitos bancarios locales, por lo que siempre conviene consultar la normativa aplicable."
+  }
+];
+
+const schemaData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Cantidad con Letra - Generador de Cheques y Facturas",
+    "url": "https://numerosenletras.org/cantidad-con-letra",
+    "description": description,
+    "applicationCategory": "FinancialApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  }
+];
+
+const breadcrumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "Cantidad con Letra", path: "/cantidad-con-letra" }
+];
+---
+
+<Layout title={title} description={description} keywords={keywords} currentPath="/cantidad-con-letra" schemaData={schemaData} breadcrumbs={breadcrumbs}>
+  <div class="relative max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in">
+    <!-- Background glow -->
+    <div class="absolute top-0 -left-4 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <div class="absolute top-20 -right-4 w-72 h-72 bg-teal-300/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <!-- Static Hero Header (Astro) -->
+    <header class="text-center mb-10 relative">
+      <div class="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 border border-emerald-100 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-display tracking-wide uppercase text-[10px]">Generador Bancario y Mercantil Oficial</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-4">
+        Convertidor de Cantidad con Letra
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Genera al instante la expresión formal en letras para cheques, pagarés, facturas, pólizas y contratos comerciales en más de 15 divisas oficiales.
+      </p>
+    </header>
+
+    <!-- Interactive Island (React) -->
+    <QuantityConverter client:load />
+
+    <!-- Static Usage Guide & Rules (Astro, 0KB JS) -->
+    <section class="mt-12 bg-white rounded-3xl border border-gray-100 shadow-xs p-6 sm:p-8 text-left space-y-6">
+      <h2 class="font-sans font-bold text-gray-900 text-lg flex items-center gap-2">
+        <span class="p-1.5 bg-emerald-50 rounded-xl text-emerald-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </span>
+        <span>¿Cómo escribir una cantidad con letra correctamente?</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600 font-sans">
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-800 text-sm">1. Formato de centavos en la cantidad con letra</h3>
+          <p class="leading-relaxed text-xs">
+            En el ámbito mercantil y bancario, al redactar una <strong>cantidad con letra</strong> para cheques o pagarés, los centavos se expresan habitualmente como una fracción sobre 100. Así, la cantidad de <strong>$1,540.50</strong> se estructura formalmente:
+          </p>
+          <div class="bg-gray-50 rounded-xl p-3 border border-gray-200/60 font-mono text-xs text-gray-700">
+            ... pesos 50/100 M.N.
+          </div>
+          <p class="leading-relaxed text-xs text-gray-500">
+            La sigla "M.N." significa <em>Moneda Nacional</em>. Para transacciones en dólares estadounidenses se complementa con "USD", y en euros suele utilizarse la palabra "Euros".
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-800 text-sm">2. Conector "de" para millones en cantidad con letra</h3>
+          <p class="leading-relaxed text-xs">
+            Si la cifra es una cantidad exacta en millones (como <strong>$2,000,000.00</strong>), las normas de la RAE prescriben que la cantidad con letra incluya la preposición <strong>"de"</strong> entre la palabra millones y la denominación de la divisa:
+          </p>
+          <div class="bg-gray-50 rounded-xl p-3 border border-gray-200/60 font-mono text-xs text-gray-700">
+            Dos millones <strong>de</strong> pesos 00/100 M.N.
+          </div>
+          <p class="leading-relaxed text-xs text-gray-500">
+            Si la cantidad incluye centavos (como <strong>$2,000,000.50</strong>), deja de ser una cifra redonda de millones y no requiere la preposición intermedia en la forma descriptiva.
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600 font-sans">
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-800 text-sm">3. Criterio jurídico en caso de discrepancias</h3>
+          <p class="leading-relaxed text-xs">
+            En diversos ordenamientos jurídicos y normativas sobre títulos y operaciones de crédito, si existe alguna discrepancia entre la cifra en números y la cantidad escrita con letra, la regulación suele dar preferencia al importe redactado en letras, puesto que escribir con palabras reduce significativamente el riesgo de alteraciones tipográficas o manipulaciones maliciosas.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="font-bold text-gray-800 text-sm">4. Mayúsculas y sellos de seguridad en cheques</h3>
+          <p class="leading-relaxed text-xs">
+            Por seguridad bancaria se recomienda iniciar la cantidad con letra en cheques con mayúscula inicial y trazar una línea horizontal continua al final del renglón para impedir adiciones no autorizadas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Static FAQ Accordion Section (Astro details/summary, 0KB JS) -->
+    <section class="mt-12 bg-white rounded-3xl border border-gray-100 shadow-xs p-6 sm:p-8 text-left space-y-6">
+      <div class="border-b border-gray-100 pb-4">
+        <h2 class="font-sans font-bold text-gray-900 text-lg sm:text-xl flex items-center gap-2">
+          <span>Preguntas Frecuentes sobre Cantidad con Letra</span>
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Respuestas prácticas y jurídicas sobre cómo redactar correctamente cantidades monetarias para cheques, pagarés y facturas.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        {faqs.map((faq, index) => (
+          <details 
+            class="group border border-gray-100 rounded-2xl open:border-emerald-200 open:bg-emerald-50/20 transition-all overflow-hidden"
+            open={index === 0}
+          >
+            <summary class="flex items-center justify-between p-4 cursor-pointer list-none font-sans font-semibold text-xs sm:text-sm text-gray-800 hover:text-emerald-700 transition-colors">
+              <span>{faq.q}</span>
+              <span class="text-gray-400 group-open:rotate-180 transition-transform text-xs font-mono ml-3">▼</span>
+            </summary>
+            <div class="px-4 pb-4 pt-1 text-xs text-gray-600 font-sans leading-relaxed border-t border-gray-100/60 mt-1">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>

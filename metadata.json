@@ -1,0 +1,6 @@
+{
+  "name": "Convertidor de Números a Letras",
+  "description": "Convertidor de números a letras en español de forma instantánea, ideal para finanzas, cheques, ortografía de cifras y generador de letras aesthetic.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,21 @@
+# numerosenletras.org - Convertidor de Números a Letras y Tipografía Creativa
+
+> Conversor didáctico y gratuito de números a letras en español según las normativas de la Real Academia Española (RAE), soporte para divisas internacionales, formatos bancarios para cheques y generadores de fuentes creativas.
+
+numerosenletras.org ayuda a estudiantes, profesionales, contadores, empresas y creadores de contenido a realizar conversiones numéricas instantáneas y formateo de textos para documentos legales y redes sociales.
+
+## Servicios y Herramientas Online
+
+- [Conversor Principal de Números a Letras](https://numerosenletras.org/) - Convierte cualquier número entero o decimal en palabras, con soporte para divisas de México (MXN), Estados Unidos (USD), Europa (EUR), Colombia (COP), Perú (PEN), Argentina (ARS), Chile (CLP) y más.
+- [Generador de Cantidad con Letra](https://numerosenletras.org/cantidad-con-letra) - Formateador formal para llenar cheques, pagarés, facturas electrónicas y contratos con expresión de centavos (ejemplo: 00/100 M.N.).
+- [Generador de Letras de Burbuja](https://numerosenletras.org/letras-burbuja) - Transforma texto estándar en caracteres Unicode de círculos blancos (ⓐⓑⓒ) y círculos negros (ⒶⒷⒸ) ideales para nombres de usuario, biografías y mensajes.
+- [Generador de Letras Aesthetic](https://numerosenletras.org/letras-aesthetic) - Conversor de fuentes lindas, tipografía cursiva, letras pequeñas, góticas y símbolos decorativos para copiar y pegar en Instagram, TikTok, Discord y WhatsApp.
+- [Guía de Ortografía RAE de Números](https://numerosenletras.org/como-se-escribe) - Diccionario y reglas sobre la escritura unívoca de cifras (1 al 29 en una sola palabra), prefijos numéricos, acentuación y uso de "un mil" vs "mil".
+- [Blog Educativo de Ortografía y Finanzas](https://numerosenletras.org/blog) - Artículos y tutoriales paso a paso sobre redacción bancaria, diseño tipográfico y normativas del idioma español.
+
+## Información Institucional
+
+- [Sobre Nosotros](https://numerosenletras.org/sobre-nosotros) - Misión, precisión técnica y estándares educativos del proyecto.
+- [Contacto](https://numerosenletras.org/contacto) - Formulario de atención y sugerencias.
+- [Términos de Servicio](https://numerosenletras.org/terminos) - Condiciones de uso libre y aviso legal.
+- [Política de Privacidad](https://numerosenletras.org/privacidad) - Uso de cookies y protección de datos del usuario.

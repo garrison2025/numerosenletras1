@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>numerosenletras.org - Blog y Guías Ortográficas</title>
+  <link>https://numerosenletras.org/</link>
+  <description>Aprende las reglas de la RAE para escribir números en letras, formatear cantidades para cheques y facturas, y explora tipografías creativas.</description>
+  <language>es-ES</language>
+  <atom:link href="https://numerosenletras.org/rss.xml" rel="self" type="application/rss+xml" />
+  
+  <item>
+    <title>Guía Definitiva RAE: Cómo escribir números a letras sin errores en cheques y facturas</title>
+    <link>https://numerosenletras.org/blog/guia-convertir-numeros-a-letras-rae-finanzas</link>
+    <description>Aprende las reglas ortográficas oficiales de la RAE para convertir números a letras. Descubre cómo se escribe 1000, 21, números decimales y montos bancarios en cheques sin errores de concordancia ni redundancias.</description>
+    <pubDate>Sat, 08 Aug 2026 00:00:00 GMT</pubDate>
+    <guid>https://numerosenletras.org/blog/guia-convertir-numeros-a-letras-rae-finanzas</guid>
+  </item>
+
+  <item>
+    <title>El Arte de las Letras Burbuja: Cómo usar tipografía circular en redes sociales</title>
+    <link>https://numerosenletras.org/blog/arte-letras-burbuja-tipografia-circular-copiar-pegar</link>
+    <description>Guía paso a paso sobre el origen y uso de los caracteres Unicode de círculos y burbujas. Aprende a destacar tu biografía en Instagram, nombres de usuario en juegos y mensajes en WhatsApp con fuentes circulares.</description>
+    <pubDate>Sat, 08 Aug 2026 00:00:00 GMT</pubDate>
+    <guid>https://numerosenletras.org/blog/arte-letras-burbuja-tipografia-circular-copiar-pegar</guid>
+  </item>
+
+  <item>
+    <title>Letras Aesthetic y Tipografías Bonitas: El Secreto de los Perfiles de Instagram y TikTok</title>
+    <link>https://numerosenletras.org/blog/letras-aesthetic-fuentes-pequenas-instagram-tiktok</link>
+    <description>Descubre cómo funcionan los conversores de letras aesthetic para redes sociales. Aprende a combinar fuentes cursivas, caracteres góticos, letras pequeñas y símbolos decorativos para transformar la estética de tu perfil digital.</description>
+    <pubDate>Sat, 08 Aug 2026 00:00:00 GMT</pubDate>
+    <guid>https://numerosenletras.org/blog/letras-aesthetic-fuentes-pequenas-instagram-tiktok</guid>
+  </item>
+</channel>
+</rss>

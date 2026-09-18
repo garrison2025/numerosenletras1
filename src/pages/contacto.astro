@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ContactPage } from '../components/LegalPages';
+
+const title = "Contacto | numerosenletras.org";
+const description = "Ponte en contacto con el equipo de numerosenletras.org para sugerencias, reportes de errores, dudas académicas o colaboraciones.";
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contacto | numerosenletras.org",
+  "url": "https://numerosenletras.org/contacto",
+  "description": description
+};
+---
+
+<Layout title={title} description={description} currentPath="/contacto" schemaData={schemaData}>
+  <ContactPage client:load />
+</Layout>

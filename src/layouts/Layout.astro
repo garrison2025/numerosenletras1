@@ -1,0 +1,270 @@
+---
+import Navbar from '../components/Navbar.astro';
+import InterlinkingMatrix from '../components/InterlinkingMatrix.astro';
+import CookieBanner from '../components/CookieBanner';
+import { BLOG_POSTS } from '../data/blog';
+import '../index.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+  currentPath: string;
+  schemaData?: any;
+}
+
+const {
+  title = "Conversor de Números a Letras | Escribir Números en Palabras",
+  description = "Herramienta online para convertir números a letras en español de forma instantánea. Ideal para cheques, contratos, facturas y aprender cómo se escribe cualquier cantidad.",
+  keywords = "como se escribe con letra, cómo se escribe con letra, conversor de numeros a letras, números a letras, letras burbuja, letras burbuja copiar y pegar, generador de letras burbuja, letras aesthetic",
+  image = "/assets/images/blog_numeros_letras.webp",
+  currentPath,
+  schemaData
+} = Astro.props;
+
+const canonicalUrl = `https://numerosenletras.org${currentPath === "/" ? "" : currentPath}`;
+const fullImageUrl = image.startsWith("http") ? image : `https://numerosenletras.org${image}`;
+
+// Generate dynamic breadcrumbs inside Astro
+const getBreadcrumbs = () => {
+  if (currentPath === "/") return null;
+
+  const items = [
+    { name: "Inicio", path: "/" }
+  ];
+
+  if (currentPath === "/cantidad-con-letra") {
+    items.push({ name: "Conversor de Cantidad con Letra", path: "/cantidad-con-letra" });
+  } else if (currentPath === "/letras-aesthetic") {
+    items.push({ name: "Letras Aesthetic", path: "/letras-aesthetic" });
+  } else if (currentPath === "/letras-burbuja") {
+    items.push({ name: "Letras Burbuja", path: "/letras-burbuja" });
+  } else if (currentPath === "/como-se-escribe") {
+    items.push({ name: "Ortografía RAE de Números", path: "/como-se-escribe" });
+  } else if (currentPath === "/blog") {
+    items.push({ name: "Blog de Ortografía", path: "/blog" });
+  } else if (currentPath.startsWith("/blog/")) {
+    items.push({ name: "Blog de Ortografía", path: "/blog" });
+    const slug = currentPath.substring(6);
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    if (post) {
+      items.push({ name: post.title, path: currentPath });
+    } else {
+      items.push({ name: "Artículo", path: currentPath });
+    }
+  } else if (currentPath === "/sobre-nosotros") {
+    items.push({ name: "Quiénes Somos", path: "/sobre-nosotros" });
+  } else if (currentPath === "/privacidad") {
+    items.push({ name: "Política de Privacidad", path: "/privacidad" });
+  } else if (currentPath === "/terminos") {
+    items.push({ name: "Términos de Servicio", path: "/terminos" });
+  } else if (currentPath === "/contacto") {
+    items.push({ name: "Contacto", path: "/contacto" });
+  } else {
+    return null;
+  }
+  return items;
+};
+
+const breadcrumbs = getBreadcrumbs();
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="google-site-verification" content="3hh3-fehDiki7YzVEL4KeWuGQhPfBLq23k_8zbACxE4" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="application-name" content="NumerosEnLetras" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="es" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title="numerosenletras.org - RSS Feed" href="/rss.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@500;700&display=swap" />
+
+    {currentPath.startsWith("/blog") && image && (
+      <link rel="preload" as="image" href={image} fetchpriority="high" type="image/webp" />
+    )}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="numerosenletras.org" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullImageUrl} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={fullImageUrl} />
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "numerosenletras.org",
+      "url": "https://numerosenletras.org/",
+      "logo": "https://numerosenletras.org/favicon.svg"
+    })} />
+
+    <!-- WebSite Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "numerosenletras.org",
+      "url": "https://numerosenletras.org/"
+    })} />
+
+    {breadcrumbs && breadcrumbs.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbs.map((item, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": item.name,
+          "item": `https://numerosenletras.org${item.path === "/" ? "" : item.path}`
+        }))
+      })} />
+    )}
+
+    {schemaData && (
+      Array.isArray(schemaData) ? (
+        schemaData.map((schema) => (
+          <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+        ))
+      ) : (
+        <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+      )
+    )}
+
+    <!-- ========================================== -->
+    <!-- GOOGLE ADSENSE CODE PLACEHOLDER           -->
+    <!-- Replace ca-pub-XXXXXXXXXXXXXXXX with your  -->
+    <!-- real AdSense Publisher ID when approved!   -->
+    <!-- ========================================== -->
+    <!--
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    -->
+    <!-- ========================================== -->
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-50 text-gray-900 antialiased">
+    <!-- Navbar (Static Astro component with lightweight mobile toggle script) -->
+    <Navbar currentPath={currentPath} />
+
+    <!-- Main Content Area -->
+    <main class="flex-1 pb-12">
+      {breadcrumbs && (
+        <nav aria-label="Breadcrumb" class="max-w-4xl mx-auto px-4 mt-6 mb-2">
+          <ol class="flex flex-wrap items-center gap-1.5 text-[11px] text-gray-500 font-sans font-medium">
+            {breadcrumbs.map((item, index) => {
+              const isLast = index === breadcrumbs.length - 1;
+              return (
+                <li class="flex items-center gap-1.5">
+                  {index > 0 && <span class="text-gray-300 font-normal">/</span>}
+                  {isLast ? (
+                    <span class="text-gray-900 font-bold max-w-[200px] sm:max-w-[400px] truncate" aria-current="page">
+                      {item.name}
+                    </span>
+                  ) : (
+                    <a
+                      href={item.path}
+                      class="text-gray-500 hover:text-blue-600 hover:underline transition-colors cursor-pointer"
+                    >
+                      {item.name}
+                    </a>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      )}
+
+      <!-- Content slot -->
+      <slot />
+
+      <!-- Dynamic Interlinking Matrix (Static Astro component) -->
+      <div class="max-w-4xl mx-auto px-4 mt-8 sm:mt-12">
+        <InterlinkingMatrix currentPath={currentPath} />
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t py-8 sm:py-12 px-4 bg-white border-gray-100 text-gray-500">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-left">
+        <div class="space-y-3">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-mono font-bold text-sm">
+              NL
+            </div>
+            <span class="font-sans font-bold text-base tracking-tight text-gray-900">
+              numerosen<span class="text-blue-600">letras</span>.org
+            </span>
+          </div>
+          <p class="font-sans text-xs leading-relaxed max-w-sm">
+            Tu portal de utilidades de conversión de números y tipografías artísticas en español. 
+            Herramientas 100% estáticas que se ejecutan directamente en tu navegador, garantizando máxima velocidad y seguridad de datos.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-sans font-bold text-xs uppercase tracking-wider text-gray-900">
+            Sobre el Proyecto
+          </h4>
+          <div class="flex flex-col space-y-2 text-xs font-sans">
+            <a href="/sobre-nosotros" class="hover:text-blue-500 hover:underline cursor-pointer">• Quiénes Somos</a>
+            <a href="/contacto" class="hover:text-blue-500 hover:underline cursor-pointer">• Formulario de Contacto</a>
+            <div class="flex items-center gap-1 text-[10px] text-gray-400 mt-1">
+              <span>Email: contacto@numerosenletras.org</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-sans font-bold text-xs uppercase tracking-wider text-gray-900">
+            Legal y Privacidad
+          </h4>
+          <div class="flex flex-col space-y-2 text-xs font-sans">
+            <a href="/privacidad" class="hover:text-blue-500 hover:underline cursor-pointer">• Política de Privacidad</a>
+            <a href="/terminos" class="hover:text-blue-500 hover:underline cursor-pointer">• Términos de Servicio</a>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-sans font-bold text-xs uppercase tracking-wider text-gray-900">
+            Herramientas Gratis
+          </h4>
+          <div class="flex flex-col space-y-2 text-xs font-sans">
+            <a href="/" class="hover:text-blue-500 hover:underline cursor-pointer">• Conversor de Números</a>
+            <a href="/cantidad-con-letra" class="hover:text-blue-500 hover:underline cursor-pointer">• Cantidad con Letra</a>
+            <a href="/letras-burbuja" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Burbuja</a>
+            <a href="/letras-aesthetic" class="hover:text-blue-500 hover:underline cursor-pointer">• Letras Aesthetic</a>
+            <a href="/como-se-escribe" class="hover:text-blue-500 hover:underline cursor-pointer">• Reglas Ortográficas RAE</a>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-gray-50 text-center text-[10px] font-sans">
+        <p>© 2026 numerosenletras.org. Todos los derechos reservados. El uso de este sitio web constituye la aceptación de nuestros términos y políticas.</p>
+      </div>
+    </footer>
+
+    <!-- Client-side Cookie Banner (Lazy loaded on idle) -->
+    <CookieBanner client:idle />
+  </body>
+</html>

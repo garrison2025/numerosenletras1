@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { TermsOfService } from '../components/LegalPages';
+
+const title = "Términos del Servicio | numerosenletras.org";
+const description = "Revisa los términos y condiciones de uso de nuestra plataforma gratuita de conversión de números y tipografías artísticas.";
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Términos del Servicio | numerosenletras.org",
+  "url": "https://numerosenletras.org/terminos",
+  "description": description
+};
+---
+
+<Layout title={title} description={description} currentPath="/terminos" schemaData={schemaData}>
+  <TermsOfService client:load />
+</Layout>

@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BubbleLetters from '../components/BubbleLetters';
+
+const title = "Letras Burbuja Ⓑⓤⓡⓑⓤⓙⓐ | Fuentes Circulares para Copiar y Pegar";
+const description = "Generador de fuentes de burbuja y letras con círculos. Convierte tu texto ordinario en elegantes tipografías esféricas al instante de forma gratuita.";
+const keywords = "letras burbuja, letras burbuja copiar y pegar, fuentes circulares, letras con circulos, generador de letras burbuja";
+
+const faqs = [
+  {
+    q: "¿Cómo generar y copiar letras burbuja para redes sociales?",
+    a: "Simplemente escribe tu frase o nombre en el campo de texto superior, selecciona el estilo de círculos (blancos Ⓑ o negros 🅑) y haz clic en Copiar para pegarlo directamente en Instagram, TikTok o WhatsApp."
+  },
+  {
+    q: "¿Son compatibles las letras burbuja con todos los teléfonos y apps?",
+    a: "Sí, las letras burbuja utilizan caracteres Unicode estándar (Enclosed Alphanumerics) compatibles con Android, iOS, Windows, Mac y la mayoría de aplicaciones de mensajería y redes sociales."
+  },
+  {
+    q: "¿Puedo usar letras en círculos para nombres de Free Fire o Roblox?",
+    a: "Sí, los símbolos circulares son ampliamente aceptados en los nombres de perfil (nicks) de la mayoría de videojuegos competitivos para destacar visualmente en las tablas de clasificación."
+  },
+  {
+    q: "¿Cómo se escriben los números en burbuja o círculos?",
+    a: "El estándar Unicode incluye números del 0 al 20 dentro de círculos tanto transparentes (①, ②, ③) como de fondo negro sólido (❶, ❷, ❸), ideales para listas ordenadas."
+  }
+];
+
+const schemaData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Letras Burbuja - Fuentes Circulares",
+    "url": "https://numerosenletras.org/letras-burbuja",
+    "description": description,
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  }
+];
+
+const breadcrumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "Letras Burbuja", path: "/letras-burbuja" }
+];
+---
+
+<Layout title={title} description={description} keywords={keywords} currentPath="/letras-burbuja" schemaData={schemaData} breadcrumbs={breadcrumbs}>
+  <div class="max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in text-left">
+    <!-- Hero Header -->
+    <header class="text-center mb-8">
+      <div class="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 border border-blue-100 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        <span class="font-display tracking-wide uppercase text-[10px]">Generador Tipográfico Unicode</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-4">
+        Letras Burbuja Ⓑⓤⓡⓑⓤⓙⓐ
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Transforma cualquier texto en fuentes esféricas circulares con contorno blanco o fondo negro, listas para copiar y pegar en Instagram, TikTok, WhatsApp y nicks de videojuegos.
+      </p>
+    </header>
+
+    <!-- Interactive Island (React) -->
+    <BubbleLetters client:load />
+
+    <!-- Static FAQ Accordion (Astro, 0KB JS) -->
+    <section class="mt-12 bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-xs">
+      <div class="border-b border-gray-100 pb-4 mb-6">
+        <h2 class="font-sans font-bold text-gray-900 text-lg sm:text-xl flex items-center gap-2">
+          <span class="p-1.5 bg-blue-50 rounded-xl text-blue-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+          <span>Preguntas Frecuentes sobre Letras Burbuja</span>
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Todo lo que necesitas saber sobre compatibilidad Unicode, cómo copiar y pegar, y uso en redes sociales.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        {faqs.map((faq, index) => (
+          <details 
+            class="group border border-gray-100 rounded-2xl open:border-blue-200 open:bg-blue-50/20 transition-all overflow-hidden"
+            open={index === 0}
+          >
+            <summary class="flex items-center justify-between p-4 cursor-pointer list-none font-sans font-semibold text-xs sm:text-sm text-gray-800 hover:text-blue-700 transition-colors">
+              <span>{faq.q}</span>
+              <span class="text-gray-400 group-open:rotate-180 transition-transform text-xs font-mono ml-3">▼</span>
+            </summary>
+            <div class="px-4 pb-4 pt-1 text-xs text-gray-600 font-sans leading-relaxed border-t border-gray-100/60 mt-1">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Static SEO Guide Article (Astro, 0KB JS) -->
+    <section class="mt-8 bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-xs space-y-6">
+      <h2 class="font-sans font-bold text-gray-900 text-lg flex items-center gap-2">
+        <span class="p-1.5 bg-blue-50 rounded-xl text-blue-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        </span>
+        <span>Guía de Tipografías Circulares y Letras en Círculos para Redes</span>
+      </h2>
+
+      <div class="text-xs text-gray-650 space-y-4 leading-relaxed font-sans">
+        <p>
+          Las <strong class="text-gray-900 font-semibold">letras burbuja</strong> son caracteres pertenecientes al bloque de <em>Alfanuméricos Encirculados</em> del consorcio Unicode. Al no ser archivos de fuente tradicionales (como .ttf o .otf), no requieren instalación alguna y funcionan como texto nativo en cualquier navegador o aplicación moderna.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          <div class="space-y-2">
+            <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wider">Círculos Blancos vs Círculos Negros</h3>
+            <p>
+              Los círculos blancos (Ⓐ, Ⓑ, Ⓒ) conservan una silueta ligera y limpia, ideal para frases completas o subtítulos en biografías. Los círculos negros sólidos (🅐, 🅑, 🅒) generan un alto contraste y son perfectos para resaltar palabras individuales, siglas o llamadas a la acción.
+            </p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wider">Nombres para Free Fire y Gaming</h3>
+            <p>
+              Muchos jugadores utilizan letras en círculos para crear nombres de clan o nicks competitivos en juegos móviles como Free Fire, PUBG o Brawl Stars, ya que estos símbolos son interpretados como texto ordinario sin violar los filtros de caracteres permitidos.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-2xl p-4 border border-gray-150 mt-4">
+          <h4 class="font-bold text-gray-800 text-xs mb-1">Compatibilidad y Accesibilidad</h4>
+          <p class="text-gray-500">
+            Los caracteres encirculados son compatibles con más del 99% de dispositivos móviles iOS y Android actuales. Para mantener una buena accesibilidad, se sugiere no redactar párrafos extensos de información sensible enteramente en caracteres decorativos.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AestheticLetters from '../components/AestheticLetters';
+
+const title = "Letras Aesthetic | Conversor de Fuentes Lindas y Bonitas online";
+const description = "Transforma tus textos normales en letras aesthetic, fuentes cursivas, negritas y símbolos mágicos para copiar y pegar en tu biografía de Instagram, TikTok y más.";
+const keywords = "letras aesthetic, tipografias bonitas, fuentes lindas, fuentes cursivas para copiar, letras para instagram, copiar y pegar fuentes, letras pequenas";
+
+const faqs = [
+  {
+    q: "¿Cómo usar las letras aesthetic copiar y pegar y las letras pequeñas en mi biografía?",
+    a: "Escribe tu texto en el conversor superior, busca el diseño de fuentes cursivas, góticas o letras pequeñas que más te guste, haz clic en 'Copiar' y pégalo directamente en la biografía de tu perfil de Instagram, TikTok, WhatsApp o Discord."
+  },
+  {
+    q: "¿Por qué se ven diferentes las letras aesthetic?",
+    a: "No son fuentes de sistema que requieran instalación, sino caracteres estandarizados del bloque Unicode (Mathematical Alphanumeric Symbols, Subscripts y Superscripts) interpretados como texto plano por cualquier navegador y aplicación."
+  },
+  {
+    q: "¿Cuáles son las letras pequeñas y letras aesthetic favoritas para Free Fire o Roblox?",
+    a: "Las letras pequeñas superiores (superíndices como ˢᵐᵃˡˡ) y las cursivas góticas son las más demandadas por la comunidad gamer para diseñar nicks y nombres de clan con distinción visual."
+  },
+  {
+    q: "¿Es seguro usar letras aesthetic en redes sociales?",
+    a: "Sí, es totalmente seguro. Al ser caracteres Unicode oficiales, no infringen normativas de plataformas ni ponen en riesgo tus cuentas o dispositivos."
+  }
+];
+
+const schemaData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Letras Aesthetic - Conversor de Fuentes Bonitas",
+    "url": "https://numerosenletras.org/letras-aesthetic",
+    "description": description,
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  }
+];
+
+const breadcrumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "Letras Aesthetic", path: "/letras-aesthetic" }
+];
+---
+
+<Layout title={title} description={description} keywords={keywords} currentPath="/letras-aesthetic" schemaData={schemaData} breadcrumbs={breadcrumbs}>
+  <div class="max-w-4xl mx-auto px-4 py-8 sm:py-14 animate-fade-in text-left">
+    <!-- Hero Header -->
+    <header class="text-center mb-8">
+      <div class="inline-flex items-center space-x-2 bg-purple-50 text-purple-700 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 border border-purple-100 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+        <span class="font-display tracking-wide uppercase text-[10px]">Generador Tipográfico Aesthetic Unicode</span>
+      </div>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-gray-900 mb-4">
+        Letras Aesthetic Copiar y Pegar
+      </h1>
+      <p class="font-sans text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base">
+        Transforma tus textos normales en fuentes estéticas, letras pequeñas, cursivas, góticas y combinaciones decoradas con kaomojis para tus perfiles digitales.
+      </p>
+    </header>
+
+    <!-- Interactive Island (React) -->
+    <AestheticLetters client:load />
+
+    <!-- Static FAQ Accordion (Astro, 0KB JS) -->
+    <section class="mt-12 bg-white rounded-3xl p-6 sm:p-8 border border-gray-150 shadow-xs">
+      <div class="border-b border-gray-100 pb-4 mb-6">
+        <h2 class="font-sans font-bold text-gray-900 text-lg sm:text-xl flex items-center gap-2">
+          <span class="p-1.5 bg-purple-50 rounded-xl text-purple-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+          <span>Preguntas Frecuentes sobre Letras Aesthetic y Letras Pequeñas</span>
+        </h2>
+        <p class="text-xs text-gray-500 mt-1">
+          Respuestas claras sobre compatibilidad móvil, formatos Unicode y uso en redes sociales.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        {faqs.map((faq, index) => (
+          <details 
+            class="group border border-gray-150 rounded-2xl open:border-purple-200 open:bg-purple-50/20 transition-all overflow-hidden"
+            open={index === 0}
+          >
+            <summary class="flex items-center justify-between p-4 cursor-pointer list-none font-sans font-semibold text-xs sm:text-sm text-gray-800 hover:text-purple-700 transition-colors">
+              <span>{faq.q}</span>
+              <span class="text-gray-400 group-open:rotate-180 transition-transform text-xs font-mono ml-3">▼</span>
+            </summary>
+            <div class="px-4 pb-4 pt-1 text-xs text-gray-600 font-sans leading-relaxed border-t border-gray-100/60 mt-1">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Static SEO Guide Article (Astro, 0KB JS) -->
+    <section class="mt-8 bg-white p-6 sm:p-8 rounded-3xl border border-gray-150 shadow-xs space-y-6">
+      <h2 class="font-sans font-bold text-gray-900 text-lg flex items-center gap-2">
+        <span class="p-1.5 bg-purple-50 rounded-xl text-purple-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        </span>
+        <span>Guía de Estilos Tipográficos Aesthetic y Letras Pequeñas</span>
+      </h2>
+      
+      <div class="text-xs text-gray-650 space-y-4 leading-relaxed font-sans">
+        <p>
+          Las <strong class="text-purple-700 font-semibold">letras aesthetic</strong> abarcan una amplia variedad de alfabetos transformados mediante símbolos matemáticos y variantes tipográficas de Unicode: cursivas elegantes, góticas (Fraktur), de doble línea (Blackboard Bold) y alfabetos en superíndice (letras pequeñas).
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          <div class="space-y-2">
+            <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wider">Letras Pequeñas Flotantes</h3>
+            <p>
+              Las letras en formato superíndice (ᵃᵇᶜ) aportan un toque sutil y minimalista, muy utilizado para indicar abreviaturas, marcas personales o nombres discretos en biografías.
+            </p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wider">Estilos Cursivos y Caligráficos</h3>
+            <p>
+              Las variantes cursivas (𝒱𝒶𝓇𝒾𝒶𝓃𝓉ℯ𝓈) transmiten calidez y sofisticación, ideales para frases reflexivas, títulos de publicaciones o citas destacadas.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-2xl p-4 border border-gray-150 mt-4">
+          <h4 class="font-bold text-gray-800 text-xs mb-1">Funcionamiento y Compatibilidad</h4>
+          <p class="text-gray-500">
+            Al no requerir descargas ni fuentes propietarias, el texto copiado se visualiza de forma fidedigna en iOS, Android, macOS y Windows, garantizando que tus contactos vean exactamente el mismo diseño que creaste.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
