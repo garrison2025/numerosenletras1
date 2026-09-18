@@ -90,10 +90,10 @@ export function AboutUs({ onNavigate }: { onNavigate?: (path: string) => void })
             Nuestra Misión
           </h2>
           <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-            En <strong>numerosenletras.org</strong>, nuestra misión es simplificar la escritura formal de cantidades en la lengua española. Desarrollamos herramientas automatizadas de conversión que garantizan la correcta ortografía de cifras de acuerdo con las normativas oficiales de la <strong>Real Academia Española (RAE)</strong>.
+            En <strong>numerosenletras.org</strong>, nuestra misión es simplificar la escritura formal de cantidades en la lengua española. Desarrollamos herramientas automatizadas de conversión orientadas a facilitar la correcta ortografía de cifras de acuerdo con las normativas oficiales de la <strong>Real Academia Española (RAE)</strong>.
           </p>
           <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-            Buscamos ser el recurso educativo y profesional de referencia para redactores, contadores, estudiantes, programadores y cualquier persona que requiera escribir números en letras con total exactitud y seguridad.
+            Buscamos ser el recurso educativo y profesional de referencia para redactores, contadores, estudiantes, programadores y cualquier persona que requiera escribir números en letras con alta precisión y claridad.
           </p>
         </section>
 
@@ -162,7 +162,7 @@ export function AboutUs({ onNavigate }: { onNavigate?: (path: string) => void })
               </AnimatePresence>
 
               <div className="pt-4 border-t border-gray-100 mt-4 flex items-center justify-between text-[10px] font-mono text-gray-400">
-                <span>100% Precisión Algorítmica</span>
+                <span>Alta Precisión Algorítmica</span>
                 <span>Procesado Localmente</span>
               </div>
             </div>
@@ -531,8 +531,8 @@ export function TermsOfService() {
               <span className="w-1.5 h-5 bg-indigo-500 rounded-full" />
               2. Exclusión de Responsabilidad (Descargo de Garantía)
             </h2>
-            <p className="text-gray-500 text-xs sm:text-sm">
-              Nuestros algoritmos están meticulosamente diseñados para ofrecer un 100% de exactitud en la ortografía de números a letras según la RAE. No obstante, el sitio web se ofrece de manera "tal como está" (As-Is). 
+            <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+              Nuestros algoritmos están diseñados para ofrecer una alta precisión en la conversión de números a letras conforme a las reglas ortográficas aplicables. No obstante, el sitio se ofrece "tal como está" (As-Is), y recomendamos verificar cualquier importe destinado a documentos legales, bancarios, fiscales o comerciales antes de su emisión o firma.
             </p>
             <div className="p-4 bg-amber-50/60 rounded-2xl border border-amber-150 text-amber-900 text-xs sm:text-sm leading-relaxed font-sans">
               <strong>Aviso Legal Importante:</strong> El usuario final tiene la total responsabilidad de revisar y verificar la ortografía y redacción de sus cheques, facturas, recibos bancarios o contratos mercantiles antes de proceder a la firma, emisión o depósito. No asumimos responsabilidad alguna por pérdidas económicas, disputas bancarias o desacuerdos comerciales resultantes de cualquier error tipográfico.
@@ -564,8 +564,6 @@ export function ContactPage() {
     asunto: "consulta",
     mensaje: ""
   });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
   
   // Accordion state
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
@@ -589,18 +587,19 @@ export function ContactPage() {
     e.preventDefault();
     if (!formData.nombre || !formData.correo || !formData.mensaje) return;
 
-    setLoading(true);
-    // Simulate API Submission
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-      setFormData({
-        nombre: "",
-        correo: "",
-        asunto: "consulta",
-        mensaje: ""
-      });
-    }, 1200);
+    const subject = encodeURIComponent(
+      `[numerosenletras.org] ${formData.asunto}`
+    );
+
+    const body = encodeURIComponent(
+`Nombre: ${formData.nombre}
+Correo: ${formData.correo}
+
+Mensaje:
+${formData.mensaje}`
+    );
+
+    window.location.href = `mailto:contacto@numerosenletras.org?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -619,7 +618,7 @@ export function ContactPage() {
           Ponte en Contacto
         </h1>
         <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-          ¿Tienes sugerencias de mejora, dudas de ortografía o reportes técnicos? Escríbenos y te responderemos a la brevedad.
+          ¿Tienes sugerencias de mejora, dudas de ortografía o reportes técnicos? Escríbenos y con gusto te atenderemos.
         </p>
       </div>
 
@@ -635,7 +634,7 @@ export function ContactPage() {
               Canales de Soporte
             </h3>
             <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-              Atendemos de manera diaria consultas de webmasters, maestros escolares, profesionales financieros y colaboradores apasionados por la ortografía y el desarrollo de software.
+              Puedes escribirnos para consultas, sugerencias, reportes técnicos o propuestas de colaboración.
             </p>
             
             <div className="pt-4 border-t border-gray-100 space-y-3.5">
@@ -658,7 +657,7 @@ export function ContactPage() {
                 <div>
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider font-mono">Tiempo de Respuesta</p>
                   <p className="text-xs sm:text-sm text-gray-600 font-medium">
-                    Menor a 24 - 48 horas hábiles de forma garantizada.
+                    Intentamos responder habitualmente en un plazo de 24–48 horas hábiles.
                   </p>
                 </div>
               </div>
@@ -710,98 +709,76 @@ export function ContactPage() {
         {/* Form column */}
         <div className="lg:col-span-7">
           <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-xl shadow-gray-100/35">
-            {submitted ? (
-              <div className="text-center py-10 space-y-4 animate-fade-in">
-                <div className="inline-flex p-4 rounded-full bg-emerald-50 text-emerald-500 mb-2">
-                  <CheckCircle className="w-10 h-10 animate-bounce" />
-                </div>
-                <h3 className="font-bold text-gray-900 text-xl">¡Mensaje Enviado con Éxito!</h3>
-                <p className="text-gray-500 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
-                  Gracias por comunicarte con nosotros. Hemos recibido tu consulta y nuestro equipo la revisará de inmediato. Te enviaremos una respuesta a tu correo electrónico.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer shadow-sm"
-                >
-                  Enviar otro mensaje
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 text-left">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label htmlFor="contact-name" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Nombre Completo</label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      required
-                      value={formData.nombre}
-                      onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                      placeholder="Ej: Alejandro Gómez"
-                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition shadow-2xs"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label htmlFor="contact-email" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Correo Electrónico</label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      required
-                      value={formData.correo}
-                      onChange={(e) => setFormData({ ...formData, correo: e.target.value })}
-                      placeholder="Ej: alejandro@correo.com"
-                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition shadow-2xs"
-                    />
-                  </div>
-                </div>
-
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 text-left">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label htmlFor="contact-subject" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Asunto del Mensaje</label>
-                  <select
-                    id="contact-subject"
-                    value={formData.asunto}
-                    onChange={(e) => setFormData({ ...formData, asunto: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition cursor-pointer shadow-2xs"
-                  >
-                    <option value="consulta">Consulta de Ortografía</option>
-                    <option value="sugerencia">Sugerencia de Nueva Herramienta</option>
-                    <option value="error">Reportar Error en el Sitio</option>
-                    <option value="publicidad">Colaboración o Publicidad</option>
-                    <option value="otro">Otro Motivo</option>
-                  </select>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label htmlFor="contact-message" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Mensaje o Comentarios</label>
-                  <textarea
-                    id="contact-message"
+                  <label htmlFor="contact-name" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Nombre Completo</label>
+                  <input
+                    id="contact-name"
+                    type="text"
                     required
-                    rows={4}
-                    value={formData.mensaje}
-                    onChange={(e) => setFormData({ ...formData, mensaje: e.target.value })}
-                    placeholder="Escribe tu mensaje detalladamente aquí..."
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition resize-none shadow-2xs"
+                    value={formData.nombre}
+                    onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                    placeholder="Ej: Alejandro Gómez"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition shadow-2xs"
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-md shadow-blue-500/10"
+                <div className="space-y-1.5">
+                  <label htmlFor="contact-email" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Correo Electrónico</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    required
+                    value={formData.correo}
+                    onChange={(e) => setFormData({ ...formData, correo: e.target.value })}
+                    placeholder="Ej: alejandro@correo.com"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition shadow-2xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label htmlFor="contact-subject" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Asunto del Mensaje</label>
+                <select
+                  id="contact-subject"
+                  value={formData.asunto}
+                  onChange={(e) => setFormData({ ...formData, asunto: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition cursor-pointer shadow-2xs"
                 >
-                  {loading ? (
-                    <span>Procesando...</span>
-                  ) : (
-                    <>
-                      <span>Enviar Mensaje</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
+                  <option value="consulta">Consulta de Ortografía</option>
+                  <option value="sugerencia">Sugerencia de Nueva Herramienta</option>
+                  <option value="error">Reportar Error en el Sitio</option>
+                  <option value="publicidad">Colaboración o Publicidad</option>
+                  <option value="otro">Otro Motivo</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label htmlFor="contact-message" className="text-xs font-bold text-gray-600 uppercase tracking-wider">Mensaje o Comentarios</label>
+                <textarea
+                  id="contact-message"
+                  required
+                  rows={4}
+                  value={formData.mensaje}
+                  onChange={(e) => setFormData({ ...formData, mensaje: e.target.value })}
+                  placeholder="Escribe tu mensaje detalladamente aquí..."
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 rounded-xl text-xs sm:text-sm outline-hidden transition resize-none shadow-2xs"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10"
+              >
+                <span>Enviar por correo</span>
+                <Send className="w-4 h-4" />
+              </button>
+
+              <p className="text-[11px] text-gray-500 text-center leading-relaxed">
+                Al enviar, se abrirá tu aplicación de correo con el mensaje preparado para <a href="mailto:contacto@numerosenletras.org" className="text-blue-600 font-semibold hover:underline">contacto@numerosenletras.org</a>. También puedes escribirnos directamente a esa dirección.
+              </p>
+            </form>
           </div>
         </div>
 
