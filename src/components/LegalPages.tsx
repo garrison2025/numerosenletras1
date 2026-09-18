@@ -175,9 +175,9 @@ export function AboutUs({ onNavigate }: { onNavigate?: (path: string) => void })
             <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
               <Shield className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-gray-950 text-lg">Privacidad Absoluta</h3>
+            <h3 className="font-bold text-gray-950 text-lg">Procesamiento Local y Privado</h3>
             <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-              No recopilamos ni transmitimos los datos que ingresas. Todo el procesamiento de conversión de números a letras y generación de texto se realiza de manera 100% local en tu navegador web. Ideal para auditar cheques confidenciales.
+              No transmitimos a servidores externos las cantidades o textos que ingresas. El algoritmo de conversión de números a letras y generación tipográfica se ejecuta en tu navegador web.
             </p>
           </div>
 

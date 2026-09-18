@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { AESTHETIC_FONTS } from "../utils/fontGenerators";
+import { canUsePreferenceStorage } from "../utils/storageConsent";
 import { 
   Sparkles, 
   Copy, 
@@ -236,6 +237,9 @@ export default function AestheticLetters({ initialText }: { initialText?: string
   // Favorites system state
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
+      if (!canUsePreferenceStorage()) {
+        return [];
+      }
       const stored = localStorage.getItem("aesthetic_favorites");
       return stored ? JSON.parse(stored) : [];
     } catch (e) {
@@ -243,8 +247,40 @@ export default function AestheticLetters({ initialText }: { initialText?: string
     }
   });
 
+  // Listen to cookie consent updates
+  useEffect(() => {
+    const handleConsentUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const allowed = customEvent.detail?.preferences === true;
+
+      if (!allowed) {
+        setFavorites([]);
+        return;
+      }
+
+      try {
+        const stored = localStorage.getItem("aesthetic_favorites");
+        setFavorites(stored ? JSON.parse(stored) : []);
+      } catch {
+        setFavorites([]);
+      }
+    };
+
+    window.addEventListener("cookie-consent-updated", handleConsentUpdate);
+    return () => {
+      window.removeEventListener("cookie-consent-updated", handleConsentUpdate);
+    };
+  }, []);
+
   const toggleFavorite = (id: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+
+    if (!canUsePreferenceStorage()) {
+      showToast("Activa las preferencias de privacidad para guardar favoritos");
+      window.dispatchEvent(new Event("open-cookie-settings"));
+      return;
+    }
+
     const isFav = favorites.includes(id);
     const newFavs = isFav ? favorites.filter(f => f !== id) : [...favorites, id];
     setFavorites(newFavs);
@@ -739,7 +775,9 @@ export default function AestheticLetters({ initialText }: { initialText?: string
             <button
               onClick={() => {
                 setFavorites([]);
-                localStorage.removeItem("aesthetic_favorites");
+                try {
+                  localStorage.removeItem("aesthetic_favorites");
+                } catch (e) {}
                 showToast("Todos los favoritos han sido eliminados 🗑️");
               }}
               className="text-[10px] font-bold text-gray-400 hover:text-rose-600 transition-colors flex items-center gap-1 cursor-pointer"

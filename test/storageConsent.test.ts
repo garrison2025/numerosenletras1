@@ -135,4 +135,14 @@ describe('Storage Consent Utility', () => {
       JSON.stringify({ essential: true, preferences: false })
     );
   });
+
+  it('verifies aesthetic and bubble favorites are gated by canUsePreferenceStorage', () => {
+    // When preferences = false, canUsePreferenceStorage is false
+    mockStorage.setItem('cookie-consent', JSON.stringify({ essential: true, preferences: false }));
+    assert.strictEqual(canUsePreferenceStorage(), false);
+
+    // When preferences = true, canUsePreferenceStorage is true
+    mockStorage.setItem('cookie-consent', JSON.stringify({ essential: true, preferences: true }));
+    assert.strictEqual(canUsePreferenceStorage(), true);
+  });
 });

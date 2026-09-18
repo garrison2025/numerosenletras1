@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { AESTHETIC_FONTS } from "../utils/fontGenerators";
+import { canUsePreferenceStorage } from "../utils/storageConsent";
 import { 
   CircleDot, 
   Copy, 
@@ -169,6 +170,9 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
   // Favorites system state for custom nicknames
   const [favorites, setFavorites] = useState<{ id: string; text: string; label: string }[]>(() => {
     try {
+      if (!canUsePreferenceStorage()) {
+        return [];
+      }
       const stored = localStorage.getItem("bubble_favorites");
       return stored ? JSON.parse(stored) : [];
     } catch (e) {
@@ -176,8 +180,40 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
     }
   });
 
+  // Listen to cookie consent updates
+  useEffect(() => {
+    const handleConsentUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const allowed = customEvent.detail?.preferences === true;
+
+      if (!allowed) {
+        setFavorites([]);
+        return;
+      }
+
+      try {
+        const stored = localStorage.getItem("bubble_favorites");
+        setFavorites(stored ? JSON.parse(stored) : []);
+      } catch {
+        setFavorites([]);
+      }
+    };
+
+    window.addEventListener("cookie-consent-updated", handleConsentUpdate);
+    return () => {
+      window.removeEventListener("cookie-consent-updated", handleConsentUpdate);
+    };
+  }, []);
+
   const saveFavorite = (text: string, label: string) => {
     if (!text.trim()) return;
+
+    if (!canUsePreferenceStorage()) {
+      showToast("Activa las preferencias de privacidad para guardar favoritos");
+      window.dispatchEvent(new Event("open-cookie-settings"));
+      return;
+    }
+
     const exists = favorites.some(fav => fav.text === text);
     if (exists) {
       showToast("Este nick de burbuja ya está en tus favoritos ❤️");
@@ -196,7 +232,11 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
     const updated = favorites.filter(fav => fav.id !== id);
     setFavorites(updated);
     try {
-      localStorage.setItem("bubble_favorites", JSON.stringify(updated));
+      if (canUsePreferenceStorage()) {
+        localStorage.setItem("bubble_favorites", JSON.stringify(updated));
+      } else {
+        localStorage.removeItem("bubble_favorites");
+      }
     } catch (e) {}
     showToast("Eliminado de tus favoritos 🗑️");
   };
@@ -733,7 +773,9 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
             <button
               onClick={() => {
                 setFavorites([]);
-                localStorage.removeItem("bubble_favorites");
+                try {
+                  localStorage.removeItem("bubble_favorites");
+                } catch (e) {}
                 showToast("Todos los favoritos han sido eliminados 🗑️");
               }}
               className="text-[10px] font-bold text-gray-400 hover:text-rose-600 transition-colors flex items-center gap-1 cursor-pointer"
