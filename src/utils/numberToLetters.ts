@@ -128,7 +128,6 @@ export function convertNumberToLetters(
     };
   }
 
-  const isFinancial = options?.formatFinancial !== false && (Boolean(currencyCfg) || options?.formatFinancial === true);
   const decimalMode = options?.decimalMode || (currencyCfg ? (options?.formatFinancial === false ? 'words' : 'fraction') : 'words');
 
   // String cleaning

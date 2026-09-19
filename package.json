@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview --port=3000 --host=0.0.0.0",
     "clean": "rm -rf dist .astro",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && astro check",
+    "astro:check": "astro check",
     "test": "tsx --test test/**/*.test.ts",
     "indexnow": "node scripts/submit-indexnow.mjs",
     "check": "npm run lint && npm run test && npm run build"
@@ -24,6 +25,7 @@
     "react-dom": "^19.0.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@types/node": "^22.14.0",
     "sharp": "^0.35.3",
     "tailwindcss": "^4.1.14",

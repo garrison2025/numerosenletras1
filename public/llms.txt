@@ -45,7 +45,7 @@ numerosenletras.org es un servicio web libre y gratuito dedicado a la precisión
 - **Perú**: Se redacta tradicionalmente *... Y XX/100 SOLES*. La moneda oficial es "Sol" (plural "Soles"), símbolo oficial *S/* (sin punto).
 - **Argentina**: Se redacta *... pesos con XX centavos* o *con XX/100*.
 - **España**: Se expresa en *euros* y *céntimos* (o *con XX/100*). El símbolo € se coloca tras la cifra con un espacio (*100 €*).
-- **Discrepancia legal**: En México (LGTOC art. 16), Colombia (C.Co art. 623), Argentina (Ley 24.452 art. 6; Anexo I art. 2 inc. 5) y España (Ley 19/1985 art. 115), ante discrepancias entre la cifra en números y la cifra en letras, prevalece la cantidad escrita en letras. En Perú, de acuerdo con las reglas establecidas por la Ley N.º 27287 de Títulos Valores, debe atenderse a la suma menor en los supuestos previstos por dicha norma.
+- **Discrepancia legal**: En México (LGTOC art. 16), Colombia (C.Co art. 623), Argentina (Ley 24.452, Anexo I, art. 2, inc. 5) y España (Ley 19/1985 art. 115), ante discrepancias entre la cifra en números y la cifra en letras, prevalece la cantidad escrita en letras. En Perú, conforme al artículo 5.2 de la Ley N.º 27287 de Títulos Valores, se atiende a la suma menor en los supuestos previstos por la norma.
 
 ## Fuentes y Autoridades Consultadas
 - Real Academia Española (RAE) y Asociación de Academias de la Lengua Española (ASALE): *Diccionario panhispánico de dudas* y *Ortografía de la lengua española*.

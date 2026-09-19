@@ -138,7 +138,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇧🇴",
     country: "Bolivia",
     region: "south",
-    defaultBank: "BANCO CENTRAL DE BOLIVIA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "GTQ",
@@ -152,7 +152,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇬🇹",
     country: "Guatemala",
     region: "north-central",
-    defaultBank: "BANCO DE GUATEMALA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "CRC",
@@ -166,7 +166,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇨🇷",
     country: "Costa Rica",
     region: "north-central",
-    defaultBank: "BANCO CENTRAL DE COSTA RICA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "HNL",
@@ -180,7 +180,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇭🇳",
     country: "Honduras",
     region: "north-central",
-    defaultBank: "BANCO CENTRAL DE HONDURAS"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "NIO",
@@ -194,7 +194,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇳🇮",
     country: "Nicaragua",
     region: "north-central",
-    defaultBank: "BANCO CENTRAL DE NICARAGUA"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "PYG",
@@ -208,7 +208,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇵🇾",
     country: "Paraguay",
     region: "south",
-    defaultBank: "BANCO CENTRAL DE PARAGUAY"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "UYU",
@@ -222,7 +222,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇺🇾",
     country: "Uruguay",
     region: "south",
-    defaultBank: "BANCO CENTRAL DE URUGUAY"
+    defaultBank: "NOMBRE DEL BANCO"
   },
   {
     code: "DOP",
@@ -236,7 +236,7 @@ export const CURRENCIES: CurrencyConfig[] = [
     flag: "🇩🇴",
     country: "R. Dom.",
     region: "north-central",
-    defaultBank: "BANCO DE LA REPÚBLICA DOMINICANA"
+    defaultBank: "NOMBRE DEL BANCO"
   }
 ];
 

@@ -71,6 +71,14 @@ describe('Country Specific Financial Formats (P0-5 & P0-6)', () => {
     assert.strictEqual(upper, 'MIL QUINIENTOS CUARENTA EUROS CON CINCUENTA CÉNTIMOS');
   });
 
+  it('handles comma-separated decimal inputs for ARS and EUR', () => {
+    const resARS = formatCountryFinancialAmount('1540,50', 'ARS');
+    assert.strictEqual(resARS, 'Mil quinientos cuarenta pesos con cincuenta centavos');
+
+    const resEUR = formatCountryFinancialAmount('1540,50', 'EUR');
+    assert.strictEqual(resEUR, 'Mil quinientos cuarenta euros con cincuenta céntimos');
+  });
+
   it('generates consistent getCountryExamples for all 5 countries', () => {
     const countries = ['MX', 'CO', 'PE', 'AR', 'ES'] as const;
     for (const c of countries) {
@@ -80,6 +88,14 @@ describe('Country Specific Financial Formats (P0-5 & P0-6)', () => {
         assert.ok(ex.num && ex.num.length > 0, `Missing num in example: ${JSON.stringify(ex)}`);
         assert.ok(ex.text && ex.text.length > 0, `Missing text in example: ${JSON.stringify(ex)}`);
       }
+    }
+  });
+
+  it('ensures all 16 currencies have defaultBank as NOMBRE DEL BANCO', async () => {
+    const { CURRENCIES } = await import('../src/data/currencies.js');
+    assert.strictEqual(CURRENCIES.length, 16, 'Expected 16 currencies');
+    for (const curr of CURRENCIES) {
+      assert.strictEqual(curr.defaultBank, 'NOMBRE DEL BANCO', `Currency ${curr.code} defaultBank is not NOMBRE DEL BANCO`);
     }
   });
 });

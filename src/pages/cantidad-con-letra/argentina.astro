@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     q: "¿Qué sucede si la suma en letras difiere de la suma en números en un cheque argentino?",
-    a: "De acuerdo con la Ley de Cheques de la República Argentina (Ley 24.452, Anexo I, artículo 2, inciso 5 y artículo 6), si el cheque tuviese su importe escrito en letras y en cifras y hubiese diferencia entre una y otra mención, valdrá por la cantidad escrita en letras."
+    a: "Según la Ley 24.452, Anexo I, artículo 2, inciso 5, si el cheque contiene el importe expresado en letras y en números y existe diferencia entre ambas expresiones, vale la suma escrita en letras."
   },
   {
     q: "¿Se escribe 'mil pesos' o 'un mil pesos' en cheques en Argentina?",
@@ -90,7 +90,7 @@ const examples = getCountryExamples('AR');
     </section>
 
     <!-- Interactive Tool Island -->
-    <QuantityConverter client:load initialCurrency="ARS" initialAmount="1540.50" initialCity="Buenos Aires" initialNumberFormatStyle="ES" />
+    <QuantityConverter client:load initialCurrency="ARS" initialAmount="1540,50" initialCity="Buenos Aires" initialNumberFormatStyle="ES" />
 
     <!-- Practical Formatting Guide -->
     <article class="mt-12 bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 text-left space-y-8 shadow-xs">
@@ -166,7 +166,7 @@ const examples = getCountryExamples('AR');
         <h3 class="font-bold text-gray-900 text-base">Errores Frecuentes en Textos Legales Argentinos</h3>
         <ul class="list-disc pl-5 space-y-1.5 text-xs text-gray-600 leading-relaxed font-sans">
           <li><strong>Separar las decenas del 21 al 29:</strong> Se escriben en una sola palabra: <em>veintiuno</em>, <em>veintidós</em>, etc.</li>
-          <li><strong>Discrepancia entre números y letras:</strong> La Ley 24.452 (Anexo I) otorga primacía a la suma expresada en letras.</li>
+          <li><strong>Discrepancia entre números y letras:</strong> La Ley 24.452 (Anexo I, artículo 2, inciso 5) otorga primacía a la suma expresada en letras.</li>
           <li><strong>Omitir la palabra "pesos":</strong> Al formular contratos o pagarés, el nombre de la moneda debe constar taxativamente.</li>
         </ul>
       </div>
@@ -194,8 +194,8 @@ const examples = getCountryExamples('AR');
         <h4 class="font-bold text-gray-800 text-xs uppercase tracking-wider font-mono">Fuentes consultadas</h4>
         <ul class="list-disc pl-5 space-y-1 text-[11px]">
           <li>
-            <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/15000-19999/19441/texact.htm" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-              InfoLEG - Ley N° 24.452 (Ley de Cheques de la República Argentina, Anexo I, artículo 2, inciso 5 y artículo 6)
+            <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/847/texact.htm" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              InfoLEG — Ley 24.452, Anexo I, artículo 2, inciso 5
             </a>
           </li>
           <li>

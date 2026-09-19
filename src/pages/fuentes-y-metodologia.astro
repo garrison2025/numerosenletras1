@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import InterlinkingMatrix from '../components/InterlinkingMatrix.astro';
 import { BookOpen, ShieldCheck, CheckCircle2, Landmark, Scale, Code2, AlertTriangle, ArrowRight } from "lucide-react";
 
 const title = "Fuentes y Metodología | numerosenletras.org";
@@ -56,7 +55,7 @@ const schemaData = {
               <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
               <span>Normalización y Análisis de Entrada</span>
             </h3>
-            <p className="text-xs">
+            <p class="text-xs">
               El motor extrae los caracteres numéricos aislándolos de símbolos monetarios ($ o €), comas y puntos. Detecta dinámicamente si el usuario emplea formato internacional (1,500.50) o europeo continental (1.500,50).
             </p>
           </div>
@@ -66,7 +65,7 @@ const schemaData = {
               <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
               <span>Descomposición en Escala Larga Española</span>
             </h3>
-            <p className="text-xs">
+            <p class="text-xs">
               A diferencia del sistema anglosajón de escala corta, el español utiliza la <strong>escala larga</strong>: un billón equivale a un millón de millones (10¹²), no a mil millones (10⁹). El algoritmo segmenta tríadas respetando esta convención.
             </p>
           </div>
@@ -76,7 +75,7 @@ const schemaData = {
               <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
               <span>Concordancia Gramatical y Apócope</span>
             </h3>
-            <p className="text-xs">
+            <p class="text-xs">
               El sistema evalúa el género del sustantivo ("veintiún pesos" vs "veintiuna páginas") y aplica la regla de apócope antepuesta al sustantivo masculino o femenino de acuerdo a las directrices de la RAE.
             </p>
           </div>
@@ -86,7 +85,7 @@ const schemaData = {
               <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
               <span>Unificación de Decenas (16 al 29)</span>
             </h3>
-            <p className="text-xs">
+            <p class="text-xs">
               Las cifras del 16 al 19 y del 21 al 29 se transcriben en una sola palabra con su acentuación correspondiente (ej. <em>dieciséis, veintidós, veintitrés, veintiséis</em>). A partir del 31 se separan con la conjunción "y" (<em>treinta y uno</em>).
             </p>
           </div>
@@ -96,7 +95,7 @@ const schemaData = {
               <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
               <span>Regla de Cien frente a Ciento</span>
             </h3>
-            <p className="text-xs">
+            <p class="text-xs">
               Se utiliza <strong>cien</strong> cuando la centena es exacta o acompaña a un sustantivo o múltiplo de mil/millón (<em>cien pesos, cien mil</em>), y <strong>ciento</strong> cuando le siguen decenas o unidades (<em>ciento cinco, ciento cuarenta</em>).
             </p>
           </div>
@@ -106,7 +105,7 @@ const schemaData = {
               <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
               <span>Preposición "de" en Millones Redondos</span>
             </h3>
-            <p className="text-xs">
+            <p class="text-xs">
               Cuando los millones son exactos, se intercala la preposición: <em>Dos millones <strong>de</strong> pesos</em>. Si le siguen millares o decenas, la preposición desaparece: <em>Dos millones quinientos pesos</em>.
             </p>
           </div>
@@ -218,11 +217,11 @@ const schemaData = {
               <strong class="text-gray-900 text-xs font-bold">Perú: BCRP & Ley N.º 27287</strong>
             </div>
             <p class="leading-relaxed">
-              Denominación oficial «Sol» (símbolo S/, Ley N.º 30381) y Ley N.º 27287 de Títulos Valores (reglas sobre importes de títulos valores y prevalencia de la suma menor en caso de discrepancia en los supuestos previstos por dicha norma).
+              Denominación oficial «Sol» (símbolo S/, Ley N.º 30381) y Ley N.º 27287 de Títulos Valores (artículo 5.2 sobre reglas aplicables a importes y prevalencia de la suma menor en caso de discrepancia en los supuestos previstos por la norma).
             </p>
             <div class="pt-1">
-              <a href="https://www.bcrp.gob.pe/docs/Transparencia/Normas-Legales/ley-27287.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px] inline-flex items-center gap-1">
-                <span>bcrp.gob.pe - Ley 27287</span>
+              <a href="https://www.leyes.congreso.gob.pe/documentos/leyes/27287.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px] inline-flex items-center gap-1">
+                <span>leyes.congreso.gob.pe - Ley 27287 art. 5.2</span>
                 <ArrowRight className="w-3 h-3" />
               </a>
             </div>
@@ -234,7 +233,7 @@ const schemaData = {
               <strong class="text-gray-900 text-xs font-bold">Argentina: BCRA & Ley N.º 24.452</strong>
             </div>
             <p class="leading-relaxed">
-              Ley 24.452 (Anexo I, artículo 2, inciso 5 sobre la orden de pago expresada en números y letras, y artículo 6 sobre prevalencia de la cantidad en letras ante discrepancias).
+              Ley 24.452 (Anexo I, artículo 2, inciso 5 sobre la orden de pago expresada en números y letras, y prevalencia de la cantidad en letras ante discrepancias) y normativas del Banco Central de la República Argentina (BCRA).
             </p>
             <div class="pt-1">
               <a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/847/texact.htm" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px] inline-flex items-center gap-1">
@@ -253,7 +252,7 @@ const schemaData = {
               Artículo 115 de la Ley 19/1985, de 16 de julio, Cambiaria y del Cheque de España, y directivas del Banco Central Europeo sobre denominación del euro y céntimos.
             </p>
             <div class="pt-1">
-              <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1985-14830" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px] inline-flex items-center gap-1">
+              <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1985-14880" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px] inline-flex items-center gap-1">
                 <span>boe.es - Ley 19/1985</span>
                 <ArrowRight className="w-3 h-3" />
               </a>
@@ -298,7 +297,7 @@ const schemaData = {
         </div>
       </section>
 
-      <!-- 5. Metodología de revisión y verificación -->
+      <!-- 5. Metodología de revisión y pruebas continuas -->
       <section class="bg-white rounded-3xl border border-gray-150 p-6 sm:p-8 space-y-6 shadow-xs">
         <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
           <div class="p-2 rounded-xl bg-purple-50 text-purple-600">
@@ -337,11 +336,11 @@ const schemaData = {
         </div>
       </section>
 
-      <!-- 5. Aviso y Descargo -->
+      <!-- 6. Aviso y Descargo -->
       <section class="bg-amber-50/60 rounded-3xl border border-amber-200/80 p-6 sm:p-8 space-y-3 text-amber-950 shadow-xs">
         <div class="flex items-center gap-2 font-bold text-sm">
           <AlertTriangle className="w-5 h-5 text-amber-700" />
-          <span>Aviso de Responsabilidad y Alcance del Servicio</span>
+          <span>6. Aviso de Responsabilidad y Alcance del Servicio</span>
         </div>
         <p class="text-xs leading-relaxed font-sans text-amber-900">
           <strong>numerosenletras.org</strong> es una herramienta digital de consulta educativa y de asistencia práctica para la redacción de importes en español. Aunque nos esforzamos rigurosamente por mantener la exactitud lingüística y bancaria de los resultados, recomendamos verificar siempre los requisitos particulares de la entidad financiera, notaría, juzgado o administración tributaria antes de suscribir documentos legales o mercantiles de valor significativo.
@@ -351,8 +350,5 @@ const schemaData = {
         </p>
       </section>
     </div>
-
-    <!-- Contextual Interlinking Matrix -->
-    <InterlinkingMatrix currentPath={currentPath} />
   </div>
 </Layout>

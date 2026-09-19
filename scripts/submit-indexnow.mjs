@@ -27,14 +27,17 @@ const URLS = [
   `https://${HOST}/terminos/`
 ];
 
+const args = process.argv.slice(2);
+const finalUrls = args.length > 0 ? args : URLS;
+
 async function submitIndexNow() {
-  console.log(`Submitting ${URLS.length} URLs to IndexNow for ${HOST}...`);
+  console.log(`Submitting ${finalUrls.length} URLs to IndexNow for ${HOST}...`);
   
   const payload = {
     host: HOST,
     key: KEY,
     keyLocation: KEY_LOCATION,
-    urlList: URLS
+    urlList: finalUrls
   };
 
   try {
@@ -46,13 +49,15 @@ async function submitIndexNow() {
       body: JSON.stringify(payload)
     });
 
-    if (response.ok || response.status === 200 || response.status === 202) {
+    if (response.status === 200 || response.status === 202) {
       console.log(`IndexNow submission successful! Status: ${response.status}`);
     } else {
-      console.warn(`IndexNow responded with status: ${response.status} ${response.statusText}`);
+      console.error(`IndexNow submission failed with status: ${response.status} ${response.statusText}`);
+      process.exitCode = 1;
     }
   } catch (error) {
     console.error("Failed to submit to IndexNow:", error);
+    process.exitCode = 1;
   }
 }
 

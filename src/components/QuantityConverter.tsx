@@ -121,7 +121,7 @@ export default function QuantityConverter({
 
   const [isFinancialFormat, setIsFinancialFormat] = useState(true);
   const [recipient, setRecipient] = useState("Juan Pérez Maldonado");
-  const [city, setCity] = useState(initialCity || "Ciudad de México");
+  const [city, setCity] = useState(initialCity || "Ciudad");
   const [chequeNumber, setChequeNumber] = useState("10024921");
   const [chequeBank, setChequeBank] = useState(selectedCurrency.defaultBank || "NOMBRE DEL BANCO");
   const [signatureStyle, setSignatureStyle] = useState<'elegant' | 'modern' | 'none'>('elegant');
