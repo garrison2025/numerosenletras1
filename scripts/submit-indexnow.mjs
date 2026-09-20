@@ -28,7 +28,36 @@ const URLS = [
 ];
 
 const args = process.argv.slice(2);
-const finalUrls = args.length > 0 ? args : URLS;
+
+const finalUrls = args.length > 0
+  ? args.map((value) => {
+      if (/^https?:\/\//i.test(value)) {
+        return value;
+      }
+
+      const path = value.startsWith("/")
+        ? value
+        : `/${value}`;
+
+      return `https://${HOST}${path}`;
+    })
+  : URLS;
+
+const invalidUrls = finalUrls.filter((url) => {
+  try {
+    const parsed = new URL(url);
+    return parsed.hostname !== HOST;
+  } catch {
+    return true;
+  }
+});
+
+if (invalidUrls.length > 0) {
+  console.error("Invalid IndexNow URLs:", invalidUrls);
+  process.exitCode = 1;
+} else {
+  submitIndexNow();
+}
 
 async function submitIndexNow() {
   console.log(`Submitting ${finalUrls.length} URLs to IndexNow for ${HOST}...`);
@@ -60,5 +89,3 @@ async function submitIndexNow() {
     process.exitCode = 1;
   }
 }
-
-submitIndexNow();
