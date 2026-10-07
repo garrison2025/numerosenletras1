@@ -99,3 +99,15 @@ describe('Country Specific Financial Formats (P0-5 & P0-6)', () => {
     }
   });
 });
+
+describe('Financial precision guards', () => {
+  it('rejects more than 2 fractional digits for every supported financial locale', () => {
+    for (const code of ['MXN', 'COP', 'PEN', 'ARS', 'EUR']) {
+      assert.throws(() => formatCountryFinancialAmount('100.999', code, { formatStyle: 'LA' }), /más de dos decimales/);
+    }
+  });
+  it('rejects ambiguous grouped values instead of silently altering cheque totals', () => {
+    assert.throws(() => formatCountryFinancialAmount('1,23,4.56', 'MXN'));
+    assert.throws(() => formatCountryFinancialAmount('1.23.4,56', 'EUR', { formatStyle: 'ES' }));
+  });
+});

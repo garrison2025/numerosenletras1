@@ -124,3 +124,19 @@ describe('convertNumberToLetters - All 16 Supported Currencies', () => {
     });
   }
 });
+
+describe('Input safety and high-value boundaries', () => {
+  it('does not silently truncate monetary fractions', () => {
+    assert.throws(() => convertNumberToLetters('123.999', { currency: CURRENCY_MAP.MXN }), /más de dos decimales/);
+  });
+  it('rejects exponential, malformed and overflowing inputs rather than returning misleading words', () => {
+    for (const input of ['1e20', '123abc', '1.2.3', '1000000000000000', 'Infinity']) {
+      assert.throws(() => convertNumberToLetters(input));
+    }
+    assert.throws(() => convertNumberToLetters(Infinity));
+  });
+  it('accepts 15-digit integers and European grouped strings', () => {
+    assert.strictEqual(convertNumberToLetters('1.234,56'), 'mil doscientos treinta y cuatro punto cincuenta y seis');
+    assert.strictEqual(convertNumberToLetters('999999999999999').includes('billones'), true);
+  });
+});

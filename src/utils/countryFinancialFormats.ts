@@ -1,5 +1,6 @@
 import { convertNumberToLetters } from './numberToLetters.js';
 import { CURRENCY_MAP } from '../data/currencies.js';
+import { parseLocalizedNumber } from './parseLocalizedNumber.js';
 
 export interface CountryExampleItem {
   num: string;
@@ -17,49 +18,19 @@ export interface FormatCountryOptions {
  * Normalizes input amount into positive integer and 2-digit decimal fraction.
  */
 function parseAmountParts(amount: number | string, formatStyle: 'LA' | 'ES' = 'LA') {
-  let str = String(amount).trim();
-  if (!str || str === '-') {
-    return { integer: 0, decimal: 0, decimalStr: '00', hasDecimals: false, isNegative: false };
-  }
-
-  const isNegative = str.startsWith('-');
-  if (isNegative) {
-    str = str.substring(1).trim();
-  }
-
-  // Parse according to regional style
-  if (formatStyle === 'ES') {
-    if (str.includes(',') && str.includes('.')) {
-      str = str.replace(/\./g, '').replace(/,/g, '.');
-    } else if (str.includes(',')) {
-      str = str.replace(/,/g, '.');
-    } else if (str.includes('.')) {
-      const dotIndex = str.lastIndexOf('.');
-      const afterDot = str.substring(dotIndex + 1);
-      if (afterDot.length === 3 && (str.length - 1 - dotIndex) === 3) {
-        str = str.replace(/\./g, '');
-      }
-    }
-  } else {
-    // Latin America: comma is thousand separator, dot is decimal
-    str = str.replace(/,/g, '');
-  }
-
-  const parts = str.split('.');
-  const intStr = parts[0] ? parts[0].replace(/^0+(?=\d)/, '') : '0';
-  const integer = parseInt(intStr || '0', 10);
-
-  const hasDecimals = parts.length > 1;
-  const rawDec = parts[1] || '';
-  const decimalStr = rawDec.substring(0, 2).padEnd(2, '0');
-  const decimal = parseInt(decimalStr || '0', 10);
-
+  const text = String(amount).trim();
+  // Public API also accepts canonical decimal strings such as 1540.50
+  // for EUR/ARS, even though the visible regional input uses 1540,50.
+  const canonicalDot = formatStyle === 'ES' &&
+    !text.includes(',') && /^[-+]?\d+\.\d{1,2}$/.test(text);
+  const parsed = parseLocalizedNumber(amount, canonicalDot ? 'LA' : formatStyle, 2);
   return {
-    integer: isNaN(integer) ? 0 : integer,
-    decimal: isNaN(decimal) ? 0 : decimal,
-    decimalStr,
-    hasDecimals,
-    isNegative
+    integer: Number(parsed.integerDigits),
+    decimal: Number(parsed.fractionDigits.padEnd(2, '0') || '0'),
+    decimalStr: parsed.fractionDigits.padEnd(2, '0') || '00',
+    hasDecimals: parsed.fractionDigits.length > 0,
+    isNegative: parsed.negative,
+    normalized: parsed.normalized
   };
 }
 
@@ -77,7 +48,7 @@ export function formatCountryFinancialAmount(
   const isUppercase = options?.uppercase === true;
   const isCapitalize = options?.capitalize !== false; // default true unless explicitly false
 
-  const { integer, decimal, decimalStr, hasDecimals, isNegative } = parseAmountParts(amount, formatStyle);
+  const { integer, decimal, decimalStr, hasDecimals, isNegative, normalized } = parseAmountParts(amount, formatStyle);
 
   // Convert integer part to Spanish words (using neutral apocope 'N')
   let intWords = convertNumberToLetters(integer, { gender: 'N' });
@@ -153,7 +124,7 @@ export function formatCountryFinancialAmount(
     default: {
       const curr = CURRENCY_MAP[code];
       if (curr) {
-        result = convertNumberToLetters(amount, {
+        result = convertNumberToLetters(normalized.replace(/^-/, ""), {
           currency: curr,
           formatFinancial: true,
           decimalMode: 'fraction'

@@ -4,6 +4,7 @@
  */
 
 import { type CurrencyConfig, CURRENCIES, CURRENCY_MAP } from "../data/currencies";
+import { parseFlexibleNumber } from "./parseLocalizedNumber";
 
 export type { CurrencyConfig };
 export { CURRENCIES, CURRENCY_MAP };
@@ -130,44 +131,14 @@ export function convertNumberToLetters(
 
   const decimalMode = options?.decimalMode || (currencyCfg ? (options?.formatFinancial === false ? 'words' : 'fraction') : 'words');
 
-  // String cleaning
-  let numStr = String(num).trim();
-  if (!numStr || numStr === "-") return "cero";
-
-  // Check negative
-  let isNegative = false;
-  if (numStr.startsWith("-")) {
-    isNegative = true;
-    numStr = numStr.substring(1).trim();
-  }
-
-  // Handle standard decimal separator (dot or comma)
-  // If format is 1.234,56 replace dots as thousand sep and comma as decimal sep
-  if (numStr.includes(",") && !numStr.includes(".")) {
-    numStr = numStr.replace(",", ".");
-  } else if (numStr.includes(".") && numStr.includes(",")) {
-    const lastDot = numStr.lastIndexOf(".");
-    const lastComma = numStr.lastIndexOf(",");
-    if (lastComma > lastDot) {
-      // European 1.234,56
-      numStr = numStr.replace(/\./g, "").replace(",", ".");
-    } else {
-      // US 1,234.56
-      numStr = numStr.replace(/,/g, "");
-    }
-  }
-
-  const parts = numStr.split(".");
-  const rawIntegerStr = parts[0] ? parts[0].replace(/^0+(?=\d)/, "") : "0";
-  const integerPart = parseInt(rawIntegerStr || "0", 10);
-  
-  const rawDecimalStr = parts[1] || "";
-  const decimalPartString = rawDecimalStr.substring(0, 2).padEnd(2, '0');
-  const decimalPart = parseInt(decimalPartString || "0", 10);
-
-  if (isNaN(integerPart)) {
-    return isCapitalize ? "Cero" : "cero";
-  }
+  // Strict locale-aware parsing prevents precision loss, malformed values,
+  // scientific notation and hanging loops from Infinity.
+  const parsed = parseFlexibleNumber(num, currencyCfg ? 2 : 12);
+  const integerPart = Number(parsed.integerDigits);
+  const rawDecimalStr = parsed.fractionDigits;
+  const decimalPartString = rawDecimalStr.padEnd(2, '0');
+  const decimalPart = Number(decimalPartString);
+  const isNegative = parsed.negative;
 
   let words = "";
 
@@ -269,7 +240,7 @@ export function convertNumberToLetters(
     }
   } else {
     // Non-currency decimal
-    if (parts.length > 1 && rawDecimalStr.length > 0) {
+    if (rawDecimalStr.length > 0) {
       if (rawDecimalStr.startsWith("0")) {
         // E.g. 1.01 -> uno punto cero uno
         const decWords = rawDecimalStr
@@ -290,7 +261,7 @@ export function convertNumberToLetters(
     }
   }
 
-  if (isNegative && words !== "cero") {
+  if (isNegative) {
     words = `menos ${words}`;
   }
 
