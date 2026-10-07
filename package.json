@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --port=3000 --host=0.0.0.0",
-    "build": "node scripts/write-build-version.mjs && astro build",
+    "build": "node scripts/write-build-version.mjs && astro build && node scripts/finalize-build.mjs",
     "preview": "astro preview --port=3000 --host=0.0.0.0",
     "clean": "rm -rf dist .astro",
     "lint": "tsc --noEmit && astro check",

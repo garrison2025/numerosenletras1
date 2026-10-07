@@ -58,7 +58,24 @@ for (const route of routes) {
   }
 }
 if (!existsSync(join(dist, 'robots.txt'))) issues.push('Missing robots.txt');
-if (!existsSync(join(dist, 'sitemap-index.xml'))) issues.push('Missing sitemap-index.xml');
+const sitemapIndexPath = join(dist, 'sitemap-index.xml');
+const legacySitemapPath = join(dist, 'sitemap.xml');
+if (!existsSync(sitemapIndexPath)) {
+  issues.push('Missing sitemap-index.xml');
+} else {
+  const xml = readFileSync(sitemapIndexPath, 'utf8');
+  if (!xml.includes('<sitemapindex') || /<html[\s>]/i.test(xml)) {
+    issues.push('sitemap-index.xml is not a valid XML sitemap index');
+  }
+}
+if (!existsSync(legacySitemapPath)) {
+  issues.push('Missing legacy sitemap.xml compatibility alias');
+} else {
+  const xml = readFileSync(legacySitemapPath, 'utf8');
+  if (!xml.includes('<sitemapindex') || /<html[\s>]/i.test(xml)) {
+    issues.push('sitemap.xml must be XML, not HTML');
+  }
+}
 if (!existsSync(join(dist, 'llms.txt'))) issues.push('Missing llms.txt');
 const buildVersionPath = join(dist, 'build-version.txt');
 if (!existsSync(buildVersionPath)) {

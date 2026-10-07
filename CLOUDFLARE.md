@@ -27,7 +27,7 @@ After a production deployment:
 1. Open `/build-version.txt`.
 2. Compare it with the current `main` commit SHA.
 3. Open `/` and `/como-se-escribe/` and verify the new copy/behavior.
-4. Confirm `/robots.txt` and `/sitemap-index.xml` return successfully.
+4. Confirm `/robots.txt`, `/sitemap-index.xml`, and the compatibility URL `/sitemap.xml` return XML successfully.
 5. Only then mark the release as deployed.
 
 ## If production stays on an old revision
@@ -40,3 +40,13 @@ In Cloudflare Dashboard → Workers & Pages → the Pages project:
 - retry the failed deployment or reconnect Git integration if commits are not triggering builds.
 
 A green GitHub Actions run proves the repository builds; it does not prove Cloudflare published that commit.
+
+
+## Sitemap compatibility
+
+Astro's canonical sitemap URL is `/sitemap-index.xml`. Google Search Console previously had `/sitemap.xml` submitted, and that URL could resolve to an HTML fallback on the deployed site. The post-build finalizer now copies the generated sitemap index to `/sitemap.xml` as well.
+
+- Canonical advertised sitemap: `https://numerosenletras.org/sitemap-index.xml`
+- Legacy GSC-compatible alias: `https://numerosenletras.org/sitemap.xml`
+
+Both URLs must return XML. The CI release gate rejects the build if either sitemap is missing or contains HTML.
