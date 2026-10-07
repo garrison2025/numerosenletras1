@@ -96,6 +96,8 @@ export default function QuantityConverter({
     }
   }, [initialAmount]);
 
+  const [numberFormatStyle, setNumberFormatStyle] = useState<'LA' | 'ES'>(initialNumberFormatStyle || 'LA');
+
   const hasUserEdited = useRef(false);
 
   // Sync amount state with title and URL
@@ -153,7 +155,6 @@ export default function QuantityConverter({
   const [currentDate, setCurrentDate] = useState("");
   
   // Advanced controls
-  const [numberFormatStyle, setNumberFormatStyle] = useState<'LA' | 'ES'>(initialNumberFormatStyle || 'LA');
 
   useEffect(() => {
     if (initialNumberFormatStyle) {
