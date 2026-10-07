@@ -33,3 +33,17 @@ describe('locale-aware monetary and cardinal input', () => {
     assert.equal(normalized, '100.00');
   });
 });
+
+describe('exact decimal quick operations', () => {
+  it('avoids binary floating-point precision loss', async () => {
+    const { calculateExactDecimal } = await import('../src/utils/parseLocalizedNumber.js');
+    assert.equal(calculateExactDecimal('1234.56', 'add', 1), '1235.56');
+    assert.equal(calculateExactDecimal('0.10', 'add', 1), '1.10');
+    assert.equal(calculateExactDecimal('999999999999999.99', 'multiply', 0.5), '499999999999999.995');
+    assert.equal(calculateExactDecimal('1.25', 'multiply', 2), '2.5');
+  });
+  it('rejects overflow rather than silently corrupting large results', async () => {
+    const { calculateExactDecimal } = await import('../src/utils/parseLocalizedNumber.js');
+    assert.throws(() => calculateExactDecimal('999999999999999', 'add', 1), /15 cifras/);
+  });
+});

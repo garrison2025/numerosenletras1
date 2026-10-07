@@ -98,3 +98,40 @@ export function parseFlexibleNumber(
   const style: NumberFormatStyle = comma >= 0 && (dot < 0 || comma > dot) ? 'ES' : 'LA';
   return parseLocalizedNumber(input, style, maxDecimalDigits);
 }
+
+/**
+ * Exact quick-action arithmetic. Using BigInt scaled integers avoids floating
+ * point rounding even for 15-digit values and high fractional precision.
+ */
+export function calculateExactDecimal(
+  normalized: string,
+  operation: 'add' | 'multiply',
+  operand: number
+): string {
+  const parsed = parseLocalizedNumber(normalized, 'LA');
+  let decimals = parsed.fractionDigits.length;
+  let scaled = BigInt(parsed.integerDigits + parsed.fractionDigits);
+  if (parsed.negative) scaled = -scaled;
+
+  if (operation === 'add') {
+    if (!Number.isSafeInteger(operand)) throw new RangeError('Incremento no válido.');
+    scaled += BigInt(operand) * 10n ** BigInt(decimals);
+  } else if (operand === 2) {
+    scaled *= 2n;
+  } else if (operand === 0.5) {
+    if (decimals === MAX_DECIMAL_DIGITS) {
+      throw new RangeError('La división requiere un decimal adicional.');
+    }
+    scaled *= 5n;
+    decimals++;
+  } else {
+    throw new RangeError('Operación no admitida.');
+  }
+
+  const minus = scaled < 0n ? '-' : '';
+  const digits = (scaled < 0n ? -scaled : scaled).toString().padStart(decimals + 1, '0');
+  const intDigits = decimals ? digits.slice(0, -decimals) : digits;
+  const fracDigits = decimals ? digits.slice(-decimals).replace(/0+$/, '') : '';
+  const output = `${minus}${intDigits}${fracDigits ? '.' + fracDigits : ''}`;
+  return parseLocalizedNumber(output, 'LA').normalized;
+}

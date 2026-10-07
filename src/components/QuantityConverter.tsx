@@ -53,10 +53,10 @@ export default function QuantityConverter({
   const [amount, setAmount] = useState(initialAmount || "1540.50");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-focus input on mount
+  // Do not unexpectedly open the on-screen keyboard on small/mobile screens.
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      inputRef.current?.focus({ preventScroll: true });
     }
   }, []);
 
@@ -359,10 +359,11 @@ export default function QuantityConverter({
 
   const handleCopy = () => {
     if (!result || result.startsWith("Entrada no") || result.startsWith("Error")) return;
-    navigator.clipboard.writeText(result);
-    setCopied(true);
-    showToast("Copiado al portapapeles");
-    setTimeout(() => setCopied(false), 2000);
+    navigator.clipboard.writeText(result).then(() => {
+      setCopied(true);
+      showToast("Copiado al portapapeles");
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => showToast("No se pudo copiar; selecciona el resultado manualmente"));
   };
 
   const handleShare = () => {
@@ -730,23 +731,23 @@ export default function QuantityConverter({
             </div>
 
             <div className={`w-full min-h-[110px] rounded-2xl p-5 border-2 transition-all flex flex-col justify-between ${
-              result
+              result && !result.startsWith('Entrada') && !result.startsWith('Error')
                 ? "bg-gradient-to-br from-emerald-50/40 via-white to-teal-50/20 border-emerald-300 shadow-sm"
                 : "bg-gray-50/60 border-dashed border-gray-200"
             }`}>
-              <div className="font-sans text-base sm:text-lg font-bold text-gray-900 break-words leading-relaxed select-all">
+              <div className="font-sans text-base sm:text-lg font-bold text-gray-900 break-words leading-relaxed select-all" role="status" aria-live="polite">
                 {result ? `( ${result} )` : (
                   <span className="text-gray-400 font-normal italic text-sm">
-                    Ingresa una cifra arriba para obtener la cantidad con letra certificada...
+                    Ingresa una cifra arriba para obtener la cantidad con letra...
                   </span>
                 )}
               </div>
 
-              {result && (
+              {result && !result.startsWith('Entrada') && !result.startsWith('Error') && (
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-4 mt-2 border-t border-emerald-100/60">
                   <div className="flex items-center gap-2 text-[11px] text-gray-500 font-mono">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                    <span>Validado para Documentos y Cheques</span>
+                    <span>Formato orientativo: verifica con la entidad receptora</span>
                   </div>
 
                   <button

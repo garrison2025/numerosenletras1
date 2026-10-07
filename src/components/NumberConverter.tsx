@@ -22,7 +22,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { convertNumberToLetters } from "../utils/numberToLetters";
-import { parseLocalizedNumber, formatNormalizedNumber, type NumberFormatStyle } from "../utils/parseLocalizedNumber";
+import { parseLocalizedNumber, formatNormalizedNumber, calculateExactDecimal, type NumberFormatStyle } from "../utils/parseLocalizedNumber";
 import { CURRENCIES, CURRENCY_MAP, DEFAULT_CURRENCY, type CurrencyConfig } from "../data/currencies";
 import { canUsePreferenceStorage } from "../utils/storageConsent";
 
@@ -253,10 +253,11 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
 
   const handleCopy = () => {
     if (!result || result.startsWith("Entrada no") || result.startsWith("Error")) return;
-    navigator.clipboard.writeText(result);
-    setCopied(true);
-    showToast("Copiado al portapapeles");
-    setTimeout(() => setCopied(false), 2000);
+    navigator.clipboard.writeText(result).then(() => {
+      setCopied(true);
+      showToast("Copiado al portapapeles");
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => showToast("No se pudo copiar; selecciona el resultado manualmente"));
   };
 
   const handleShare = () => {
@@ -359,7 +360,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
     showToast("Número de ejemplo generado");
   };
 
-  // Quick operations use the same locale parser as the conversion output.
+  // BigInt scaled arithmetic preserves cent and sub-cent precision exactly.
   const applyQuickOperation = (operation: 'add' | 'multiply', value: number) => {
     try {
       if (!inputVal.trim() && operation === 'add') {
@@ -367,20 +368,8 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
         return;
       }
       const parsed = parseLocalizedNumber(inputVal, numberFormatStyle);
-      if (parsed.fractionDigits.length > 10) {
-        showToast("Para operaciones rápidas, utiliza hasta 10 decimales");
-        return;
-      }
-      const current = Number(parsed.normalized);
-      const resultValue = operation === 'add' ? current + value : current * value;
-      if (!Number.isFinite(resultValue) || Math.abs(resultValue) > 999999999999999) {
-        showToast("El resultado supera el máximo admitido");
-        return;
-      }
-      const precision = Math.min(10, Math.max(parsed.fractionDigits.length, value === 0.5 ? 1 : 0));
-      const rounded = resultValue.toFixed(precision);
-      const canonical = String(Number(rounded));
-      setInputVal(formatNormalizedNumber(canonical, numberFormatStyle));
+      const next = calculateExactDecimal(parsed.normalized, operation, value);
+      setInputVal(formatNormalizedNumber(next, numberFormatStyle));
     } catch (error) {
       showToast(error instanceof Error ? error.message : "Número no válido");
     }
@@ -720,7 +709,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
                 ? "bg-gradient-to-br from-blue-50/40 via-white to-indigo-50/20 border-blue-300 shadow-sm"
                 : "bg-gray-50/60 border-dashed border-gray-200"
             }`}>
-              <div className="text-left font-sans text-lg sm:text-xl font-bold leading-relaxed text-gray-900 break-words select-all">
+              <div className="text-left font-sans text-lg sm:text-xl font-bold leading-relaxed text-gray-900 break-words select-all" role="status" aria-live="polite">
                 {result || (
                   <span className="text-gray-400 font-normal italic text-sm sm:text-base">
                     Escribe una cantidad arriba para ver la transcripción ortográfica inmediata...
@@ -732,7 +721,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-4 mt-2 border-t border-blue-100/60">
                   <div className="flex items-center gap-2 text-[11px] text-gray-500 font-mono">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                    <span>Validado RAE</span>
+                    <span>Conversión ortográfica</span>
                     {isCurrencyMode && (
                       <span className="bg-blue-100 text-blue-700 px-1.5 py-0.2 rounded text-[10px] font-bold">
                         {activeCurrency.flag} {activeCurrency.code}
