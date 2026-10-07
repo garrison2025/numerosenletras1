@@ -1,10 +1,10 @@
 # numerosenletras.org - Convertidor de Números a Letras y Formato Financiero
 
-> Plataforma de referencia lingüística y financiera en español para la transcripción canónica de números cardinales a letras, conversión de cantidades para cheques y pagarés según normativas de bancos centrales (RAE / ASALE / Banxico / Banco de la República / BCRP / BCRA / Banco de España), y generadores tipográficos Unicode.
+> Plataforma de referencia lingüística y financiera en español para la transcripción canónica de números cardinales a letras, conversión de cantidades para cheques y pagarés con referencias a reglas lingüísticas y usos documentales de cada país (RAE / ASALE / legislación y entidades monetarias nacionales), y generadores tipográficos Unicode.
 
 ## Identidad y Propósito del Sitio
 numerosenletras.org es un servicio web libre y gratuito dedicado a la precisión ortográfica y bancaria del idioma español. Está estructurado en dos silos temáticos:
-1. **Silo Numérico y Financiero (Principal)**: Conversión de cifras cardinales, redondeo formal, reglas de acentuación de números y formatos específicos para cheques, pagarés, recibos y facturas en América Latina y España.
+1. **Silo Numérico y Financiero (Principal)**: Conversión de cifras cardinales, validación explícita de precisión, reglas de acentuación de números y formatos específicos para cheques, pagarés, recibos y facturas en América Latina y España.
 2. **Silo Tipográfico Unicode**: Herramientas complementarias para la transformación de caracteres a alfabetos alfanuméricos estilizados y símbolos circulares para redes sociales.
 
 ## URLs Principales (Estructura Canónica con Trailing Slash)
@@ -58,3 +58,9 @@ numerosenletras.org es un servicio web libre y gratuito dedicado a la precisión
 
 ## Alcance y Limitaciones
 numerosenletras.org es un proyecto educativo de libre acceso. Las respuestas generadas siguen los estándares formales vigentes, si bien se recomienda contrastar con el receptor de un documento mercantil o notaría antes de suscribir obligaciones de elevado importe.
+
+## Límites y validación de los resultados
+- El conversor implementa cardinales enteros de hasta 15 cifras y hasta 12 cifras decimales en modo general.
+- Para importes financieros exige como máximo dos decimales: no redondea ni trunca importes automáticamente.
+- En el formulario el usuario debe elegir el separador regional; un formato ambiguo o inválido se rechaza con una explicación.
+- Los ejemplos de documentos comerciales son informativos; no representan autorización ni certificación de ningún banco, administración o entidad reguladora.

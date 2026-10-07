@@ -145,3 +145,12 @@ body {
     display: none !important;
   }
 }
+
+/* Respect user accessibility preferences on every tool and content route. */
+@media (prefers-reduced-motion: reduce) {
+  html, body { scroll-behavior: auto !important; }
+  .animate-fade-in, .animate-scale-up, .animate-spin-slow {
+    animation: none !important;
+    transform: none !important;
+  }
+}

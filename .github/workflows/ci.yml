@@ -36,3 +36,6 @@ jobs:
 
       - name: Run Astro Build
         run: bun run build
+
+      - name: Audit generated SEO HTML and local links
+        run: bun run verify:site

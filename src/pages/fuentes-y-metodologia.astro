@@ -56,7 +56,7 @@ const schemaData = {
               <span>Normalización y Análisis de Entrada</span>
             </h3>
             <p class="text-xs">
-              El motor extrae los caracteres numéricos aislándolos de símbolos monetarios ($ o €), comas y puntos. Detecta dinámicamente si el usuario emplea formato internacional (1,500.50) o europeo continental (1.500,50).
+              El usuario selecciona explícitamente el formato numérico americano (1,500.50) o español (1.500,50). El motor valida agrupaciones y separadores, admite hasta 15 cifras enteras y rechaza importes con más de dos decimales, sin redondeos ni recortes silenciosos.
             </p>
           </div>
 

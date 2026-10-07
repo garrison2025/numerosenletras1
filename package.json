@@ -12,7 +12,8 @@
     "astro:check": "astro check",
     "test": "tsx --test test/**/*.test.ts",
     "indexnow": "node scripts/submit-indexnow.mjs",
-    "check": "npm run lint && npm run test && npm run build"
+    "verify:site": "node scripts/check-built-site.mjs",
+    "check": "npm run lint && npm run test && npm run build && npm run verify:site"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.1",

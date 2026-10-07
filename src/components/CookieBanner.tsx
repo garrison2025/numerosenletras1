@@ -7,7 +7,7 @@ export default function CookieBanner() {
   const [showCustomize, setShowCustomize] = useState(false);
   const [preferences, setPreferences] = useState({
     essential: true,
-    preferences: true,
+    preferences: false,
   });
 
   useEffect(() => {
