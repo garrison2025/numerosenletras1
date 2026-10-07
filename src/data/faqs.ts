@@ -10,7 +10,7 @@ export const HOME_FAQS: FAQItem[] = [
   },
   {
     q: "¿Cuál es la diferencia entre 'ciento' y 'cien' al escribir números?",
-    a: "Se emplea 'cien' exclusivamente para la centena exacta (100). Cuando el número va acompañado de decenas o unidades menores, adopta obligatoriamente la forma 'ciento' (ej. 'ciento uno', 'ciento cincuenta')."
+    a: "Se emplea 'cien' para 100 y también delante de 'mil' cuando corresponde (por ejemplo, 'cien mil'). Para 101–199 se usa 'ciento' seguido de la parte restante: 'ciento uno', 'ciento cincuenta'."
   },
   {
     q: "¿A partir de qué número se separan las cifras con la conjunción 'y'?",

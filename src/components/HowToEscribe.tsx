@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { convertNumberToLetters } from "../utils/numberToLetters";
+import { parseFlexibleNumber } from "../utils/parseLocalizedNumber";
 import { 
   BookOpen, 
   Search, 
@@ -18,7 +19,6 @@ import {
   AlertCircle,
   Coins
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
 
 interface FAQItem {
   q: string;
@@ -30,29 +30,6 @@ interface CommonNumLink {
   num: number;
   label: string;
   text: string;
-}
-
-// Robust parser supporting Spanish dot/comma styles and American styles
-function parseSpanishNumber(str: string): number {
-  let cleaned = str.trim();
-  if (!cleaned) return NaN;
-  
-  const lastComma = cleaned.lastIndexOf(',');
-  const lastDot = cleaned.lastIndexOf('.');
-  
-  if (lastComma > lastDot) {
-    // Comma is the decimal separator. Remove dots, replace comma with dot.
-    cleaned = cleaned.replace(/\./g, "").replace(/,/g, ".");
-  } else if (lastDot > lastComma) {
-    // Dot is the decimal separator. Remove commas.
-    cleaned = cleaned.replace(/,/g, "");
-  } else {
-    // Only one separator type or none.
-    if (cleaned.includes(",") && !cleaned.includes(".")) {
-      cleaned = cleaned.replace(/,/g, ".");
-    }
-  }
-  return parseFloat(cleaned);
 }
 
 const CURRENCY_PRESETS = [
@@ -134,7 +111,7 @@ function getSpellingRule(num: number): string {
     return "En los centenares (101-999) hay concordancia de género con el sustantivo que acompañan (ej: 'trescientos libros' masculino / 'trescientas libretas' femenino). Nota: 'quinientos', 'setecientos' y 'novecientos' tienen raíces irregulares.";
   }
   if (num === 1000) {
-    return "Se escribe como 'mil'. La RAE aconseja no anteponer el determinante 'un' ('un mil' se considera redundante en el habla ordinaria, aunque se acepta en cheques financieros para evitar fraudes).";
+    return "Se escribe como 'mil'. La RAE aconseja no anteponer el determinante 'un' ('un mil' no es la forma académica general; puede encontrarse como uso documental y conviene verificarlo con la entidad receptora).";
   }
   if (num > 1000 && num < 1000000) {
     return "El millar funciona como un modificador invariable. Se escribe el número de millares seguido de la palabra 'mil' por separado (ej: 'cinco mil', 'veintiún mil').";
@@ -368,14 +345,25 @@ export default function HowToEscribe({
     setTimeout(() => setCopiedId(null), 1500);
   };
 
-  // Parse and calculate values for live checker using robust Spanish/English parser
-  const parsedLiveNum = parseSpanishNumber(liveNumber);
-  const isValidLiveNum = !isNaN(parsedLiveNum) && parsedLiveNum >= 0 && parsedLiveNum < 1000000000000;
-  const cleanLiveNumStr = isValidLiveNum ? String(parsedLiveNum) : "";
+  // Shared strict parser: same number semantics as the primary converters.
+  let parsedLiveNum = Number.NaN;
+  let cleanLiveNumStr = "";
+  let liveInputError = "";
+  try {
+    const parsed = parseFlexibleNumber(liveNumber, 12);
+    parsedLiveNum = Number(parsed.normalized);
+    if (parsed.negative || parsedLiveNum >= 1_000_000_000_000) {
+      throw new RangeError("Introduce un valor entre 0 y 999.999.999.999,999...");
+    }
+    cleanLiveNumStr = parsed.normalized;
+  } catch (error) {
+    liveInputError = error instanceof Error ? error.message : "Formato numérico no válido.";
+  }
+  const isValidLiveNum = cleanLiveNumStr !== "" && Number.isFinite(parsedLiveNum);
 
-  // Real-time generated values
-  const liveMasc = isValidLiveNum ? convertNumberToLetters(parsedLiveNum, { gender: 'M' }) : "";
-  const liveFem = isValidLiveNum ? convertNumberToLetters(parsedLiveNum, { gender: 'F' }) : "";
+  // Keep the canonical string through conversion so decimals are not rounded by JS Number.
+  const liveMasc = isValidLiveNum ? convertNumberToLetters(cleanLiveNumStr, { gender: 'M' }) : "";
+  const liveFem = isValidLiveNum ? convertNumberToLetters(cleanLiveNumStr, { gender: 'F' }) : "";
   const liveRoman = isValidLiveNum && Number.isInteger(parsedLiveNum) ? toRoman(parsedLiveNum) : "N/A (Requiere entero menor de 4,000)";
   const liveOrdinal = isValidLiveNum && Number.isInteger(parsedLiveNum) ? toOrdinal(parsedLiveNum) : "N/A (Requiere entero entre 1 y 100)";
   
@@ -388,7 +376,7 @@ export default function HowToEscribe({
     ? customCurrencyCentName
     : (CURRENCY_PRESETS.find(c => c.id === selectedCurrency)?.cent || "centavos");
 
-  const liveFinancial = isValidLiveNum ? convertNumberToLetters(parsedLiveNum, {
+  const liveFinancial = isValidLiveNum ? convertNumberToLetters(cleanLiveNumStr, {
     gender: 'N',
     isCurrency: true,
     currencyName: currentCurrencyName,
@@ -396,7 +384,7 @@ export default function HowToEscribe({
     formatFinancial: true
   }) : "";
 
-  const liveFinancialWithCents = isValidLiveNum ? convertNumberToLetters(parsedLiveNum, {
+  const liveFinancialWithCents = isValidLiveNum ? convertNumberToLetters(cleanLiveNumStr, {
     gender: 'N',
     isCurrency: true,
     currencyName: currentCurrencyName,
@@ -425,13 +413,21 @@ export default function HowToEscribe({
             <span className="text-xs font-bold text-gray-400 font-mono hidden sm:inline">NÚMERO:</span>
             <input
               type="text"
-              className="w-full md:w-44 bg-white border-2 border-blue-100 focus:border-blue-500 text-gray-900 font-mono text-lg font-bold rounded-2xl px-4 py-2.5 outline-hidden shadow-xs transition-all text-center"
-              placeholder="Ej: 125"
+              className={`w-full md:w-52 bg-white border-2 ${liveNumber.trim() && !isValidLiveNum ? "border-red-300 focus:border-red-500" : "border-blue-100 focus:border-blue-500"} text-gray-900 font-mono text-lg font-bold rounded-2xl px-4 py-2.5 outline-hidden shadow-xs transition-all text-center`}
+              placeholder="Ej: 1,234.56 o 1.234,56"
+              inputMode="decimal"
+              aria-invalid={Boolean(liveNumber.trim() && !isValidLiveNum)}
+              aria-describedby="live-number-hint"
               value={liveNumber}
               onChange={(e) => setLiveNumber(e.target.value)}
             />
           </div>
         </div>
+        <p id="live-number-hint" className={`text-xs -mt-3 mb-5 ${liveNumber.trim() && !isValidLiveNum ? "text-red-600" : "text-gray-500"}`}>
+          {liveNumber.trim() && !isValidLiveNum
+            ? liveInputError
+            : "Admite formato 1,234.56 o 1.234,56. Los formatos mal agrupados se rechazan en lugar de truncarse."}
+        </p>
 
         {/* Currency Customization block */}
         <div className="bg-white/45 border border-blue-100/50 rounded-2xl p-4.5 mb-6 flex flex-col gap-4">
@@ -460,12 +456,12 @@ export default function HowToEscribe({
           </div>
 
           {/* If Custom is selected, show input fields */}
-          <AnimatePresence>
+
             {selectedCurrency === "custom" && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
+              <div
+
+
+
                 className="overflow-hidden grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1"
               >
                 <div>
@@ -492,9 +488,9 @@ export default function HowToEscribe({
                     className="w-full bg-white border border-gray-200 focus:border-blue-500 rounded-xl px-3 py-2 text-xs font-semibold text-gray-700 outline-hidden"
                   />
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
+
         </div>
 
         {isValidLiveNum ? (
@@ -1087,19 +1083,19 @@ export default function HowToEscribe({
       )}
 
       {/* Toast Alert Notification */}
-      <AnimatePresence>
+
         {toastVisible && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+          <div
+
+
+
             className="fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-slate-800"
           >
             <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>{toastMessage}</span>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+
     </div>
   );
 }

@@ -47,3 +47,17 @@ describe('exact decimal quick operations', () => {
     assert.throws(() => calculateExactDecimal('999999999999999', 'add', 1), /15 cifras/);
   });
 });
+
+describe('flexible parser used by the spelling guide', () => {
+  it('accepts explicit LA and ES decimal forms', async () => {
+    const { parseFlexibleNumber } = await import('../src/utils/parseLocalizedNumber.js');
+    assert.equal(parseFlexibleNumber('1,234.56').normalized, '1234.56');
+    assert.equal(parseFlexibleNumber('1.234,56').normalized, '1234.56');
+  });
+  it('rejects malformed values instead of parseFloat prefix truncation', async () => {
+    const { parseFlexibleNumber } = await import('../src/utils/parseLocalizedNumber.js');
+    for (const input of ['1.2.3', '12,34.56', '123abc', '1e9']) {
+      assert.throws(() => parseFlexibleNumber(input));
+    }
+  });
+});

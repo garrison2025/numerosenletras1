@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { AESTHETIC_FONTS } from "../utils/fontGenerators";
 import { canUsePreferenceStorage } from "../utils/storageConsent";
 import { 
@@ -585,13 +584,12 @@ export default function AestheticLetters({ initialText }: { initialText?: string
               </div>
             </button>
 
-            <AnimatePresence>
               {isCustomExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                <div
+
+
+
+
                   className="overflow-hidden"
                 >
                   <div className="pt-4 border-t border-purple-100/60 mt-4 space-y-4">
@@ -677,9 +675,9 @@ export default function AestheticLetters({ initialText }: { initialText?: string
                       </button>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
+
           </div>
 
           {/* Filter controls and Search inside generator */}
@@ -1020,13 +1018,13 @@ export default function AestheticLetters({ initialText }: { initialText?: string
         </div>
 
         {/* Custom Bio Customizer Modal Overlay */}
-        <AnimatePresence>
+
           {editingBio && (
             <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              <div
+
+
+
                 className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-gray-100 flex flex-col relative"
               >
                 <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
@@ -1099,18 +1097,17 @@ export default function AestheticLetters({ initialText }: { initialText?: string
                     <span>Copiar Biografía</span>
                   </button>
                 </div>
-              </motion.div>
+              </div>
             </div>
           )}
-        </AnimatePresence>
 
         {/* Premium Floating Toast Notifications */}
-        <AnimatePresence>
+
           {toastVisible && (
-            <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 30, scale: 0.95 }}
+            <div
+
+
+
               className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white rounded-2xl px-5 py-3.5 flex items-center space-x-3 shadow-2xl border border-gray-800/80 max-w-sm w-11/12 md:w-auto"
             >
               <div className="flex items-center justify-center bg-emerald-500/20 text-emerald-400 p-1 rounded-full shrink-0">
@@ -1119,9 +1116,9 @@ export default function AestheticLetters({ initialText }: { initialText?: string
               <span className="text-xs font-semibold text-gray-100 select-none block truncate">
                 {toastMessage}
               </span>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+
       </div>
     </div>
   );

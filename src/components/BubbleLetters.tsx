@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { AESTHETIC_FONTS } from "../utils/fontGenerators";
 import { canUsePreferenceStorage } from "../utils/storageConsent";
 import { 
@@ -533,13 +532,12 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
               </div>
             </button>
 
-            <AnimatePresence>
               {isCustomExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                <div
+
+
+
+
                   className="overflow-hidden"
                 >
                   <div className="pt-4 border-t border-blue-100/60 mt-4 space-y-4">
@@ -664,9 +662,9 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
+
           </div>
 
           {/* Results Comparison Grid */}
@@ -1011,33 +1009,32 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
       </div>
 
       {/* Toast Alert Notifications */}
-      <AnimatePresence>
+
         {toastVisible && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+          <div
+
+
+
             className="fixed bottom-6 right-6 z-55 bg-gray-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 border border-gray-800"
           >
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             <span>{toastMessage}</span>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
       {/* Bio Editor Modal overlay */}
-      <AnimatePresence>
+
         {editingBio && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
+
+
+
             className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 sm:p-6"
           >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
+            <div
+
+
+
               className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl border border-gray-150 flex flex-col max-h-[90vh]"
             >
               {/* Header */}
@@ -1169,10 +1166,9 @@ export default function BubbleLetters({ initialText }: { initialText?: string })
                   <span>Copiar & Cerrar</span>
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
 
     </div>
   );
