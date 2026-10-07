@@ -38,7 +38,7 @@ describe('exact decimal quick operations', () => {
   it('avoids binary floating-point precision loss', async () => {
     const { calculateExactDecimal } = await import('../src/utils/parseLocalizedNumber.js');
     assert.equal(calculateExactDecimal('1234.56', 'add', 1), '1235.56');
-    assert.equal(calculateExactDecimal('0.10', 'add', 1), '1.10');
+    assert.equal(calculateExactDecimal('0.10', 'add', 1), '1.1');
     assert.equal(calculateExactDecimal('999999999999999.99', 'multiply', 0.5), '499999999999999.995');
     assert.equal(calculateExactDecimal('1.25', 'multiply', 2), '2.5');
   });

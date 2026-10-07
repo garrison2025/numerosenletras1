@@ -671,7 +671,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
                 <FileCheck2 className="w-3.5 h-3.5 text-blue-600" />
-                Resultado en Letras Oficial
+                Resultado en Letras
               </span>
               
               <div className="flex items-center gap-1">

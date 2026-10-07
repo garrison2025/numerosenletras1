@@ -665,7 +665,7 @@ export default function QuantityConverter({
           {/* Cent format option */}
           <div className="bg-gray-50/70 rounded-2xl p-4 border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-0.5">
-              <span className="text-xs font-bold text-gray-700 block">Formato Oficial de Centavos</span>
+              <span className="text-xs font-bold text-gray-700 block">Formato de Centavos</span>
               <p className="text-[11px] text-gray-500 leading-tight">
                 {isFinancialFormat 
                   ? "Estándar bancario y mercantil: '... pesos 50/100 M.N.' (Recomendado para cheques y facturas)" 
