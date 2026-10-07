@@ -60,6 +60,13 @@ for (const route of routes) {
 if (!existsSync(join(dist, 'robots.txt'))) issues.push('Missing robots.txt');
 if (!existsSync(join(dist, 'sitemap-index.xml'))) issues.push('Missing sitemap-index.xml');
 if (!existsSync(join(dist, 'llms.txt'))) issues.push('Missing llms.txt');
+const buildVersionPath = join(dist, 'build-version.txt');
+if (!existsSync(buildVersionPath)) {
+  issues.push('Missing build-version.txt');
+} else {
+  const revision = readFileSync(buildVersionPath, 'utf8').trim();
+  if (!/^[0-9a-f]{7,40}$/i.test(revision)) issues.push('Invalid build-version.txt revision');
+}
 if (issues.length) {
   console.error(issues.map(line => '- '+line).join('\n'));
   process.exit(1);

@@ -43,3 +43,8 @@ Conversions are performed in-browser. Preference/history storage is opt-in. `pub
 ## Release verification
 
 A green CI run is required. Before calling a public deployment complete, check mobile layouts, amount output/copy/print, real live redirects/404, robots/sitemap reachability, performance with real measurements, and Search Console indexing/clicks. Record evidence in `SEO-GEO-RELEASE-EVIDENCE.md`.
+
+
+## Production deployment fingerprint
+
+The build creates `/build-version.txt` containing the deployed Git SHA. On Cloudflare Pages this comes from `CF_PAGES_COMMIT_SHA`. Compare that value with the current `main` commit whenever production appears stale. See `CLOUDFLARE.md`.

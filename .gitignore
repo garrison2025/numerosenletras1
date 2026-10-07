@@ -7,3 +7,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Generated at build time to identify the deployed commit
+public/build-version.txt
