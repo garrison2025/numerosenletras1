@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { convertNumberToLetters } from "../utils/numberToLetters";
 import { formatCountryFinancialAmount } from "../utils/countryFinancialFormats";
+import { parseLocalizedNumber, formatNormalizedNumber, type NumberFormatStyle } from "../utils/parseLocalizedNumber";
 import { 
   CURRENCIES, 
   CURRENCY_MAP, 
@@ -85,6 +86,12 @@ export default function QuantityConverter({
         if (n) {
           setAmount(n);
         }
+        const requestedStyle = urlParams.get('formato');
+        if (requestedStyle === 'LA' || requestedStyle === 'ES') setNumberFormatStyle(requestedStyle);
+        const requestedCurrency = urlParams.get('moneda');
+        if (!initialCurrency && requestedCurrency && CURRENCY_MAP[requestedCurrency]) {
+          setSelectedCurrency(CURRENCY_MAP[requestedCurrency]);
+        }
       } catch {}
     }
   }, [initialAmount]);
@@ -113,11 +120,13 @@ export default function QuantityConverter({
         } else {
           url.searchParams.delete("n");
         }
+        url.searchParams.set('formato', numberFormatStyle);
+        url.searchParams.set('moneda', selectedCurrency.code);
         window.history.replaceState(null, "", url.pathname + url.search + url.hash);
       } catch {}
     }, 400);
     return () => clearTimeout(timer);
-  }, [amount, initialCurrency]);
+  }, [amount, initialCurrency, numberFormatStyle, selectedCurrency.code]);
 
   const [isFinancialFormat, setIsFinancialFormat] = useState(true);
   const [recipient, setRecipient] = useState("Juan Pérez Maldonado");
@@ -287,71 +296,52 @@ export default function QuantityConverter({
     return curr.region === currencyRegion;
   });
 
-  // Parse input according to numberFormatStyle
-  const parseAmountValue = (val: string): string => {
-    let clean = val.trim();
-    if (!clean) return "";
-    if (numberFormatStyle === 'LA') {
-      clean = clean.replace(/,/g, '');
-    } else {
-      clean = clean.replace(/\./g, '').replace(/,/g, '.');
+  const switchNumberFormatStyle = (next: NumberFormatStyle) => {
+    if (next === numberFormatStyle) return;
+    if (amount.trim()) {
+      try {
+        const parsed = parseLocalizedNumber(amount, numberFormatStyle, 2);
+        setAmount(formatNormalizedNumber(parsed.normalized, next));
+      } catch {
+        // Preserve partial/invalid input until it is corrected.
+      }
     }
-    return clean;
+    setNumberFormatStyle(next);
   };
 
-  // Live conversion
+  // Financial amounts are parsed once and always passed to engines in
+  // canonical decimal-dot form. Never truncate sub-cent fractions.
   useEffect(() => {
-    const cleanVal = parseAmountValue(amount);
-
-    if (!cleanVal) {
+    if (!amount.trim()) {
       setResult("");
       return;
     }
-
-    if (isNaN(Number(cleanVal)) && cleanVal !== "-") {
-      setResult("Entrada numérica no válida");
-      return;
-    }
-
     try {
-      const isNeg = cleanVal.startsWith("-");
-      const posVal = isNeg ? cleanVal.substring(1) : cleanVal;
-
-      let conv = "";
+      const parsed = parseLocalizedNumber(amount, numberFormatStyle, 2);
+      const cleanVal = parsed.normalized;
+      let conv: string;
       if (isFinancialFormat && ['MXN', 'COP', 'PEN', 'ARS', 'EUR'].includes(selectedCurrency.code)) {
-        conv = formatCountryFinancialAmount(posVal, selectedCurrency.code, {
+        conv = formatCountryFinancialAmount(cleanVal, selectedCurrency.code, {
           uppercase: true,
-          formatStyle: numberFormatStyle
+          formatStyle: 'LA'
         });
-        if (isNeg && conv !== "CERO") {
-          conv = `MENOS ${conv}`;
-        }
       } else {
-        conv = convertNumberToLetters(posVal, {
+        conv = convertNumberToLetters(cleanVal, {
           currency: selectedCurrency,
           formatFinancial: isFinancialFormat,
           decimalMode: isFinancialFormat ? 'fraction' : 'words'
-        });
-
-        if (isNeg && conv !== "cero") {
-          conv = `MENOS ${conv}`;
-        }
-        conv = conv.toUpperCase();
+        }).toUpperCase();
       }
-
       setResult(conv);
-
-      // Save to history debounce if valid
-      if (canUsePreferenceStorage() && historyEnabled && cleanVal && !isNaN(Number(cleanVal)) && cleanVal !== "0") {
+      if (canUsePreferenceStorage() && historyEnabled && cleanVal !== '0') {
         const timer = setTimeout(() => {
           setHistory(prev => {
-            if (prev.length > 0 && prev[0].amount === cleanVal && prev[0].currencyCode === selectedCurrency.code) {
-              return prev;
-            }
+            if (prev.length > 0 && prev[0].amount === cleanVal &&
+                prev[0].currencyCode === selectedCurrency.code && prev[0].result === conv) return prev;
             const newItem: QuantityHistoryItem = {
               id: Math.random().toString(36).substring(2, 9),
               amount: cleanVal,
-              result: conv.toUpperCase(),
+              result: conv,
               currencyCode: selectedCurrency.code,
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
@@ -360,8 +350,9 @@ export default function QuantityConverter({
         }, 800);
         return () => clearTimeout(timer);
       }
-    } catch {
-      setResult("Error en el formato del número");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Formato numérico no válido.';
+      setResult(`Entrada numérica no válida: ${message}`);
     }
   }, [amount, selectedCurrency, isFinancialFormat, numberFormatStyle, historyEnabled]);
 
@@ -374,12 +365,18 @@ export default function QuantityConverter({
   };
 
   const handleShare = () => {
-    const rawVal = amount.trim();
-    if (!rawVal) return;
-    const url = new URL(window.location.origin + window.location.pathname);
-    url.searchParams.set("n", rawVal);
-    navigator.clipboard.writeText(url.toString());
-    showToast("Enlace de cantidad con letra copiado");
+    try {
+      parseLocalizedNumber(amount, numberFormatStyle, 2);
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("n", amount.trim());
+      url.searchParams.set("formato", numberFormatStyle);
+      url.searchParams.set("moneda", selectedCurrency.code);
+      navigator.clipboard.writeText(url.toString()).then(() => {
+        showToast("Enlace de cantidad con letra copiado");
+      }).catch(() => showToast("No se pudo copiar el enlace"));
+    } catch {
+      showToast("Corrige el importe antes de compartirlo");
+    }
   };
 
   const handleSpeech = () => {
@@ -495,7 +492,7 @@ export default function QuantityConverter({
               <div className="flex items-center space-x-1.5 bg-gray-100/80 p-0.5 rounded-lg border border-gray-200/50">
                 <button
                   type="button"
-                  onClick={() => setNumberFormatStyle('LA')}
+                  onClick={() => switchNumberFormatStyle('LA')}
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md transition-all cursor-pointer ${
                     numberFormatStyle === 'LA' 
                       ? "bg-white text-emerald-600 shadow-xs" 
@@ -507,7 +504,7 @@ export default function QuantityConverter({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setNumberFormatStyle('ES')}
+                  onClick={() => switchNumberFormatStyle('ES')}
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md transition-all cursor-pointer ${
                     numberFormatStyle === 'ES' 
                       ? "bg-white text-emerald-600 shadow-xs" 
@@ -535,6 +532,8 @@ export default function QuantityConverter({
                 }}
                 placeholder={numberFormatStyle === 'LA' ? "Ej: 1,540.50" : "Ej: 1.540,50"}
                 className="w-full bg-gray-50/50 hover:bg-gray-50 focus:bg-white text-gray-900 text-xl sm:text-2xl font-mono font-bold tracking-tight rounded-2xl border-2 border-gray-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all pl-12 pr-28 py-4 outline-hidden placeholder:text-gray-350"
+                inputMode="decimal"
+                aria-invalid={result.startsWith("Entrada numérica no válida")}
                 autoComplete="off"
               />
               <div className="absolute right-3 flex items-center space-x-1">
@@ -552,8 +551,8 @@ export default function QuantityConverter({
                   type="button"
                   onClick={() => {
                     const sample = (Math.random() * 85000 + 100).toFixed(2);
-                    setAmount(sample);
-                    showToast(`Ejemplo generado: $${sample}`);
+                    setAmount(formatNormalizedNumber(sample, numberFormatStyle));
+                    showToast("Ejemplo de importe generado");
                   }}
                   className="p-1.5 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition-all cursor-pointer"
                   title="Generar monto de ejemplo"
@@ -578,7 +577,7 @@ export default function QuantityConverter({
                 <button
                   key={idx}
                   type="button"
-                  onClick={() => setAmount(pill.val)}
+                  onClick={() => setAmount(formatNormalizedNumber(pill.val, numberFormatStyle))}
                   className="text-[10.5px] font-mono font-semibold bg-gray-100/70 hover:bg-emerald-50 text-gray-600 hover:text-emerald-700 px-2 py-0.5 rounded-md transition-all cursor-pointer border border-transparent hover:border-emerald-200"
                 >
                   {pill.label}

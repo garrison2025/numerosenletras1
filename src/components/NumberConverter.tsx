@@ -22,6 +22,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { convertNumberToLetters } from "../utils/numberToLetters";
+import { parseLocalizedNumber, formatNormalizedNumber, type NumberFormatStyle } from "../utils/parseLocalizedNumber";
 import { CURRENCIES, CURRENCY_MAP, DEFAULT_CURRENCY, type CurrencyConfig } from "../data/currencies";
 import { canUsePreferenceStorage } from "../utils/storageConsent";
 
@@ -83,6 +84,10 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
       const paramNum = urlParams.get("n") || urlParams.get("numero") || urlParams.get("cantidad");
       if (paramNum) {
         setInputVal(paramNum);
+      }
+      const requestedStyle = urlParams.get("formato");
+      if (requestedStyle === 'LA' || requestedStyle === 'ES') {
+        setNumberFormatStyle(requestedStyle);
       }
 
       const allowed = canUsePreferenceStorage();
@@ -147,78 +152,53 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
     }
   }, [currencyPreset]);
 
-  // Clean and parse input based on numberFormatStyle
-  const parseInputValue = (val: string): string => {
-    let cleaned = val.trim();
-    if (!cleaned) return "";
-
-    if (numberFormatStyle === 'LA') {
-      // Latin America / USA: commas are thousands separators, dot is decimal
-      cleaned = cleaned.replace(/,/g, '');
-    } else {
-      // Spain / Europe: dots are thousands separators, comma is decimal
-      cleaned = cleaned.replace(/\./g, '').replace(/,/g, '.');
+  const switchNumberFormatStyle = (next: NumberFormatStyle) => {
+    if (next === numberFormatStyle) return;
+    if (inputVal.trim()) {
+      try {
+        const parsed = parseLocalizedNumber(inputVal, numberFormatStyle, isCurrencyMode ? 2 : 12);
+        setInputVal(formatNormalizedNumber(parsed.normalized, next));
+      } catch {
+        // Preserve invalid work-in-progress input so the visitor can correct it.
+      }
     }
-    return cleaned;
+    setNumberFormatStyle(next);
   };
 
-  // Convert on input or config change
+  // Convert on input or format changes, never silently reinterpret separators.
   useEffect(() => {
-    const cleanInput = parseInputValue(inputVal);
-
-    if (!cleanInput) {
+    if (!inputVal.trim()) {
       setResult("");
       return;
     }
-
-    if (isNaN(Number(cleanInput)) && cleanInput !== "-") {
-      setResult("Entrada no válida (solo números y un punto decimal)");
-      return;
-    }
-
     try {
-      const isNegative = cleanInput.startsWith("-");
-      const positiveVal = isNegative ? cleanInput.substring(1) : cleanInput;
-      
-      let convertedText = "";
-      if (isCurrencyMode) {
-        const currencyCfg: CurrencyConfig = CURRENCY_MAP[currencyPreset] || DEFAULT_CURRENCY;
-        convertedText = convertNumberToLetters(positiveVal, {
-          currency: currencyCfg,
-          formatFinancial: isFinancialFormat,
-          decimalMode: isFinancialFormat ? 'fraction' : 'words'
-        });
-      } else {
-        convertedText = convertNumberToLetters(positiveVal, { gender });
-      }
-      
-      if (isNegative && convertedText !== "cero") {
-        convertedText = `menos ${convertedText}`;
-      }
+      const parsed = parseLocalizedNumber(inputVal, numberFormatStyle, isCurrencyMode ? 2 : 12);
+      const currencyCfg = CURRENCY_MAP[currencyPreset] || DEFAULT_CURRENCY;
+      let convertedText = isCurrencyMode
+        ? convertNumberToLetters(parsed.normalized, {
+            currency: currencyCfg,
+            formatFinancial: isFinancialFormat,
+            decimalMode: isFinancialFormat ? 'fraction' : 'words'
+          })
+        : convertNumberToLetters(parsed.normalized, { gender });
 
-      // Case conversion
       if (letterCase === 'upper') {
         convertedText = convertedText.toUpperCase();
       } else if (letterCase === 'lower') {
         convertedText = convertedText.toLowerCase();
-      } else if (letterCase === 'title') {
-        convertedText = convertedText
-          .toLowerCase()
-          .split(' ')
-          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(' ');
+      } else {
+        convertedText = convertedText.toLowerCase().split(' ')
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
       }
-
       setResult(convertedText);
-
-      // Save to history debounce
-      if (!isFirstMount.current && cleanInput && !isNaN(Number(cleanInput))) {
-        saveToHistory(cleanInput, convertedText);
+      if (!isFirstMount.current) {
+        saveToHistory(parsed.normalized, convertedText);
       } else {
         isFirstMount.current = false;
       }
-    } catch {
-      setResult("Error en la conversión");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Formato numérico no válido.';
+      setResult(`Entrada no válida: ${message}`);
     }
   }, [inputVal, gender, letterCase, isCurrencyMode, currencyPreset, isFinancialFormat, numberFormatStyle]);
 
@@ -280,14 +260,17 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
   };
 
   const handleShare = () => {
-    const rawVal = inputVal.trim();
-    if (!rawVal || isNaN(Number(rawVal.replace(/[^0-9.-]/g, "")))) return;
-    
-    const url = new URL(window.location.origin + window.location.pathname);
-    url.searchParams.set("n", rawVal);
-    
-    navigator.clipboard.writeText(url.toString());
-    showToast("Enlace de conversión copiado al portapapeles");
+    try {
+      parseLocalizedNumber(inputVal, numberFormatStyle, isCurrencyMode ? 2 : 12);
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("n", inputVal.trim());
+      url.searchParams.set("formato", numberFormatStyle);
+      navigator.clipboard.writeText(url.toString()).then(() => {
+        showToast("Enlace de conversión copiado al portapapeles");
+      }).catch(() => showToast("No se pudo copiar el enlace"));
+    } catch {
+      showToast("Corrige el número antes de compartirlo");
+    }
   };
 
   const handleSpeech = () => {
@@ -371,29 +354,40 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
   const handleRandomNumber = () => {
     const scales = [100, 1000, 25000, 500000, 2000000];
     const chosenScale = scales[Math.floor(Math.random() * scales.length)];
-    const randomVal = (Math.random() * chosenScale).toFixed(Math.random() > 0.4 ? 2 : 0);
-    setInputVal(randomVal);
-    showToast(`Número aleatorio generado: ${randomVal}`);
+    const sample = (Math.random() * chosenScale).toFixed(Math.random() > 0.4 ? 2 : 0);
+    setInputVal(formatNormalizedNumber(sample, numberFormatStyle));
+    showToast("Número de ejemplo generado");
   };
 
-  const handleMultiply = (factor: number) => {
-    const parsed = parseFloat(inputVal);
-    if (!isNaN(parsed)) {
-      const multiplied = (parsed * factor).toFixed(parsed % 1 !== 0 ? 2 : 0);
-      setInputVal(multiplied);
-      showToast(`Multiplicado por ${factor}: ${multiplied}`);
+  // Quick operations use the same locale parser as the conversion output.
+  const applyQuickOperation = (operation: 'add' | 'multiply', value: number) => {
+    try {
+      if (!inputVal.trim() && operation === 'add') {
+        setInputVal(formatNormalizedNumber(String(value), numberFormatStyle));
+        return;
+      }
+      const parsed = parseLocalizedNumber(inputVal, numberFormatStyle);
+      if (parsed.fractionDigits.length > 10) {
+        showToast("Para operaciones rápidas, utiliza hasta 10 decimales");
+        return;
+      }
+      const current = Number(parsed.normalized);
+      const resultValue = operation === 'add' ? current + value : current * value;
+      if (!Number.isFinite(resultValue) || Math.abs(resultValue) > 999999999999999) {
+        showToast("El resultado supera el máximo admitido");
+        return;
+      }
+      const precision = Math.min(10, Math.max(parsed.fractionDigits.length, value === 0.5 ? 1 : 0));
+      const rounded = resultValue.toFixed(precision);
+      const canonical = String(Number(rounded));
+      setInputVal(formatNormalizedNumber(canonical, numberFormatStyle));
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : "Número no válido");
     }
   };
 
-  const handleAddValue = (delta: number) => {
-    const parsed = parseFloat(inputVal);
-    if (!isNaN(parsed)) {
-      const summed = (parsed + delta).toFixed(parsed % 1 !== 0 ? 2 : 0);
-      setInputVal(summed);
-    } else {
-      setInputVal(String(delta));
-    }
-  };
+  const handleMultiply = (factor: number) => applyQuickOperation('multiply', factor);
+  const handleAddValue = (delta: number) => applyQuickOperation('add', delta);
 
   // Keyboard shortcut listener
   useEffect(() => {
@@ -438,7 +432,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
                 <button
                   type="button"
                   onClick={() => {
-                    setNumberFormatStyle('LA');
+                    switchNumberFormatStyle('LA');
                     showToast("Formato decimal: 1,234.56 (América)");
                   }}
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md transition-all cursor-pointer ${
@@ -453,7 +447,7 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
                 <button
                   type="button"
                   onClick={() => {
-                    setNumberFormatStyle('ES');
+                    switchNumberFormatStyle('ES');
                     showToast("Formato decimal: 1.234,56 (España / UE)");
                   }}
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md transition-all cursor-pointer ${
@@ -476,7 +470,8 @@ export default function NumberConverter({ initialNumber = "", onNavigate }: Numb
                 onChange={(e) => setInputVal(e.target.value)}
                 placeholder={numberFormatStyle === 'LA' ? "Ej: 1,250.50 o 1000000" : "Ej: 1.250,50 o 1000000"}
                 className="w-full bg-gray-50/50 hover:bg-gray-50 focus:bg-white text-gray-900 text-xl sm:text-2xl font-mono font-bold tracking-tight rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all px-4 py-4 pr-32 outline-hidden placeholder:text-gray-350"
-                autoFocus
+                inputMode="decimal"
+                aria-invalid={result.startsWith("Entrada no válida")}
                 autoComplete="off"
               />
 
