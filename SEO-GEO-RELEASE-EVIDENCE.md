@@ -13,7 +13,8 @@ Date: 2026-10-07. Scope: input correctness, selected regional number format, pre
 ## Verification not supplied by CI
 - Mobile and desktop visual pass at specific breakpoints: PENDING manual browser QA.
 - Clipboard, speech and cheque-print UX: PENDING browser QA.
-- Production HTTP redirect and real 404 behavior: PENDING live deployment verification.
+- Production content sync: VERIFIED on 2026-10-07 for homepage, /como-se-escribe/ and /cantidad-con-letra/; latest functional parser/copy changes were visible on the public site.
+- Production HTTP redirects and real 404 behavior beyond sampled routes: PENDING.
 - Lighthouse / CrUX LCP, CLS and INP measurements: PENDING.
 - GSC impressions/clicks/coverage by URL, query and country: PENDING (no account data asserted).
 - Advertising policy status / AdSense approval: NOT EVALUATED. Existing ads.txt is a template and must not be called configured for an actual publisher without that site's account ID.
@@ -21,3 +22,5 @@ Date: 2026-10-07. Scope: input correctness, selected regional number format, pre
 
 ## Owner release gate
 CI success is necessary, not sufficient. Do not label this as a fully validated production release until the pending browser, live-URL and data checks are recorded. No fabricated SEO numbers or official endorsements.
+
+- Deployment diagnosis: GitHub `main` and CI are healthy; public pages later reflected the submitted changes, confirming the Git-to-production path is active. A build fingerprint mechanism was added in commit `af5549a8` to expose the deployed revision as `/build-version.txt` on subsequent builds.
