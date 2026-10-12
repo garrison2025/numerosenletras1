@@ -20,6 +20,7 @@ const routes = [
   '/letras-aesthetic/',
   '/letras-burbuja/',
   '/fuentes-y-metodologia/',
+  '/recursos/ficha-numeros-escritos/',
   '/blog/',
   '/blog/guia-convertir-numeros-a-letras-rae-finanzas/',
   '/blog/arte-letras-burbuja-tipografia-circular-copiar-pegar/',

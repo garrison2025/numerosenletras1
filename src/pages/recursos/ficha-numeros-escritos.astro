@@ -1,0 +1,108 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = 'Ficha de Números en Letras para Clase | Ejercicios y Respuestas';
+const description = 'Ficha gratuita para practicar números escritos con palabras en español: 15 ejercicios, reglas ortográficas, actividades y solucionario.';
+const currentPath = '/recursos/ficha-numeros-escritos/';
+const schemaData = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: 'Números escritos con palabras: ficha de práctica',
+  url: 'https://numerosenletras.org/recursos/ficha-numeros-escritos/',
+  inLanguage: 'es',
+  description,
+  educationalLevel: '4.º a 7.º de educación básica',
+  learningResourceType: 'Worksheet',
+  isAccessibleForFree: true,
+  dateModified: '2026-10-12',
+};
+---
+<Layout {title} {description} {currentPath} {schemaData}>
+  <main class="bg-slate-50 min-h-screen py-8 sm:py-12">
+    <article class="max-w-4xl mx-auto px-4 sm:px-8">
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm px-5 sm:px-10 py-8 sm:py-12 space-y-9 text-slate-800">
+        <header>
+          <p class="text-sm tracking-widest font-bold uppercase text-blue-700 mb-3">NumerosEnLetras.org · recurso didáctico original</p>
+          <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 mb-5">Números escritos con palabras: ficha de ejercicios</h1>
+          <p class="text-lg text-slate-600 leading-relaxed">15 actividades para 4.º a 7.º básico: escribe cifras con palabras, aplica las reglas ortográficas del español y comprueba tus respuestas con un solucionario.</p>
+          <div class="no-print flex flex-wrap gap-3 mt-6">
+            <button type="button" onclick="window.print()" class="px-5 py-3 rounded-xl bg-blue-700 text-white font-semibold hover:bg-blue-800">Imprimir o guardar como PDF</button>
+            <a href="/" class="px-5 py-3 rounded-xl border border-blue-300 text-blue-800 font-semibold hover:bg-blue-50">Comprobar con el conversor gratuito</a>
+          </div>
+          <p class="mt-5 text-sm text-slate-500">Objetivos: practicar cardinales, distinguir «cien» y «ciento», escribir las decenas con precisión y justificar el uso de «y».</p>
+        </header>
+        <section aria-labelledby="reglas">
+          <h2 id="reglas" class="text-2xl font-bold mb-4 text-slate-900">1. Recordatorio de ortografía</h2>
+          <div class="rounded-xl border-l-4 border-blue-600 bg-blue-50 px-6 py-5 space-y-3">
+            <p><strong>21–29:</strong> normalmente se escriben en una sola palabra: veintitrés, veinticuatro, veinticinco.</p>
+            <p><strong>31 en adelante:</strong> se usa «y» entre decenas y unidades cuando corresponde: treinta y uno, cuarenta y dos.</p>
+            <p><strong>100 aislado:</strong> cien. Para 101 escribimos ciento uno.</p>
+            <p><strong>Antes de «mil»:</strong> 21 000 se expresa como veintiún mil, no «veintiuno mil».</p>
+          </div>
+        </section>
+        <section aria-labelledby="cifras">
+          <h2 id="cifras" class="text-2xl font-bold mb-4 text-slate-900">2. Actividad A · De cifras a palabras</h2>
+          <p class="text-slate-600 mb-4">Escribe estas nueve cantidades correctamente, utilizando tildes y separaciones cuando sea necesario.</p>
+          <ol class="list-decimal pl-6 space-y-4" aria-label="Convertir cifras a letras">
+            <li>17 <div class="answer-line"></div></li>
+            <li>24 <div class="answer-line"></div></li>
+            <li>31 <div class="answer-line"></div></li>
+            <li>105 <div class="answer-line"></div></li>
+            <li>218 <div class="answer-line"></div></li>
+            <li>1 001 <div class="answer-line"></div></li>
+            <li>2 450 <div class="answer-line"></div></li>
+            <li>21 000 <div class="answer-line"></div></li>
+            <li>1 000 000 <div class="answer-line"></div></li>
+          </ol>
+        </section>
+        <section aria-labelledby="palabras">
+          <h2 id="palabras" class="text-2xl font-bold mb-4 text-slate-900">3. Actividad B · De palabras a cifras</h2>
+          <ol class="list-decimal pl-6 space-y-4" start="10" aria-label="Convertir palabras a cifras">
+            <li>Mil ciento nueve. <div class="answer-line"></div></li>
+            <li>Setecientos cuarenta y dos. <div class="answer-line"></div></li>
+            <li>Treinta y seis mil doscientos uno. <div class="answer-line"></div></li>
+          </ol>
+        </section>
+        <section aria-labelledby="errores">
+          <h2 id="errores" class="text-2xl font-bold mb-4 text-slate-900">4. Actividad C · Corrige los errores</h2>
+          <ol class="list-decimal pl-6 space-y-4" start="13" aria-label="Corregir errores ortográficos">
+            <li>«veinte y tres» <div class="answer-line"></div></li>
+            <li>«treinta uno» <div class="answer-line"></div></li>
+            <li>«ciento» para escribir el número 100 aislado <div class="answer-line"></div></li>
+          </ol>
+          <p class="mt-6 text-slate-600"><strong>Ampliación:</strong> crea tres números de cinco o seis dígitos. Escríbelos en letras y revisa los de un compañero, explicando cada decisión.</p>
+        </section>
+        <section id="solucionario" aria-labelledby="respuestas" class="teacher-answers border-t-2 border-blue-200 pt-8">
+          <h2 id="respuestas" class="text-2xl font-bold mb-4 text-slate-900">5. Solucionario para docentes y autocorrección</h2>
+          <p class="text-slate-600 mb-5">Realiza primero las actividades. Después compara cada solución e identifica qué regla explica la forma correcta.</p>
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>diecisiete</li><li>veinticuatro</li><li>treinta y uno</li><li>ciento cinco</li><li>doscientos dieciocho</li><li>mil uno</li><li>dos mil cuatrocientos cincuenta</li><li>veintiún mil</li><li>un millón</li>
+            <li>1 109</li><li>742</li><li>36 201</li>
+            <li>veintitrés (una sola palabra con tilde)</li>
+            <li>treinta y uno (falta la conjunción «y»)</li>
+            <li>cien (100 aislado)</li>
+          </ol>
+          <p class="mt-5 rounded-xl bg-slate-100 p-4">Como actividad adicional, compara veintitrés con treinta y tres: ¿por qué una expresión se escribe unida y la otra separada? Consulta la <a class="text-blue-700 underline" href="/como-se-escribe/">guía sobre ortografía de números</a> y verifica los ejemplos con el <a class="text-blue-700 underline" href="/">conversor interactivo</a>.</p>
+        </section>
+        <footer class="border-t border-slate-200 pt-5 text-sm text-slate-600">
+          <p>Ficha original de NumerosEnLetras.org · Revisión: 12 de octubre de 2026.</p>
+          <p>Se permite la impresión para práctica personal y uso en clase. No se declara una licencia Creative Commons ni autorización de redistribución comercial.</p>
+        </footer>
+      </div>
+    </article>
+  </main>
+</Layout>
+<style>
+  .answer-line{height:23px;border-bottom:1px solid #cbd5e1;margin-top:4px}
+  @media print {
+    @page { size: A4; margin: 13mm; }
+    :global(body){background:#fff!important;color:#111!important}
+    .no-print{display:none!important}
+    main{padding:0!important;min-height:0!important}
+    article{max-width:none!important;padding:0!important}
+    article>div{box-shadow:none!important;border:0!important;border-radius:0!important;padding:0!important}
+    h2{break-after:avoid}
+    li{break-inside:avoid}
+    .teacher-answers{break-before:page}
+  }
+</style>
